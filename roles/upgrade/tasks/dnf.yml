@@ -1,0 +1,60 @@
+---
+- name: "Ensure Dependencies are present."
+  ansible.builtin.package:
+    name: dnf-utils
+    state: present
+
+- name: "Mark packages on hold."
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: 'exclude={{ item }}'
+    state: present
+  with_items: "{{ upgrade_packages_on_hold }}"
+
+- name: "Store List of Updates for further Inspection."
+  ansible.builtin.command: dnf check-update
+  args:
+  register: upgrade_update_list_dnf
+  failed_when: upgrade_update_list_dnf.rc > 100
+  ignore_errors: true
+  when: upgrade_reporting_enable | bool
+
+- name: "Upgrade via DNF."
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: "Cleanup via DNF."
+  ansible.builtin.dnf:
+    autoremove: true
+
+- name: "Unhold packages."
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: 'exclude={{ item }}'
+    state: absent
+  with_items: "{{ upgrade_packages_on_hold }}"
+
+- name: "Check for Reboot Hint."
+  ansible.builtin.shell: dnf needs-restarting -r
+  args:
+  register: reboot_hint_dnf
+  failed_when: reboot_hint_dnf.rc >= 2
+  changed_when: reboot_hint_dnf.rc == 1
+
+- name: "Check for Service Restarts."
+  ansible.builtin.shell: dnf needs-restarting -s
+  args:
+  register: service_restarts_dnf
+  changed_when: "service_restarts_dnf.stdout_lines | length"
+  when: not (ansible_distribution == "Fedora" and ansible_distribution_major_version | int < 33)
+
+- name: "Set Reboot Hint."
+  ansible.builtin.set_fact:
+    reboot_hint: true
+  when: reboot_hint_dnf.rc == 1
+
+- name: "Set Service Restarts."
+  ansible.builtin.set_fact:
+    service_restarts: "{{ service_restarts_dnf.stdout_lines }}"
+  when: not (ansible_distribution == "Fedora" and ansible_distribution_major_version | int < 33) and "service_restarts_dnf.stdout_lines | length"

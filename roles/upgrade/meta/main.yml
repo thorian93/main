@@ -1,0 +1,50 @@
+---
+galaxy_info:
+  role_name: upgrade
+  author: thorian93
+  description: Upgrade Management for Linux
+  license: "license (MIT)"
+
+  min_ansible_version: "2.9"
+
+  galaxy_tags:
+    - linux
+    - server
+    - update
+    - upgrade
+    - system
+    - maintenance
+    - operating
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Debian
+      versions:
+        - Stretch
+        - Buster
+        - Bullseye
+    - name: Fedora
+      versions:
+        - 31
+        - 32
+        - 33
+        - 34
+        - 35
+        - 36
+        - 37
+    - name: opensuse
+      versions:
+        - 15.2
+        - 42.2
+    - name: SLES
+      versions:
+        - 11
+        - 12
+    - name: Ubuntu
+      versions:
+        - Xenial
+        - Bionic
+        - Focal
