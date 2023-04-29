@@ -51,9 +51,6 @@ jobs:
       - name: Compile Collection Changelog
         run: antsibull-changelog release
 
-      - name: Compile Collection Docs
-        run: antsibull-docs collection --use-current --squash-hierarchy --fail-on-error --dest-dir ./docs/ tribe29.checkmk
-
       - name: Create Pull Request for docs and changelog against devel branch
         uses: peter-evans/create-pull-request@v5
         with:
