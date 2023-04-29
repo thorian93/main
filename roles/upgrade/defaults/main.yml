@@ -26,9 +26,9 @@ upgrade_force_reboot: false
 upgrade_needrestart_disable_interaction: true
 upgrade_restart_services: true
 upgrade_restart_services_blacklist:
-  - auditd.service
-  - dbus.service
-  - systemd-manager.service
+  - auditd
+  - dbus
+  - systemd-manager
 
 # Reporting
 upgrade_reporting_enable: false
