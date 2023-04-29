@@ -1,0 +1,5 @@
+---
+common_apps_distribution:
+  - cronie
+  - python-dnf
+  - util-linux-user

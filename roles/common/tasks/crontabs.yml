@@ -1,0 +1,14 @@
+---
+- name: "Configure crontabs."
+  ansible.builtin.cron:
+    name: "{{ item.name }}"
+    job: "{{ item.job }}"
+    state: "{{ item.state }}"
+    disabled: "{{ item.disabled }}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    day: "{{ item.day }}"
+    weekday: "{{ item.weekday }}"
+    month: "{{ item.month }}"
+  with_items: "{{ common_crontabs_jobs }}"
+  when: common_crontabs_jobs is defined

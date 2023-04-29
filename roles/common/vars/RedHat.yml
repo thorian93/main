@@ -1,0 +1,10 @@
+---
+common_apps_derivate:
+  - iptstate
+  - tig
+  - xz
+  - yum-utils
+
+common_timezone_package: tzdata
+common_vimrc_path: /etc/vimrc
+common_admin_group: wheel

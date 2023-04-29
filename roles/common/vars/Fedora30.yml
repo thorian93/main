@@ -1,0 +1,4 @@
+---
+common_apps_distribution:
+  - libselinux-python
+  - util-linux-user

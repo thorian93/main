@@ -1,0 +1,27 @@
+---
+- name: "Install ZSH."
+  ansible.builtin.package:
+    name: zsh
+    state: present
+
+- name: "Download oh-my-zsh."
+  ansible.builtin.git:
+    repo: "{{ common_zsh_source }}"
+    dest: "{{ common_zsh_path }}"
+    version: master
+    update: true
+
+- name: "Copy .zshrc."
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "/{% if 'root' in item %}{{ item }}{% else %}home/{{ item }}{% endif %}/.zshrc"
+    backup: true
+  with_items: "{{ common_zsh_users }}"
+
+- name: "Determine ZSH binary location."
+  ansible.builtin.command: which zsh
+  register: common_zsh_binary_location
+
+- name: "Enable ZSH as default shell."
+  ansible.builtin.command: "chsh -s {{ common_zsh_binary_location.stdout }} {{ item }}"
+  with_items: "{{ common_zsh_users }}"

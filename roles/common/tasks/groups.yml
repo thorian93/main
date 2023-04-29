@@ -1,0 +1,38 @@
+---
+- name: "Concatenate Groups Presence Variables."
+  set_fact:
+    common_groups_present: >-
+      {{ common_global_groups_present | default('') | list  +
+      common_os_groups_present | default('') | list  +
+      common_system_groups_present | default('') | list  +
+      common_stage_groups_present | default('') | list  +
+      common_role_groups_present | default('') | list }}
+
+- name: "Concatenate Groups Absence Variables."
+  ansible.builtin.set_fact:
+    common_groups_absent: >-
+      {{ common_global_groups_absent | default('') | list  +
+      common_os_groups_absent | default('') | list  +
+      common_system_groups_absent | default('') | list  +
+      common_stage_groups_absent | default('') | list  +
+      common_role_groups_absent | default('') | list }}
+
+- name: "Ensure Admin Group exists."
+  ansible.builtin.group:
+    name: "{{ common_admin_group }}"
+    state: "present"
+
+- name: "Create groups."
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    system: "{{ item.system }}"
+  with_items: "{{ common_groups_present }}"
+  when: common_groups_present | length
+
+- name: "Remove groups."
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ common_groups_absent }}"
+  when: common_groups_absent | length

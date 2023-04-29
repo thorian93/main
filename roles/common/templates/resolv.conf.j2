@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+# This file is set immutable with 'chattr +i' to make sure no other program changes it.
+# If you try to make manual changes to this file be aware that they might be overwritten by Ansible!
+# If you want to make changes anyways you can remove the immutable flag with 'chattr -i'
+
+search {% for search in common_dns_search %}{{ search }} {% endfor %}
+
+{% for server in common_dns_servers %}
+nameserver {{ server }}
+{% endfor %}
+{% for option in common_dns_options %}
+options {{ option }}
+{% endfor %}

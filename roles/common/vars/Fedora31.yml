@@ -1,0 +1,3 @@
+---
+common_apps_distribution_version:
+  - python3-libselinux

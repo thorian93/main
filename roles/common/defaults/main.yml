@@ -1,0 +1,102 @@
+---
+common_stable_os:
+  - CentOS 7
+  - CentOS 8
+  - Debian 9
+  - Debian 10
+  - Debian 11
+  - Fedora 33
+  - Fedora 34
+  - Fedora 35
+  - Fedora 36
+  - SLES 11
+  - SLES 12
+  - openSUSE Leap 15
+  - openSUSE Leap 42
+  - Ubuntu 16
+  - Ubuntu 18
+  - Ubuntu 20
+  - Ubuntu 22
+
+# Common Management Selections
+# Cleanup Variable Names. These backwards compatibility will be removed in a future version of this role!
+common_configure_crontabs: "{{ common_crontabs_configure | default(false) }}"
+common_configure_disks: "{{ common_disks_configure | default(false) }}"
+common_configure_dns: "{{ common_dns_configure | default(false) }}"
+common_configure_groups: "{{ common_groups_configure | default(false) }}"
+common_configure_zsh: "{{ common_zsh_configure | default(false) }}"
+common_configure_scripting: "{{ common_scripting_configure | default(false) }}"
+common_configure_software: "{{ common_software_configure | default(false) }}"
+common_configure_users: "{{ common_users_configure | default(false) }}"
+common_configure_timezone: "{{ common_timezone_configure | default(false) }}"
+common_configure_vim: "{{ common_vim_configure | default(false) }}"
+
+# Host
+common_host_name: "{{ inventory_hostname }}"
+
+# Users
+## Users can be defined on several levels and will be concatenated
+common_global_users_present: []
+# - name: johndoe
+#   password: []
+#   update_password: always
+#   keys: []
+#     - foobar
+#   shell: /bin/bash
+#   user_groups: []
+#   append: yes
+#   system: no
+#   state: present
+#   remove: no
+common_os_users_present: []
+common_system_users_present: []
+common_stage_users_present: []
+common_role_users_present: []
+
+# Optional Apps
+common_optional_apps_install: false
+
+# EPEL for RedHat
+common_epel_enabled: false
+
+# DNS
+common_dns_search: []
+common_dns_servers:
+  - 1.1.1.1
+  - 1.0.0.1
+common_dns_options: []
+# - "timeout:3"
+# - "attempts:2"
+# - "rotate"
+
+# Timezone
+common_timezone: "Europe/Berlin"
+
+# Scripting
+common_scripting_path: /opt/control/scripts
+common_config_path: /opt/control/config
+common_scripting_scripts_global: []
+# - src:
+#   dest:
+#   owner:
+#   group:
+#   mode:
+#   state:
+common_scripting_scripts_os: []
+common_scripting_scripts_system: []
+common_scripting_scripts_stage: []
+common_scripting_scripts_role: []
+
+# Shopt options
+shopt_options:
+  - shopt -s cdspell
+  - shopt -s nocaseglob
+
+# Oh my ZSH
+common_zsh_users: root
+common_zsh_theme: clean
+common_zsh_path: /opt/oh-my-zsh
+common_zsh_plugins:
+  - git
+  - rsync
+  - wd

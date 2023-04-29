@@ -1,0 +1,26 @@
+---
+- name: "Configure shopt Preferences."
+  ansible.builtin.lineinfile:
+    dest: /etc/bash.bashrc
+    line: "{{ item }}"
+    create: true
+  with_items: "{{ shopt_options }}"
+
+- name: "Configure Bash Completion."
+  ansible.builtin.blockinfile:
+    dest: /etc/bash.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    content: |
+     if ! shopt -oq posix; then
+        if [ -f /usr/share/bash-completion/bash_completion ]; then
+           . /usr/share/bash-completion/bash_completion
+        elif [ -f /etc/bash_completion ]; then
+           . /etc/bash_completion
+        fi
+     fi
+
+- name: "Workaround - Install python-xml."
+  ansible.builtin.shell: zypper in -y python-xml
+  args:
+  when: ansible_distribution == "opensuse Leap" and ansible_distribution_major_version == "15"

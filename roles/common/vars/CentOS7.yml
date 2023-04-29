@@ -1,0 +1,4 @@
+---
+common_apps_distribution_version:
+  - bind-utils
+  - libselinux-python

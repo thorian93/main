@@ -1,0 +1,51 @@
+---
+- name: "Concatenate Users Presence Variables."
+  ansible.builtin.set_fact:
+    common_users_present: >-
+      {{ common_global_users_present | default('') | list  +
+      common_os_users_present | default('') | list  +
+      common_system_users_present | default('') | list  +
+      common_stage_users_present | default('') | list  +
+      common_role_users_present | default('') | list }}
+
+- name: "Concatenate Users Absence Variables."
+  ansible.builtin.set_fact:
+    common_users_absent: >-
+      {{ common_global_users_absent | default('') | list  +
+      common_os_users_absent | default('') | list  +
+      common_system_users_absent | default('') | list  +
+      common_stage_users_absent | default('') | list  +
+      common_role_users_absent | default('') | list }}
+
+- name: "Create Users."
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    update_password: "{{ item.update_password }}"
+    groups: "{{ item.user_groups }}"
+    shell: "{{ item.shell }}"
+    system: "{{ item.system }}"
+    state: "{{ item.state }}"
+  with_items: "{{ common_users_present }}"
+  when: common_users_present | length
+  no_log: true
+
+- name: "Add Public Keys for Users."
+  ansible.builtin.authorized_key:
+    user: "{{ item.0.name }}"
+    state: "{{ item.0.state }}"
+    key: "{{ item.1 | default() }}"
+  with_subelements:
+    - "{{ common_users_present }}"
+    - keys
+  when: common_users_present | length
+  no_log: true
+
+- name: "Remove Users."
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    remove: "{{ item.remove }}"
+  with_items: "{{ common_users_absent }}"
+  when: common_users_absent | length
+  no_log: true

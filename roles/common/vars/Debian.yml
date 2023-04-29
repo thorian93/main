@@ -1,0 +1,29 @@
+---
+common_apps_derivate:
+  - apt-transport-https
+  - aptitude
+  - bash-completion
+  - bind9-dnsutils
+  - check-support-status
+  - debian-goodies
+  - hddtemp
+  - iftop
+  - inotify-tools
+  - iptstate
+  - lnav
+  - lsb-release
+  - mailutils
+  - net-tools
+  - nmon
+  - p7zip
+  - python-apt
+  - tig
+  - tuptime
+  - unar
+  - unison
+  - whois
+  - xz-utils
+
+common_timezone_package: tzdata
+common_vimrc_path: /etc/vim/vimrc
+common_admin_group: sudo

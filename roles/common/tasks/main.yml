@@ -1,0 +1,76 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  ansible.builtin.fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in common_stable_os)
+
+- name: "Set hostname."
+  ansible.builtin.hostname:
+    name: "{{ common_host_name | default('{{ inventory_hostname }}') }}"
+
+- name: "Configure /etc/hosts."
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 {{ common_host_name | default('{{ inventory_hostname }}') }} localhost"
+    regexp: "^127.0.0.1"
+    state: present
+
+- name: "Include Derivate specific Variables."
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+  changed_when: false
+  failed_when: false
+
+- name: "Include Distribution specific Variables."
+  ansible.builtin.include_vars: "{{ ansible_distribution }}.yml"
+  changed_when: false
+  failed_when: false
+
+- name: "Include Distribution Version specific Variables."
+  ansible.builtin.include_vars: "{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
+  changed_when: false
+  failed_when: false
+
+- name: "Include OS Family specific Playbook."
+  ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: "Include Software Management Playbook."
+  ansible.builtin.include_tasks: software.yml
+  when: common_configure_software | bool
+
+- name: "Include DNS Nameservers Management Playbook."
+  ansible.builtin.include_tasks: dns.yml
+  when: common_configure_dns | bool
+
+- name: "Include Timezone Management Playbook."
+  ansible.builtin.include_tasks: timezone.yml
+  when: common_configure_timezone | bool
+
+- name: "Include Disks Management Playbook."
+  ansible.builtin.include_tasks: disks.yml
+  when: common_configure_disks | bool
+
+- name: "Include Groups Management Playbook."
+  ansible.builtin.include_tasks: groups.yml
+  when: common_configure_groups | bool
+
+- name: "Include Users Management Playbook."
+  ansible.builtin.include_tasks: users.yml
+  when: common_configure_users | bool
+
+- name: "Include Crontabs Management Playbook."
+  ansible.builtin.include_tasks: crontabs.yml
+  when: common_configure_crontabs | bool
+
+- name: "Include Scripting Management Playbook."
+  ansible.builtin.include_tasks: scripting.yml
+  when: common_configure_scripting | bool
+
+- name: "Include VIM Playbook."
+  ansible.builtin.include_tasks: vim.yml
+  when: common_configure_vim | bool
+
+- name: "Include oh-my-zsh Playbook."
+  ansible.builtin.include_tasks: oh-my-zsh.yml
+  when: common_configure_zsh | bool

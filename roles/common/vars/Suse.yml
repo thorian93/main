@@ -1,0 +1,6 @@
+---
+common_apps_derivate: []
+
+common_timezone_package: timezone
+common_vimrc_path: /etc/vimrc
+common_admin_group: wheel
