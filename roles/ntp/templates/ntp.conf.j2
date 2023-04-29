@@ -1,0 +1,18 @@
+#{{ ansible_managed }}
+
+driftfile {{ ntp_driftfile }}
+{% for i in ntp_server %}
+server {{ i }}
+{% endfor %}
+
+{% for i in ntp_restrict %}
+{{ i }}
+{% endfor %}
+
+{% if ntp_includefile %}
+includefile  {{ ntp_includefile }}
+{% endif %}
+
+{% if ntp_statistics %}
+statistics {{ ntp_statistics }}
+{% endif %}

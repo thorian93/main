@@ -1,0 +1,55 @@
+---
+sudo_stable_os:
+  - CentOS 7
+  - CentOS 8
+  - Debian 9
+  - Debian 10
+  - Debian 11
+  - Fedora 30
+  - Fedora 31
+  - Fedora 32
+  - Fedora 33
+  - Fedora 34
+  - Fedora 35
+  - SLES 11
+  - SLES 12
+  - openSUSE Leap 15
+  - openSUSE Leap 42
+  - Ubuntu 16
+  - Ubuntu 18
+  - Ubuntu 20
+
+## Custom sudoers config can be defined on several levels and will be concatenated
+## Make sure to use a filename you recognize
+sudo_sudoers_config_global: []
+# - filename: sudoers_config
+#   state: present
+#   lines:
+#     - "root	ALL=(ALL:ALL) ALL"
+#     - "john	ALL=(ALL:ALL) ALL"
+sudo_sudoers_config_os: []
+sudo_sudoers_config_system: []
+sudo_sudoers_config_stage: []
+sudo_sudoers_config_role: []
+
+## Users can be defined on several levels and will be concatenated
+sudo_passwordless_users_global: []
+# - john
+sudo_passwordless_users_os: []
+sudo_passwordless_users_system: []
+sudo_passwordless_users_stage: []
+sudo_passwordless_users_role: []
+
+sudo_defaults:
+  - line: "# Defaults targetpw # ask for the password of the target user i.e. root"
+    regex: '^Defaults\s*targetpw.*'
+    state: 'present'
+  - line: "# ALL ALL=(ALL) ALL # WARNING! Only use this together with 'Defaults targetpw'!"
+    regex: '^ALL\s*ALL=\(ALL\)\s*ALL.*'
+    state: 'present'
+  - line: '%{{ common_admin_group }} ALL=({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
+    regex: '(# |^)\%{{ common_admin_group }}\s*ALL=\({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
+    state: 'present'
+  - line: "#includedir /etc/sudoers.d"
+    regex: '^#includedir\s*/etc/sudoers.d.*'
+    state: 'present'

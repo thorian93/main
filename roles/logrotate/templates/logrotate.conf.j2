@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+
+# see "man logrotate" for details
+
+{{ logrotate_interval }}
+
+rotate {{ logrotate_keep }}
+
+{{ logrotate_create }}
+
+{{ logrotate_compress }}
+
+{% if ansible_distribution == "Ubuntu" %}
+# use the syslog group by default, since this is the owning group of /var/log/syslog.
+su root syslog
+{% endif %}
+
+{% for logrotate_misc_option in logrotate_misc_options %}
+{{ logrotate_misc_option }}
+{% endfor %}
+
+include /etc/logrotate.d

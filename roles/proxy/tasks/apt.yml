@@ -1,0 +1,15 @@
+---
+- name: "Configure Proxy for APT."
+  template:
+    dest: /etc/apt/apt.conf.d/99proxy
+    src: 99proxy.j2
+    owner: root
+    group: root
+    mode: 0644
+  when: proxy_package_proxy_server | length
+
+- name: "Remove proxy for APT."
+  file:
+    path: '/etc/apt/apt.conf.d/99proxy'
+    state: absent
+  when: ( not proxy_package_proxy_server | length ) or ( not proxy_package_proxy_port | length )

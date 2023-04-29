@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+
+/var/log/httpd/*.log {
+	daily
+	missingok
+	rotate 14
+	compress
+	delaycompress
+	dateext
+    dateformat -%Y-%m-%d
+	notifempty
+	create 640 root adm
+	sharedscripts
+	postrotate
+		if systemctl status httpd > /dev/null 2>&1; then \
+			systemctl reload httpd > /dev/null 2>&1; \
+		fi;
+	endscript
+	prerotate
+		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+			run-parts /etc/logrotate.d/httpd-prerotate; \
+		fi; \
+	endscript
+}

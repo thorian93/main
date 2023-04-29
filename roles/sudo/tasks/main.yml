@@ -1,0 +1,59 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  ansible.builtin.fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in sudo_stable_os)
+
+- name: "Include Derivate specific Variables."
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: "Concatenate additional sudoers Permissions Variables."
+  ansible.builtin.set_fact:
+    sudo_sudoers_config: >-
+      {{ sudo_sudoers_config_global | default('') | list  +
+      sudo_sudoers_config_os | default('') | list  +
+      sudo_sudoers_config_system | default('') | list  +
+      sudo_sudoers_config_stage | default('') | list  +
+      sudo_sudoers_config_role | default('') | list }}
+
+- name: "Configure main sudo Configuration."
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers
+    line: "{{ item.line }}"
+    regexp: "{{ item.regex }}"
+    state: "{{ item.state }}"
+    backup: true
+    insertbefore: '.*includedir.*'
+    validate: 'visudo -cf %s'
+  with_items: "{{ sudo_defaults }}"
+
+- name: "Configure passwordless sudoers Permissions."
+  ansible.builtin.template:
+    dest: /etc/sudoers.d/passwordless_sudoers
+    src: passwordless_sudoers.j2
+    mode: 0440
+    owner: root
+    group: root
+    validate: 'visudo -cf %s'
+
+- name: "Add additional sudoers Permissions."
+  ansible.builtin.template:
+    dest: "/etc/sudoers.d/{{ item.filename | default('custom_sudoers') }}"
+    src: custom_sudoers.j2
+    mode: 0440
+    owner: root
+    group: root
+    validate: 'visudo -cf %s'
+  when: sudo_sudoers_config is defined and item.state == "present"
+  with_items:
+    - "{{ sudo_sudoers_config }}"
+
+- name: "Remove additional sudoers Permissions."
+  ansible.builtin.file:
+    path: "/etc/sudoers.d/{{ item.filename }}"
+    state: "{{ item.state }}"
+  when: sudo_sudoers_config is defined and item.state == "absent"
+  with_items:
+    - "{{ sudo_sudoers_config }}"

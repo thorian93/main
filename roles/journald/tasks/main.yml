@@ -1,0 +1,28 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  ansible.builtin.fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in journald_stable_os)
+
+- name: "Alert if systemd is not there."
+  ansible.builtin.fail: msg="No systemd init system found, so no journald is available!"
+  when: ansible_service_mgr != "systemd"
+
+- name: "Ensure the logging directory exists."
+  ansible.builtin.file:
+    path: /var/log/journal
+    state: directory
+    owner: root
+    group: systemd-journal
+    mode: '02755'
+    setype: var_log_t
+
+- name: "Ensure the logging is configured for persistent logging."
+  ansible.builtin.lineinfile:
+    dest: "/etc/systemd/journald.conf"
+    regexp: "^.*Storage="
+    line: "Storage=persistent"
+    backup: true
+  notify: restart journald

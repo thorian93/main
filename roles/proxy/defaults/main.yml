@@ -1,0 +1,44 @@
+---
+proxy_stable_os:
+  - CentOS 7
+  - CentOS 8
+  - Debian 9
+  - Debian 10
+  - Debian 11
+  - Fedora 30
+  - Fedora 31
+  - Fedora 32
+  - Fedora 33
+  - Fedora 34
+  - Fedora 35
+  - Fedora 36
+  - openSUSE Leap 15
+  - openSUSE Leap 42
+  - Ubuntu 16
+  - Ubuntu 18
+  - Ubuntu 20
+  - Ubuntu 22
+
+# Common Management Selections:
+proxy_apache2_configure: false
+proxy_bash_configure: false
+proxy_git_configure: false
+proxy_profile_configure: false
+proxy_wget_configure: false
+proxy_pkg_mgr_configure: false
+proxy_systemd_configure: false
+
+# Main Proxy
+proxy_server: "127.0.0.1"
+proxy_port: "8080"
+proxy_exceptions:
+  - 127.0.0.0/8
+  - ::1
+
+# Package Proxy
+# Set to blank "" to remove lines from the configuration
+proxy_package_proxy_server: "{{ proxy_server }}"
+proxy_package_proxy_port: "{{ proxy_port }}"
+proxy_package_proxy_username: ""
+proxy_package_proxy_password: ""
+proxy_package_proxy_exceptions: []
