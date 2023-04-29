@@ -24,8 +24,8 @@ config.vm.define "collection", primary: true do |srv|
     apt-get update
     apt-get install -y python3.9 python3-pip ca-certificates curl gnupg lsb-release
     python3.9 -m pip install -r /home/vagrant/ansible_collections/thorian93/main/requirements.txt
-    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/main/.yml
-    mkdir -p /home/vagrant/ansible_collections/thorian93/main
+    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/main/requirements.yml
+    # mkdir -p /home/vagrant/ansible_collections/thorian93/main
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
