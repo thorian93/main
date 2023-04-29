@@ -1,0 +1,43 @@
+---
+galaxy_info:
+  role_name: certmanage
+  author: thorian93
+  description: Local Certificate Store Management
+  license: "license (MIT)"
+
+  min_ansible_version: 2.9
+
+  galaxy_tags:
+    - linux
+    - server
+    - cert
+    - pki
+    - ca
+    - certificate
+    - system
+    - encryption
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Debian
+      versions:
+        - Stretch
+        - Buster
+        - Bullseye
+    - name: Fedora
+      versions:
+        - 30
+        - 31
+        - 32
+        - 33
+        - 34
+        - 35
+        - 36
+    - name: Ubuntu
+      versions:
+        - Xenial
+        - Bionic
+        - Focal
