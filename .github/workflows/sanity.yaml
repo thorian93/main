@@ -1,10 +1,16 @@
 ---
-name: Ansible Collection Sanity Tests
+name: Sanity Tests
 on: # yamllint disable-line rule:truthy
   push:
-    branches:    
+    branches:
     - 'main'
     - 'devel'
+
+env:
+  NAMESPACE: thorian93
+  COLLECTION_NAME: main
+  FILES: "CHANGELOG.rst LICENSE README.md ansible.cfg galaxy.yml"
+  DIRS: "changelogs meta playbooks roles"
 
 jobs:
   ansible-test:
@@ -35,10 +41,10 @@ jobs:
           # Keep in sync with release.yaml!
           # files: "README.md ansible.cfg galaxy.yml"
           # directories: "changelogs docs meta playbooks plugins"
-          files: "README.md ansible.cfg galaxy.yml"
-          directories: "changelogs meta playbooks roles"
-          namespace: "thorian93"
-          collection: "main"
+          files: ${{env.FILES}}
+          directories: ${{env.DIRS}}
+          namespace: ${{env.NAMESPACE}}
+          collection: ${{env.COLLECTION_NAME}}
 
       - name: Run Sanity Checks.
         run: cd ansible_collections/$namespace/$collection/ && ansible-test sanity

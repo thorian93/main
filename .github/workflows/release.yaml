@@ -1,7 +1,11 @@
 ---
-name: Release new Collection Version
+name: Release
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+
+env:
+  FILES: "CHANGELOG.rst LICENSE README.md ansible.cfg galaxy.yml"
+  DIRS: "changelogs meta playbooks roles"
 
 jobs:
   release:
@@ -25,17 +29,61 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      #
+      # First stage: Build and install collection to generate docs and changelogs.
+      #
+
       - name: Copy Files and Directories to Source
         run: |
           mkdir -p build/src
           cp $files build/src
           cp -rf $directories build/src
         env:
-          files: "README.md ansible.cfg galaxy.yml"
-          directories: "changelogs meta playbooks roles"
+          files: ${{env.FILES}}
+          directories: ${{env.DIRS}}
+
+      - name: Build Ansible Collection
+        run: ansible-galaxy collection build build/src --force
+
+      - name: Install Ansible Collection
+        run: ansible-galaxy collection install ./thorian93-main-${{ steps.current_version.outputs.version }}.tar.gz
 
       - name: Compile Collection Changelog
         run: antsibull-changelog release
+
+      - name: Compile Collection Docs
+        run: antsibull-docs collection --use-current --squash-hierarchy --fail-on-error --dest-dir ./docs/ tribe29.checkmk
+
+      - name: Create Pull Request for docs and changelog against devel branch
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Update Changelogs
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: changelogs-update-${{ steps.current_version.outputs.version }}
+          base: devel
+          delete-branch: true
+          title: '[Auto] Update changelogs for v${{ steps.current_version.outputs.version }}'
+          body: |
+            Changelogs updated during *${{ steps.current_version.outputs.version }}* release.
+          assignees: thorian93
+          reviewers: thorian93
+          draft: false
+
+      #
+      # Second stage: Build the final version of the collection and release it.
+      #
+
+      - name: Copy Files and Directories to Source
+        run: |
+          mkdir -p build/src
+          cp $files build/src
+          cp -rf $directories build/src
+          rm -rf build/src/roles/*/molecule
+        env:
+          files: ${{env.FILES}}
+          directories: ${{env.DIRS}}
 
       - name: Build Ansible Collection
         run: ansible-galaxy collection build build/src --force
