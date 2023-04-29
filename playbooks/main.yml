@@ -1,0 +1,74 @@
+---
+- hosts: my_test_host
+  become: true
+  tags: [certmanage, certificates]
+  roles:
+    - ansible-role-certmanage
+
+- hosts: my_test_host
+  name: "Common."
+  become: true
+  tags: [common, base]
+  roles:
+    - ansible-role-common
+
+- hosts: my_test_host
+  become: true
+  tags: [security, fail2ban]
+  roles:
+    - ansible-role-fail2ban
+
+- hosts: my_test_host
+  become: true
+  tags: [security, firewall]
+  roles:
+    - ansible-role-firewall
+
+- hosts: my_test_host
+  become: true
+  tags: [journald, logging, base]
+  roles:
+    - ansible-role-journald
+
+- hosts: my_test_host
+  become: true
+  tags: [logging, logrotate, base]
+  roles:
+    - ansible-role-logrotate
+
+- hosts: my_test_host
+  become: true
+  tags: [ntp, base]
+  roles:
+    - ansible-role-ntp
+
+- hosts: my_test_host
+  name: "Proxy."
+  become: true
+  tags: [proxy, base]
+  roles:
+    - ansible-role-proxy
+
+- hosts: my_test_host
+  become: true
+  tags: [ssh, base, security]
+  roles:
+    - ansible-role-ssh
+
+- hosts: my_test_host
+  become: true
+  tags: [sudo, base, security]
+  roles:
+    - ansible-role-sudo
+
+- hosts: my_test_host
+  become: true
+  tags: [upgrade, base, security]
+  roles:
+    - ansible-role-upgrade
+
+- hosts: my_test_host
+  become: true
+  tags: [upgrade, base, security]
+  roles:
+    - ansible-role-unattended-upgrade
