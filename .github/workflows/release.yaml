@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
       - name: Install Dependencies
         run: |
@@ -31,10 +31,8 @@ jobs:
           cp $files build/src
           cp -rf $directories build/src
         env:
-          # files: "README.md LICENSE ansible.cfg galaxy.yml"
           files: "README.md ansible.cfg galaxy.yml"
-          # directories: "playbooks plugins roles vars"
-          directories: "changelogs docs meta playbooks plugins"
+          directories: "changelogs meta playbooks roles"
 
       - name: Compile Collection Changelog
         run: antsibull-changelog release
@@ -70,5 +68,5 @@ jobs:
           asset_name: thorian93-main-${{ steps.current_version.outputs.version }}.tar.gz
           asset_content_type: application/tar+gzip
 
-      # - name: Deploy Ansible collection to Galaxy
+      # - name: Publish Ansible Collection to the Galaxy
       #   run: ansible-galaxy collection publish thorian93-main-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
