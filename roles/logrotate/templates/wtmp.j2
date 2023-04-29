@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+/var/log/wtmp {
+    monthly
+{% if ansible_distribution == "Ubuntu" %}
+    # use the utmp group as ubuntu fails otherwise
+    su root utmp
+{% endif %}
+    create 0664 root utmp
+	minsize 1M
+    rotate 1
+}

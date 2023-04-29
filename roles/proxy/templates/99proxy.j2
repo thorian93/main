@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+Acquire::http::Proxy "http://{{ proxy_package_proxy_server_enhanced }}:{{ proxy_package_proxy_port }}";
+{% if proxy_package_proxy_exceptions | length > 0 %}
+Acquire::http::Proxy {
+{% for proxy_exception in proxy_package_proxy_exceptions %}
+    {{ proxy_exception }} DIRECT;
+{% endfor %}
+}
+{% endif %}

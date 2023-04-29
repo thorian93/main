@@ -1,0 +1,52 @@
+---
+# Support for OSes:
+sshd_stable_os:
+  - CentOS 7
+  - CentOS 8
+  - Debian 9
+  - Debian 10
+  - Debian 11
+  - Fedora 30
+  - Fedora 31
+  - Fedora 32
+  - Fedora 33
+  - Fedora 34
+  - Fedora 35
+  - Fedora 36
+  - openSUSE Leap 15
+  - openSUSE Leap 42
+  - Ubuntu 16
+  - Ubuntu 18
+  - Ubuntu 20
+  - Ubuntu 22
+
+# Basic
+sshd_port: '22'
+sshd_protocol: '2'
+sshd_address_family: 'inet'
+
+# Authentication:
+sshd_permit_root_login: false
+sshd_permit_password_authentication: false
+sshd_permit_empty_passwords: false
+sshd_challenge_response_auth: false
+sshd_gss_api_authentication: false
+sshd_strict_mode: true
+sshd_allowed_users: []  # Space separated list of users that may login - Read the README on how to use this!
+sshd_allowed_groups: []  # Space separated list of groups that may login - Read the README on how to use this!
+sshd_ciphers: []
+sshd_enabled_ciphers: []
+sshd_disabled_ciphers: []
+
+# Misc
+sshd_allow_x11_forwarding: false
+sshd_usedns: false
+sshd_print_motd: false
+sshd_print_banner: false
+sshd_banner_file: '/etc/banner'  # Will be created when a banner text is defined. To use it enable sshd_print_banner.
+sshd_banner_text: ''
+
+# Hashicorp Vault Settings
+sshd_vault_trusted_ca_enable: false
+sshd_vault_server: 'https://127.0.0.1:8200'
+sshd_vault_ca_cert: "trusted-user-ca-keys.pem"

@@ -1,0 +1,68 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  ansible.builtin.fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in logrotate_stable_os)
+
+- name: "Install Prerequisites."
+  ansible.builtin.package:
+    name: logrotate
+    state: present
+
+- name: "Configure Logrotate."
+  ansible.builtin.template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.conf
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
+    validate: logrotate -d %s
+
+- name: "Configure BTMP and WTMP Logrotate Sections."
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/etc/logrotate.d/{{ item }}"
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
+    validate: logrotate -d %s
+  loop:
+    - "btmp"
+    - "wtmp"
+
+- name: "Configure Logrotate for Webservers."
+  ansible.builtin.template:
+    src: "{{ webserver_name }}.j2"
+    dest: "/etc/logrotate.d/{{ webserver_name }}"
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
+    validate: logrotate -d %s
+  when: (webserver_name != "none") and (logrotate_manage_webserver | bool)
+
+- name: "Configure Logrotate for MySQL."
+  ansible.builtin.template:
+    src: "mysql-server.j2"
+    dest: "/etc/logrotate.d/mysql-server"
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
+    validate: logrotate -d %s
+  when: logrotate_manage_mysql | bool
+
+- name: "Configure Custom Logrotate Sections."
+  ansible.builtin.template:
+    src: "custom.j2"
+    dest: "/etc/logrotate.d/{{ item.name }}"
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
+    validate: logrotate -d %s
+  loop: "{{ logrotate_custom_configs }}"

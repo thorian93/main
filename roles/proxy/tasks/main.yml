@@ -1,0 +1,45 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in proxy_stable_os)
+
+- name: "Prepare proxy URL for username and password if needed."
+  set_fact:
+    proxy_package_proxy_server_enhanced: "{{ proxy_package_proxy_server if (proxy_package_proxy_username == '' or proxy_package_proxy_password == '') else proxy_package_proxy_username + '@' + proxy_package_proxy_password + ':' + proxy_package_proxy_server }}"
+
+- name: "Prepare state of settings."
+  set_fact:
+    proxy_state: "{{ 'absent' if (proxy_package_proxy_server == '' or proxy_package_proxy_port == '') else 'present'}}"
+    username_state: "{{ 'absent' if proxy_package_proxy_username == '' else 'present'}}"
+    password_state: "{{ 'absent' if proxy_package_proxy_password == '' else 'present'}}"
+
+- name: "Include Proxy for Profile Playbook."
+  include_tasks: profile.yml
+  when: proxy_profile_configure | bool
+
+- name: "Include Proxy for Bash Playbook."
+  include_tasks: bash.yml
+  when: proxy_bash_configure | bool
+
+- name: "Include Proxy for wget Playbook."
+  include_tasks: wget.yml
+  when: proxy_wget_configure | bool
+
+- name: "Include Proxy for Git Playbook."
+  include_tasks: git.yml
+  when: proxy_git_configure | bool
+
+- name: "Include Proxy for Package Manager Playbook."
+  include_tasks: "{{ ansible_pkg_mgr }}.yml"
+  when: proxy_pkg_mgr_configure | bool and ansible_pkg_mgr != "zypper"
+
+- name: "Include Proxy for Apache2 Playbook."
+  include_tasks: apache2.yml
+  when: proxy_apache2_configure | bool
+
+- name: "Include Proxy as default for systemd."
+  include_tasks: systemd.yml
+  when: proxy_systemd_configure | bool

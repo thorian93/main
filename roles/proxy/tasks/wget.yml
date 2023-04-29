@@ -1,0 +1,15 @@
+---
+- name: "Update /etc/wgetrc with proxy settings."
+  ansible.builtin.lineinfile:
+   dest: /etc/wgetrc
+   line: "{{ item.line }}"
+   regexp: "{{ item.regexp }}"
+   create: true
+   owner: root
+   group: root
+   mode: 0644
+  with_items:
+   - line: "http_proxy = http://{{ proxy_server }}:{{ proxy_port }}"
+     regexp: "^http_proxy =.*"
+   - line: "https_proxy = http://{{ proxy_server }}:{{ proxy_port }}"
+     regexp: "^https_proxy =.*"

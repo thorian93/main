@@ -33,8 +33,15 @@ jobs:
       fail-fast: false
       matrix:
         role:
-          - 'common'
-          - 'upgrade'
+          - certmanage
+          - common
+          - journald
+          - logrotate
+          - ntp
+          - proxy
+          - ssh
+          - sudo
+          - upgrade
 
     steps:
       - name: Check out code
@@ -56,5 +63,5 @@ jobs:
       - name: Test with molecule
         run: |
           cd roles/${{ matrix.role }}
-          molecule -d docker test
+          molecule test -d docker
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}

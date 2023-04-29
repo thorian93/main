@@ -1,0 +1,25 @@
+---
+- name: Create Certificates Folder.
+  ansible.builtin.file:
+    path: /etc/pki/ca-trust/source/anchors
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy the Certificates.
+  ansible.builtin.template:
+    src: "certificate.pem.j2"
+    dest: "/etc/pki/ca-trust/source/anchors/certificate_{{ item.name }}.pem"
+  with_items: "{{ certmanage_certificates }}"
+  register: upload_cert_result
+
+- name: Update CA Trust.
+  ansible.builtin.command: update-ca-trust
+  when: upload_cert_result.changed
+
+- name: Update CA Trust for older Distributions.
+  ansible.builtin.command: update-ca-trust enable
+  when:
+    - upload_cert_result.changed
+    - ansible_distribution_version|int < 7

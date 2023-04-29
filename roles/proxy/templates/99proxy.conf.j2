@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+[Manager]
+DefaultEnvironment="http_proxy=http://{{ proxy_server }}:{{ proxy_port }}" \
+"HTTP_PROXY=http://{{ proxy_server }}:{{ proxy_port }}" \
+"https_proxy=http://{{ proxy_server }}:{{ proxy_port }}" \
+"HTTPS_PROXY=http://{{ proxy_server }}:{{ proxy_port }}" \
+"no_proxy=localhost{% for proxy_exception in proxy_exceptions %}, {{ proxy_exception }}{% endfor %}" \
+"NO_PROXY=localhost{% for proxy_exception in proxy_exceptions %}, {{ proxy_exception }}{% endfor %}"

@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+# Custom File based on Ansible variables.
+
+{{ item.files }} {
+    {{ item.interval }}
+    rotate {{ item.rotate }}
+{% for option in item.options %}
+    {{ option }}
+{% endfor %}
+}

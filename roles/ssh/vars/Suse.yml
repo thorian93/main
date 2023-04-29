@@ -1,0 +1,2 @@
+---
+sshd_sftp_path: '/usr/lib/ssh/sftp-server'

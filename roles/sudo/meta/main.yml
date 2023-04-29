@@ -1,0 +1,41 @@
+---
+galaxy_info:
+  role_name: sudo
+  author: thorian93
+  description: Sudo Permission Management
+  license: "license (MIT)"
+
+  min_ansible_version: 2.9
+
+  galaxy_tags:
+    - linux
+    - server
+    - sudo
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Debian
+      versions:
+        - Stretch
+        - Buster
+        - Bullseye
+    - name: Fedora
+      versions:
+        - 30
+        - 31
+        - 32
+        - 33
+        - 34
+        - 35
+    - name: opensuse
+      versions:
+        - 15.2
+        - 42.2
+    - name: Ubuntu
+      versions:
+        - Xenial
+        - Bionic
+        - Focal

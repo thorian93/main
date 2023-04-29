@@ -61,7 +61,7 @@ jobs:
           branch: changelogs-update-${{ steps.current_version.outputs.version }}
           base: devel
           delete-branch: true
-          title: '[Auto] Update changelogs for v${{ steps.current_version.outputs.version }}'
+          title: '[Auto] Update changelogs for ${{ steps.current_version.outputs.version }}'
           body: |
             Changelogs updated during *${{ steps.current_version.outputs.version }}* release.
           assignees: thorian93
@@ -91,8 +91,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.current_version.outputs.version }}
-          release_name: v${{ steps.current_version.outputs.version }}
+          tag_name: ${{ steps.current_version.outputs.version }}
+          release_name: ${{ steps.current_version.outputs.version }}
           body: |
             # Ansible Collection: thorian93.main
 

@@ -9,8 +9,6 @@ on: # yamllint disable-line rule:truthy
 env:
   NAMESPACE: thorian93
   COLLECTION_NAME: main
-  FILES: "CHANGELOG.rst LICENSE README.md ansible.cfg galaxy.yml"
-  DIRS: "changelogs meta playbooks roles"
 
 jobs:
   ansible-test:
@@ -23,8 +21,6 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          # it is just required to run that once as "ansible-test integration" in the docker image
-          # will run on all python versions it supports.
           python-version: '3.11'
 
       - name: Install Dependencies
@@ -32,24 +28,8 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Copy Files and Directories to Source
-        run: |
-          mkdir -p ansible_collections/$namespace/$collection/
-          cp $files ansible_collections/$namespace/$collection/
-          cp -rf $directories ansible_collections/$namespace/$collection/
-        env:
-          # Keep in sync with release.yaml!
-          # files: "README.md ansible.cfg galaxy.yml"
-          # directories: "changelogs docs meta playbooks plugins"
-          files: ${{env.FILES}}
-          directories: ${{env.DIRS}}
-          namespace: ${{env.NAMESPACE}}
-          collection: ${{env.COLLECTION_NAME}}
-
       - name: Run Sanity Checks.
         run: cd ansible_collections/$namespace/$collection/ && ansible-test sanity
         env:
           namespace: "thorian93"
           collection: "main"
-
-# ToDo: Automatically raise issue?

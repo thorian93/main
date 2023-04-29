@@ -1,0 +1,36 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in sshd_stable_os)
+
+- name: "Include Derivate specific Variables."
+  include_vars: "{{ ansible_os_family }}.yml"
+  ignore_errors: true
+
+- name: "Configure Banner."
+  template:
+    src: banner.j2
+    dest: "{{ sshd_banner_file }}"
+    backup: false
+    owner: root
+    group: root
+    mode: '0664'
+  when: sshd_banner_text is defined and sshd_banner_text | length
+
+- name: "Configure Vault Trusted CA."
+  include_tasks: vault-trusted-ca.yml
+  when: sshd_vault_trusted_ca_enable is defined and sshd_vault_trusted_ca_enable | bool
+
+- name: "Configure SSHD."
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    backup: true
+    owner: root
+    group: root
+    mode: '0600'
+    validate: /usr/sbin/sshd -t -f %s
+  notify: reload ssh
