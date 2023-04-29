@@ -1,0 +1,11 @@
+ancestor: null
+releases:
+  0.0.1:
+    changes:
+      major_changes:
+      - Add upgrade role.
+      - Create basic collection layout.
+      release_summary: Initial Release of this collection.
+    fragments:
+    - initial.yml
+    release_date: '2023-04-29'
