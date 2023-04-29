@@ -38,6 +38,7 @@
 - name: "Check for Reboot Hint."
   ansible.builtin.shell: dnf needs-restarting -r
   args:
+    executable: "/bin/bash"
   register: reboot_hint_dnf
   failed_when: reboot_hint_dnf.rc >= 2
   changed_when: reboot_hint_dnf.rc == 1
@@ -45,6 +46,7 @@
 - name: "Check for Service Restarts."
   ansible.builtin.shell: dnf needs-restarting -s
   args:
+    executable: "/bin/bash"
   register: service_restarts_dnf
   changed_when: "service_restarts_dnf.stdout_lines | length"
   when: not (ansible_distribution == "Fedora" and ansible_distribution_major_version | int < 33)
