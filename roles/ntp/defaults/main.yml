@@ -33,9 +33,10 @@ ntp_server:
   - 3.de.pool.ntp.org
 
 ntp_restrict:
-  - "restrict -4 default kod notrap nomodify nopeer noquery"
-  - "restrict -6 default kod notrap nomodify nopeer noquery"
+  - "restrict -4 default kod notrap nomodify nopeer noquery limited"
+  - "restrict -6 default kod notrap nomodify nopeer noquery limited"
   - "restrict localhost"
+  - "restrict 127.0.0.1"
 
 ntp_includefile: false
 ntp_statistics: false
