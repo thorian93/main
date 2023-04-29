@@ -1,0 +1,7 @@
+.*.swp
+.*.swo
+*~
+*.tar.gz
+.vagrant/
+build/
+tests/output
