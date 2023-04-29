@@ -5,7 +5,7 @@
 # 3. If your collection depends on other collections ensure they are installed, see "Install collection dependencies"
 # If you need help please ask in #ansible-community on the Libera.chat IRC network
 
-name: Molecule Tests
+name: Molecule
 on:
   workflow_dispatch:
   pull_request:
@@ -28,19 +28,13 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    name: Checkmk ${{ matrix.main }} + py${{ matrix.python }}
+    name: Run Molecule
     strategy:
       fail-fast: false
       matrix:
-        python:
-          - '3.8'
-          - '3.9'
-          - '3.10'
-          - '3.11'
-        # main:
-        #   - '2.0.0'
-        #   - '2.1.0'
-        #   - '2.2.0'
+        role:
+          - 'common'
+          - 'upgrade'
 
     steps:
       - name: Check out code
@@ -48,10 +42,10 @@ jobs:
         with:
           path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-      - name: Set up Python ${{ matrix.python }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python }}
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -61,6 +55,6 @@ jobs:
 
       - name: Test with molecule
         run: |
-          cd roles/
+          cd roles/${{ matrix.role }}
           molecule test
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
