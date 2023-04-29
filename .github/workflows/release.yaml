@@ -113,5 +113,5 @@ jobs:
           asset_name: thorian93-main-${{ steps.current_version.outputs.version }}.tar.gz
           asset_content_type: application/tar+gzip
 
-      # - name: Publish Ansible Collection to the Galaxy
-      #   run: ansible-galaxy collection publish thorian93-main-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
+      - name: Publish Ansible Collection to the Galaxy
+        run: ansible-galaxy collection publish thorian93-main-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
