@@ -1,0 +1,6 @@
+---
+release_summary: "Initial Release of this collection."
+
+major_changes:
+  - Create basic collection layout.
+  - Add upgrade role.
