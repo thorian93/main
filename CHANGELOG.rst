@@ -5,6 +5,9 @@ thorian93.main Release Notes
 .. contents:: Topics
 
 
+v0.0.2
+======
+
 v0.0.1
 ======
 
