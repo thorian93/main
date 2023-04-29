@@ -9,3 +9,5 @@ releases:
     fragments:
     - initial.yml
     release_date: '2023-04-29'
+  0.0.2:
+    release_date: '2023-04-29'
