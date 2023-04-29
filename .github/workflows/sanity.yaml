@@ -9,20 +9,19 @@ on: # yamllint disable-line rule:truthy
 jobs:
   ansible-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.11]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          # it is just required to run that once as "ansible-test integration" in the docker image
+          # will run on all python versions it supports.
+          python-version: '3.11'
 
-      - name: Install Dependencies.
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi

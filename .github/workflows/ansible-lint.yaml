@@ -68,8 +68,8 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-      - name: Install Checkmk collection
-        run: ansible-galaxy collection install --timeout 120 thorian93.main
+      # - name: Install Checkmk collection
+      #   run: ansible-galaxy collection install --timeout 120 thorian93.main
 
       # Run the linting
       - name: Run yamllint on roles
