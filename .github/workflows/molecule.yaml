@@ -37,10 +37,10 @@ jobs:
           - '3.9'
           - '3.10'
           - '3.11'
-        main:
-          - '2.0.0'
-          - '2.1.0'
-          - '2.2.0'
+        # main:
+        #   - '2.0.0'
+        #   - '2.1.0'
+        #   - '2.2.0'
 
     steps:
       - name: Check out code
@@ -61,6 +61,6 @@ jobs:
 
       - name: Test with molecule
         run: |
-          cd roles/server/
-          molecule test -s ${{ matrix.main }}
+          cd roles/
+          molecule test
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}

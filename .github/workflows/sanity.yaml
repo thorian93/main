@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9]
+        python-version: [3.11]
 
     steps:
       - name: Checkout code
@@ -34,8 +34,10 @@ jobs:
           cp -rf $directories ansible_collections/$namespace/$collection/
         env:
           # Keep in sync with release.yaml!
+          # files: "README.md ansible.cfg galaxy.yml"
+          # directories: "changelogs docs meta playbooks plugins"
           files: "README.md ansible.cfg galaxy.yml"
-          directories: "changelogs docs meta playbooks plugins"
+          directories: "changelogs meta playbooks roles"
           namespace: "thorian93"
           collection: "main"
 
