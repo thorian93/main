@@ -7,6 +7,15 @@ thorian93.main Release Notes
 
 v0.0.2
 ======
+Release Summary
+---------------
+
+Extending the collection.
+
+Major Changes
+-------------
+
+- Add several roles.
 
 v0.0.1
 ======
