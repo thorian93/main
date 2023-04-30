@@ -31,5 +31,5 @@ jobs:
       - name: Run Sanity Checks.
         run: cd ansible_collections/$namespace/$collection/ && ansible-test sanity
         env:
-          namespace: "thorian93"
-          collection: "main"
+          namespace: ${{env.NAMESPACE}}
+          collection: ${{env.COLLECTION_NAME}}
