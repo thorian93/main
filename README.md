@@ -4,6 +4,10 @@
 Everything within this repository is subject to possibly heavy change
 and I cannot guarantee any stability at this point. You have been warned!
 
+[![Linting](https://github.com/thorian93/main/actions/workflows/linting.yaml/badge.svg)](https://github.com/thorian93/main/actions/workflows/linting.yaml)
+[![Molecule Tests](https://github.com/thorian93/main/actions/workflows/molecule.yaml/badge.svg)](https://github.com/thorian93/main/actions/workflows/molecule.yaml)
+[![Sanity Tests](https://github.com/thorian93/main/actions/workflows/sanity.yaml/badge.svg)](https://github.com/thorian93/main/actions/workflows/sanity.yaml)
+
 ---
 
 ## Getting help
