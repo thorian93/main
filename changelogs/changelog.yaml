@@ -10,4 +10,10 @@ releases:
     - initial.yml
     release_date: '2023-04-29'
   0.0.2:
+    changes:
+      major_changes:
+      - Add several roles.
+      release_summary: Extending the collection.
+    fragments:
+    - 0.0.2.yml
     release_date: '2023-04-29'

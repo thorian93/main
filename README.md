@@ -4,16 +4,18 @@
 Everything within this repository is subject to possibly heavy change
 and I cannot guarantee any stability at this point. You have been warned!
 
+[![Linting](https://github.com/thorian93/main/actions/workflows/linting.yaml/badge.svg)](https://github.com/thorian93/main/actions/workflows/linting.yaml)
+[![Molecule Tests](https://github.com/thorian93/main/actions/workflows/molecule.yaml/badge.svg)](https://github.com/thorian93/main/actions/workflows/molecule.yaml)
+[![Sanity Tests](https://github.com/thorian93/main/actions/workflows/sanity.yaml/badge.svg)](https://github.com/thorian93/main/actions/workflows/sanity.yaml)
+
 ---
 
 ## Getting help
-
 If you need help, take a look at the [issues](https://github.com/thorian93/main/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
 and create one, if you cannot find a solution to your problem.
 I will try help to the best of my abilities.
 
 ## Included content
-
 ### Roles
 Name | Description | Tests
 --- | --- | ---
@@ -26,7 +28,6 @@ Please refer to the [official Ansible documentation](https://docs.ansible.com/an
     ansible-galaxy collection install thorian93.main
 
 ## Using this collection
-
 You can either call roles by their Fully Qualified Collection Namespace (FQCN),
 such as `thorian93.main.upgrade`, or you can call modules by their short name
 if you list the `thorian93.main` collection in the playbook's [`collections`](https://docs.ansible.com/ansible/devel/user_guide/collections_using.html#using-collections-in-playbooks) keyword:
@@ -45,7 +46,6 @@ if you list the `thorian93.main` collection in the playbook's [`collections`](ht
 ```
 
 ## Contributing to this collection
-
 I welcome and appreciate contributions to this collection.
 If you find problems, please open an issue or create a PR against the [thorian93.main collection repository](https://github.com/thorian93/main).
 See [Contributing to Ansible-maintained collections](https://docs.ansible.com/ansible/devel/community/contributing_maintained_collections.html#contributing-maintained-collections) for more details on how to contribute.
@@ -55,7 +55,6 @@ See [Contributing to Ansible-maintained collections](https://docs.ansible.com/an
 See [CHANGELOG.rst](CHANGELOG.rst).
 
 ## More information
-
 - [Ansible Collection overview](https://github.com/ansible-collections/overview)
 - [Ansible User guide](https://docs.ansible.com/ansible/latest/user_guide/index.html)
 - [Ansible Developer guide](https://docs.ansible.com/ansible/latest/dev_guide/index.html)

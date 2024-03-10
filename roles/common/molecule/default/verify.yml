@@ -1,17 +1,17 @@
 ---
-# - name: Verify
-#   hosts: all
-#   gather_facts: false
-#   tasks:
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
 
-#     - name: "Test Server is upgraded."
-#       ansible.builtin.package:
-#         name: "*"
-#         state: "updated"
-#       register: server_upgrade_status
+  # - name: "Test Server is upgraded."
+  #   ansible.builtin.package:
+  #     name: "*"
+  #     state: "updated"
+  #   register: server_upgrade_status
 
-#     - debug: var=server_upgrade_status
+  # - debug: var=server_upgrade_status
 
-#     - name: "Verify Server is upgraded."
-#       ansible.builtin.assert:
-#         that: server_upgrade_status.status == 200
+  # - name: "Verify Server is upgraded."
+  #   ansible.builtin.assert:
+  #     that: server_upgrade_status.status == 200

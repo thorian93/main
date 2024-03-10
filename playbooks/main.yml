@@ -3,72 +3,72 @@
   become: true
   tags: [certmanage, certificates]
   roles:
-    - ansible-role-certmanage
+    - thorian93.main.certmanage
 
 - hosts: my_test_host
   name: "Common."
   become: true
   tags: [common, base]
   roles:
-    - ansible-role-common
+    - thorian93.main.common
 
 - hosts: my_test_host
   become: true
   tags: [security, fail2ban]
   roles:
-    - ansible-role-fail2ban
+    - thorian93.main.fail2ban
 
 - hosts: my_test_host
   become: true
   tags: [security, firewall]
   roles:
-    - ansible-role-firewall
+    - thorian93.main.firewall
 
 - hosts: my_test_host
   become: true
   tags: [journald, logging, base]
   roles:
-    - ansible-role-journald
+    - thorian93.main.journald
 
 - hosts: my_test_host
   become: true
   tags: [logging, logrotate, base]
   roles:
-    - ansible-role-logrotate
+    - thorian93.main.logrotate
 
 - hosts: my_test_host
   become: true
   tags: [ntp, base]
   roles:
-    - ansible-role-ntp
+    - thorian93.main.ntp
 
 - hosts: my_test_host
   name: "Proxy."
   become: true
   tags: [proxy, base]
   roles:
-    - ansible-role-proxy
+    - thorian93.main.proxy
 
 - hosts: my_test_host
   become: true
   tags: [ssh, base, security]
   roles:
-    - ansible-role-ssh
+    - thorian93.main.ssh
 
 - hosts: my_test_host
   become: true
   tags: [sudo, base, security]
   roles:
-    - ansible-role-sudo
+    - thorian93.main.sudo
 
 - hosts: my_test_host
   become: true
   tags: [upgrade, base, security]
   roles:
-    - ansible-role-upgrade
+    - thorian93.main.upgrade
 
 - hosts: my_test_host
   become: true
   tags: [upgrade, base, security]
   roles:
-    - ansible-role-unattended-upgrade
+    - thorian93.main.unattended-upgrade

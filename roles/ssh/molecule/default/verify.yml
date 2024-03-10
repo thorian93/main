@@ -4,14 +4,34 @@
   gather_facts: false
   tasks:
 
-    # - name: "Test Server is upgraded."
-    #   ansible.builtin.package:
-    #     name: "*"
-    #     state: "updated"
-    #   register: server_upgrade_status
+  # - name: "Test sshd is running."
+  #   ansible.builtin.command: omd status started
+  #   register: checkmk_server_site_started_state
+  #   changed_when: false
+  #   failed_when: (not checkmk_server_site_started_state.rc == 0) and (not checkmk_server_site_started_state.rc == 1)
 
-    # - debug: var=server_upgrade_status
+  # - name: "Verify started site is running."
+  #   ansible.builtin.assert:
+  #     that: checkmk_server_site_started_state.rc == 0
 
-    # - name: "Verify Server is upgraded."
-    #   ansible.builtin.assert:
-    #     that: server_upgrade_status.status == 200
+  # - name: "Test started site URL returns 200."
+  #   ansible.builtin.uri:
+  #     url: "{{ checkmk_var_server_url }}/started/"
+  #   register: checkmk_server_url_state
+
+  # - name: "Verify started site URL returns 200."
+  #   ansible.builtin.assert:
+  #     that: checkmk_server_url_state.status == 200
+
+  # - name: "Test if we can talk to the REST API by activating changes."
+  #   checkmk.general.activation:
+  #     server_url: "{{ checkmk_var_server_url }}"
+  #     site: "started"
+  #     automation_user: "{{ checkmk_var_automation_user }}"
+  #     automation_secret: "{{ checkmk_var_automation_secret }}"
+  #     force_foreign_changes: true
+  #   register: checkmk_server_api_state
+
+  # - name: "Verify REST API call."
+  #   ansible.builtin.assert:
+  #     that: checkmk_server_api_state.msg == "422 - There are no changes to be activated."
