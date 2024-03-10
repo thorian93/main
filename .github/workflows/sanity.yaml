@@ -1,35 +1,62 @@
----
-name: Sanity Tests
-on: # yamllint disable-line rule:truthy
-  push:
-    branches:
-    - 'main'
-    - 'devel'
+# README:
+# Resources:
+# - Template for this file: https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
+# - About Ansible sanity tests: https://docs.ansible.com/ansible/latest/dev_guide/testing_sanity.html
 
 env:
   NAMESPACE: thorian93
   COLLECTION_NAME: main
 
+name: Sanity Tests
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'docs/**'
+      - 'changelogs/**'
+      - '**.md'
+      - '**.rst'
+      - 'roles/**'
+  pull_request:
+    types: [opened]
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'docs/**'
+      - 'changelogs/**'
+      - '**.md'
+      - '**.rst'
+      - 'roles/**'
+
 jobs:
-  ansible-test:
+
+  sanity:
     runs-on: ubuntu-latest
+    name: Sanity (Ⓐ${{ matrix.ansible }})
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible:
+          - stable-2.14
+          - stable-2.15
+          - stable-2.16
+          - devel
 
     steps:
+
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
-      - name: Run Sanity Checks.
-        run: cd ansible_collections/$namespace/$collection/ && ansible-test sanity
-        env:
-          namespace: ${{env.NAMESPACE}}
-          collection: ${{env.COLLECTION_NAME}}
+      - name: Run sanity tests
+        run: ansible-test sanity --docker -v --color --coverage
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
