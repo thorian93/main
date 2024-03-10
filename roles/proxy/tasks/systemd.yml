@@ -1,20 +1,20 @@
 ---
 - block:
-  - name: "Ensure systemd configuration directory exists."
-    file:
-      dest: /etc/systemd/system.conf.d
-      state: directory
-      mode: 0755
-      owner: root
-      group: root
+    - name: "Ensure systemd configuration directory exists."
+      file:
+        dest: /etc/systemd/system.conf.d
+        state: directory
+        mode: 0755
+        owner: root
+        group: root
 
-  - name: "Configure proxy as systemd default."
-    template:
-      dest: /etc/systemd/system.conf.d/99proxy.conf
-      src: 99proxy.conf.j2
-      mode: 0644
-      owner: root
-      group: root
+    - name: "Configure proxy as systemd default."
+      template:
+        dest: /etc/systemd/system.conf.d/99proxy.conf
+        src: 99proxy.conf.j2
+        mode: 0644
+        owner: root
+        group: root
 
   when: ( proxy_server | length ) and ( proxy_port | length )
 
