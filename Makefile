@@ -109,11 +109,11 @@ test-sanity:
 	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && /home/vagrant/.local/bin/ansible-test sanity --docker'
 
 test-linting:
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && PATH="$PATH:/home/vagrant/.local/bin" /home/vagrant/.local/bin/yamllint -c .yamllint roles/'
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && PATH="$PATH:/home/vagrant/.local/bin" /home/vagrant/.local/bin/yamllint -c .yamllint playbooks/'
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && PATH="$PATH:/home/vagrant/.local/bin" /home/vagrant/.local/bin/ansible-lint -c .ansible-lint playbooks/'
+	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && yamllint -c .yamllint roles/'
+	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && yamllint -c .yamllint playbooks/'
+	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && ansible-lint -c .ansible-lint playbooks/'
 
 tests-molecule: test-molecule-upgrade
 
 test-molecule-upgrade:
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main/roles/upgrade && PATH="$PATH:/home/vagrant/.local/bin" /home/vagrant/.local/bin/molecule test'
+	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main/roles/upgrade && molecule test'
