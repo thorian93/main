@@ -31,6 +31,7 @@ help:
 	@echo ""
 
 release:
+	@./scripts/release.sh -s $(VERSION) -t $(RELEASE)
 
 publish:
 
