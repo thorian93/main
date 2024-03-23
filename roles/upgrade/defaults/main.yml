@@ -1,6 +1,5 @@
 ---
 upgrade_stable_os:
-  - CentOS 7
   - CentOS 8
   - Debian 9
   - Debian 10
