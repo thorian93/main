@@ -59,13 +59,13 @@ jobs:
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
       - name: Run ansible-lint on roles
-        run: ansible-lint -c  ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/.ansible-lint ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/roles/
-        working-directory: ./ansible_collections/
+        run: ansible-lint -c  .ansible-lint roles/
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
         env:
           ANSIBLE_ROLES_PATH: "./thorian93/main/roles"
 
       - name: Run ansible-lint on playbooks
-        run: ansible-lint -c  ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/.ansible-lint ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/playbooks/
-        working-directory: ./ansible_collections/
+        run: ansible-lint -c  .ansible-lint playbooks/
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
         env:
           ANSIBLE_ROLES_PATH: "./thorian93/main/roles"
