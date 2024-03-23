@@ -16,6 +16,7 @@ sshd_stable_os:
   - Fedora 36
   - openSUSE Leap 15
   - openSUSE Leap 42
+  - Rocky 9
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20
