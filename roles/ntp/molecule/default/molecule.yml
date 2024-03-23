@@ -40,6 +40,15 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
+  - name: debian10
+    image: geerlingguy/docker-debian11-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    tmpfs:
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
   - name: debian11
     image: geerlingguy/docker-debian11-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
@@ -51,6 +60,15 @@ platforms:
     pre_build_image: true
   - name: debian12
     image: geerlingguy/docker-debian12-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    tmpfs:
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: centos7
+    image: geerlingguy/docker-centos7-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     tmpfs:
       - /run
