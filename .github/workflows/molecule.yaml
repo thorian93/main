@@ -23,7 +23,7 @@ on:
 
 env:
   NAMESPACE: thorian93
-  COLLECTION_NAME: main 
+  COLLECTION_NAME: main
 
 jobs:
   build:
@@ -63,5 +63,5 @@ jobs:
       - name: Test with molecule
         run: |
           cd roles/${{ matrix.role }}
-          molecule test -d docker
+          molecule test
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
