@@ -5,6 +5,7 @@ sudo_stable_os:
   - Debian 9
   - Debian 10
   - Debian 11
+  - Debian 12
   - Fedora 30
   - Fedora 31
   - Fedora 32
@@ -18,6 +19,7 @@ sudo_stable_os:
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20
+  - Ubuntu 22
 
 ## Custom sudoers config can be defined on several levels and will be concatenated
 ## Make sure to use a filename you recognize
