@@ -83,3 +83,8 @@
   ansible.builtin.set_fact:
     service_restarts: "{{ service_restarts_apt.stdout_lines }}"
   when: "service_restarts_apt.stdout_lines | length"
+
+- name: "Trigger Checkmk APT Plugin."
+  ansible.builtin.file:
+    path: /var/lib/check_mk_agent/cache/plugins_mk_apt.cache
+    state: absent
