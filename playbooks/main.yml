@@ -1,74 +1,47 @@
 ---
 - hosts: my_test_host
   become: true
-  tags: [certmanage, certificates]
   roles:
-    - thorian93.main.certmanage
+    - certmanage
 
 - hosts: my_test_host
   name: "Common."
   become: true
-  tags: [common, base]
   roles:
-    - thorian93.main.common
+    - common
 
 - hosts: my_test_host
   become: true
-  tags: [security, fail2ban]
   roles:
-    - thorian93.main.fail2ban
+    - journald
 
 - hosts: my_test_host
   become: true
-  tags: [security, firewall]
   roles:
-    - thorian93.main.firewall
+    - logrotate
 
 - hosts: my_test_host
   become: true
-  tags: [journald, logging, base]
   roles:
-    - thorian93.main.journald
-
-- hosts: my_test_host
-  become: true
-  tags: [logging, logrotate, base]
-  roles:
-    - thorian93.main.logrotate
-
-- hosts: my_test_host
-  become: true
-  tags: [ntp, base]
-  roles:
-    - thorian93.main.ntp
+    - ntp
 
 - hosts: my_test_host
   name: "Proxy."
   become: true
-  tags: [proxy, base]
   roles:
-    - thorian93.main.proxy
+    - proxy
 
 - hosts: my_test_host
   become: true
-  tags: [ssh, base, security]
   roles:
-    - thorian93.main.ssh
+    - ssh
 
 - hosts: my_test_host
   become: true
-  tags: [sudo, base, security]
   roles:
-    - thorian93.main.sudo
+    - sudo
 
 - hosts: my_test_host
   become: true
-  tags: [upgrade, base, security]
   roles:
-    - thorian93.main.upgrade
-
-- hosts: my_test_host
-  become: true
-  tags: [upgrade, base, security]
-  roles:
-    - thorian93.main.unattended-upgrade
+    - upgrade
