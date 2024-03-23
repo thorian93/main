@@ -7,11 +7,11 @@
     - name: "Test Server is upgraded."
       ansible.builtin.package:
         name: "*"
-        state: "updated"
+        state: "latest"
       register: server_upgrade_status
 
     - debug: var=server_upgrade_status
 
     - name: "Verify Server is upgraded."
       ansible.builtin.assert:
-        that: server_upgrade_status.status == 200
+        that: not server_upgrade_status.changed and not server_upgrade_status.failed
