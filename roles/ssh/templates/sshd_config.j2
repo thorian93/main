@@ -44,7 +44,7 @@ Ciphers {{ sshd_ciphers }}
 Ciphers +{{ sshd_enabled_ciphers }}
 {% endif %}
 {% if sshd_disabled_ciphers is defined and sshd_disabled_ciphers|length %}
-{% if 
+{% if
 (ansible_distribution == 'Debian' and ansible_distribution_version is version('10', '>='))
 or (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('18', '>='))
 or (ansible_distribution == 'CentOS' and ansible_distribution_version is version('8', '>='))
@@ -60,7 +60,7 @@ Ciphers -{{ sshd_disabled_ciphers }}
 # Authentication:
 
 #LoginGraceTime 2m
-{% if sshd_permit_root_login is defined and sshd_permit_root_login|length %}
+{% if sshd_permit_root_login is defined and sshd_permit_root_login | bool %}
 PermitRootLogin {{ sshd_permit_root_login }}
 {% else %}
 #PermitRootLogin prohibit-password

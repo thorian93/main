@@ -26,6 +26,19 @@
         group: root
       when: ansible_distribution == 'Ubuntu'
 
+    - name: "Inject file to test Checkmk APT plugin trigger logic."
+      block:
+        - name: "Create directory."
+          ansible.builtin.file:
+            path: /var/lib/check_mk_agent/cache/
+            state: directory
+            recurse: true
+
+        - name: "Create file."
+          ansible.builtin.file:
+            path: /var/lib/check_mk_agent/cache/plugins_mk_apt.cache
+            state: touch
+
   tasks:
 
     - name: "Run role."

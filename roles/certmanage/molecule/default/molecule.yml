@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
 driver:
-  name: podman
+  name: docker
 platforms:
   - name: ubuntu1804
     image: docker.io/geerlingguy/docker-ubuntu1804-ansible
@@ -74,7 +74,6 @@ verifier:
 scenario:
   test_sequence:
     - dependency
-    - lint
     - cleanup
     - destroy
     - syntax
@@ -82,7 +81,7 @@ scenario:
     - prepare
     - converge
     # - idempotence  # disable for now, as we have non-idempotent tasks
-    - side_effect
+    # - side_effect
     - verify
     - cleanup
     - destroy

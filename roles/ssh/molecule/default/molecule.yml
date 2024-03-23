@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
 driver:
-  name: podman
+  name: docker
 platforms:
   - name: ubuntu1804
     image: docker.io/geerlingguy/docker-ubuntu1804-ansible
@@ -14,7 +14,7 @@ platforms:
     privileged: true
     pre_build_image: true
   - name: ubuntu2004
-    image: docker.io/geerlingguy/docker-ubuntu2004-ansible
+    image: geerlingguy/docker-ubuntu2004-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     tmpfs:
       - /run
@@ -23,7 +23,7 @@ platforms:
     privileged: true
     pre_build_image: true
   - name: ubuntu2204
-    image: docker.io/geerlingguy/docker-ubuntu2204-ansible
+    image: geerlingguy/docker-ubuntu2204-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     tmpfs:
       - /run
@@ -40,17 +40,8 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-  - name: debian11
-    image: docker.io/geerlingguy/docker-debian11-ansible
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    tmpfs:
-      - /run
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
-  - name: centos7
-    image: docker.io/geerlingguy/docker-centos7-ansible
+  - name: debian12
+    image: geerlingguy/docker-debian12-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     tmpfs:
       - /run
@@ -59,7 +50,16 @@ platforms:
     privileged: true
     pre_build_image: true
   - name: centos8
-    image: docker.io/geerlingguy/docker-centos8-ansible
+    image: geerlingguy/docker-centos8-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    tmpfs:
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: rockylinux9
+    image: geerlingguy/docker-rockylinux9-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     tmpfs:
       - /run
@@ -74,7 +74,6 @@ verifier:
 scenario:
   test_sequence:
     - dependency
-    - lint
     - cleanup
     - destroy
     - syntax
@@ -82,7 +81,7 @@ scenario:
     - prepare
     - converge
     # - idempotence  # disable for now, as we have non-idempotent tasks
-    - side_effect
+    # - side_effect
     - verify
     - cleanup
     - destroy

@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
     apt-get -y update --quiet
     apt-get -y install python3-pip ca-certificates curl gnupg lsb-release
     python3 -m pip install pip --upgrade
-    python3 -m pip install -r /home/vagrant/ansible_collections/thorian93/mainrequirements.txt
-    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/mainrequirements.yml
+    python3 -m pip install -r /home/vagrant/ansible_collections/thorian93/main/requirements.txt
+    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/main/requirements.yml
     mkdir -p /home/vagrant/ansible_collections/thorian93/main
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -61,9 +61,9 @@ Vagrant.configure("2") do |config|
     apt-get -y update --quiet
     apt-get -y install python3-pip ca-certificates curl gnupg lsb-release
     python3 -m pip install pip --upgrade
-    python3 -m pip install -r /home/vagrant/ansible_collections/thorian93/mainrequirements.txt
+    python3 -m pip install -r /home/vagrant/ansible_collections/thorian93/main/requirements.txt
     python3 -m pip install molecule molecule-plugins[docker]
-    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/mainrequirements.yml
+    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/main/requirements.yml
     mkdir -p /home/vagrant/ansible_collections/thorian93/main
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg

@@ -5,6 +5,10 @@
 # 3. If your collection depends on other collections ensure they are installed, see "Install collection dependencies"
 # If you need help please ask in #ansible-community on the Libera.chat IRC network
 
+env:
+  NAMESPACE: thorian93
+  COLLECTION_NAME: main
+
 name: Linting
 on:
   workflow_dispatch:
@@ -22,10 +26,6 @@ on:
     paths:
       - 'roles/**'
       - 'playbooks/**'
-
-env:
-  NAMESPACE: thorian93
-  COLLECTION_NAME: main 
 
 jobs:
 
@@ -59,13 +59,13 @@ jobs:
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
       - name: Run ansible-lint on roles
-        run: ansible-lint -c  ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/.ansible-lint ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/roles/
-        working-directory: ./ansible_collections/
+        run: ansible-lint -c  .ansible-lint roles/
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
         env:
           ANSIBLE_ROLES_PATH: "./thorian93/main/roles"
 
       - name: Run ansible-lint on playbooks
-        run: ansible-lint -c  ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/.ansible-lint ${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/playbooks/
-        working-directory: ./ansible_collections/
+        run: ansible-lint -c  .ansible-lint playbooks/
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
         env:
           ANSIBLE_ROLES_PATH: "./thorian93/main/roles"

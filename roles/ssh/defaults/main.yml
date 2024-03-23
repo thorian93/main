@@ -6,6 +6,7 @@ sshd_stable_os:
   - Debian 9
   - Debian 10
   - Debian 11
+  - Debian 12
   - Fedora 30
   - Fedora 31
   - Fedora 32
@@ -15,6 +16,7 @@ sshd_stable_os:
   - Fedora 36
   - openSUSE Leap 15
   - openSUSE Leap 42
+  - Rocky 9
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20
