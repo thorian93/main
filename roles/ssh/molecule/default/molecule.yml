@@ -40,7 +40,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-  - name: debian10
+  - name: debian11
     image: geerlingguy/docker-debian11-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     tmpfs:
