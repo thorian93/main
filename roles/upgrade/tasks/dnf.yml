@@ -16,7 +16,6 @@
   args:
   register: upgrade_update_list_dnf
   failed_when: upgrade_update_list_dnf.rc > 100
-  ignore_errors: true
   when: upgrade_reporting_enable | bool
 
 - name: "Upgrade via DNF."

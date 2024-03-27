@@ -19,7 +19,6 @@
   ansible.builtin.command: zypper lu
   args:
   register: upgrade_update_list_zypper
-  ignore_errors: true
   when: upgrade_reporting_enable | bool
 
 - name: "Upgrade via ZYPPER."
@@ -38,7 +37,6 @@
     executable: "/bin/bash"
   register: reboot_hint_zypper
   changed_when: "'The following running processes use deleted files' in reboot_hint_zypper.stdout"
-  ignore_errors: true
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:

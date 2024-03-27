@@ -4,32 +4,27 @@
     name: "{{ common_minimal_apps }}"
     state: present
   when: common_minimal_apps is defined
-  ignore_errors: true
 
 - name: "Install optional Applications."
   ansible.builtin.package:
     name: "{{ common_optional_apps }}"
     state: present
   when: common_optional_apps is defined and common_optional_apps_install
-  ignore_errors: true
 
 - name: "Install Derivate specific Applications."
   ansible.builtin.package:
     name: "{{ common_apps_derivate }}"
     state: present
   when: common_apps_derivate is defined
-  ignore_errors: true
 
 - name: "Install Distribution specific Applications."
   ansible.builtin.package:
     name: "{{ common_apps_distribution }}"
     state: present
   when: common_apps_distribution is defined
-  ignore_errors: true
 
 - name: "Install Distribution Version specific Applications."
   ansible.builtin.package:
     name: "{{ common_apps_distribution_version }}"
     state: present
   when: common_apps_distribution_version is defined
-  ignore_errors: true
