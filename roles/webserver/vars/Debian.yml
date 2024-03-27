@@ -1,0 +1,12 @@
+---
+webserver_apache_name: apache2
+webserver_apache_user: www-data
+webserver_apache_conf_file: /etc/apache2/apache2.conf
+webserver_apache_manager: apache2ctl
+webserver_apache_site_dir: "/etc/{{ webserver_apache_name }}/sites-available"
+
+webserver_nginx_name: nginx
+webserver_nginx_user: nginx
+webserver_nginx_conf_file: /etc/nginx/nginx.conf
+webserver_nginx_manager: nginx
+webserver_nginx_site_dir: "/etc/{{ webserver_nginx_name }}/conf.d"

@@ -1,0 +1,35 @@
+---
+- name: "Preflight - Fail if target host is not stable for this Role."
+  ansible.builtin.fail:
+    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined) or
+        (ansible_distribution+" "+ansible_distribution_major_version not in webserver_stable_os)
+
+- name: "Include OS Family specific Variables."
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: "Populate Service Facts."
+  ansible.builtin.service_facts:
+
+- name: "Set Fact Webserver."
+  ansible.builtin.set_fact:
+    webserver_name: >
+      {% if 'apache2.service' in services %}{{ webserver_apache_name }}
+      {% elif 'httpd.service' in services %}{{ webserver_apache_name }}
+      {% elif 'nginx.service' in services %}{{ webserver_nginx_name }}
+      {% else %}none{% endif %}
+    webserver_user: >
+      {% if 'apache2.service' in services %}{{ webserver_apache_user }}
+      {% elif 'httpd.service' in services %}{{ webserver_apache_user }}
+      {% elif 'nginx.service' in services %}{{ webserver_nginx_user }}
+      {% else %}none{% endif %}
+    webserver_conf_file: >
+      {% if 'apache2.service' in services %}{{ webserver_apache_conf_file }}
+      {% elif 'httpd.service' in services %}{{ webserver_apache_conf_file }}
+      {% elif 'nginx.service' in services %}{{ webserver_nginx_conf_file }}
+      {% else %}none{% endif %}
+
+- name: "Print Webserver Facts."
+  ansible.builtin.debug:
+    msg: "Name: {{ webserver_name }} | User: {{ webserver_user }} | Main Conf File: {{ webserver_conf_file }}"
