@@ -1,8 +1,6 @@
 ---
 parseable: true
 skip_list:
-  - 301
-  - 305
   - ANSIBLE0012
   - ANSIBLE0013
 use_default_rules: true
