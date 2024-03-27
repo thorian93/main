@@ -7,7 +7,7 @@
         (ansible_distribution+" "+ansible_distribution_major_version not in sudo_stable_os)
 
 - name: "Include Derivate specific Variables."
-  include_vars: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
 - name: "Concatenate additional sudoers Permissions Variables."
   ansible.builtin.set_fact:
