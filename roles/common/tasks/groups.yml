@@ -1,6 +1,6 @@
 ---
 - name: "Concatenate Groups Presence Variables."
-  set_fact:
+  ansible.builtin.set_fact:
     common_groups_present: >-
       {{ common_global_groups_present | default('') | list  +
       common_os_groups_present | default('') | list  +

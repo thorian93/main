@@ -1,7 +1,8 @@
 ---
-- block:
+- name: "Configure Proxy for systemd."
+  block:
     - name: "Ensure systemd configuration directory exists."
-      file:
+      ansible.builtin.file:
         dest: /etc/systemd/system.conf.d
         state: directory
         mode: 0755
@@ -9,7 +10,7 @@
         group: root
 
     - name: "Configure proxy as systemd default."
-      template:
+      ansible.builtin.template:
         dest: /etc/systemd/system.conf.d/99proxy.conf
         src: 99proxy.conf.j2
         mode: 0644
@@ -19,7 +20,7 @@
   when: ( proxy_server | length ) and ( proxy_port | length )
 
 - name: "Remove proxy from systemd default."
-  file:
+  ansible.builtin.file:
     dest: /etc/systemd/system.conf.d/99proxy.conf
     state: absent
   when: ( not proxy_server | length ) or ( not proxy_port | length )

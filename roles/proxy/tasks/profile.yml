@@ -1,6 +1,6 @@
 ---
 - name: "Create proxy.sh script in profile.d to set Proxy for interactive Shells globally."
-  template:
+  ansible.builtin.template:
    dest: /etc/profile.d/99proxy.sh
    src: 99proxy.sh.j2
    owner: root
