@@ -23,7 +23,7 @@
   when: upgrade_reporting_enable | bool
 
 - name: "Upgrade via ZYPPER."
-  ansible.builtin.zypper:
+  community.general.zypper:
     name: "*"
     state: latest
     update_cache: true

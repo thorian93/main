@@ -1,6 +1,6 @@
 ---
 - name: "Configure Proxy for YUM."
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     dest: /etc/yum/yum.conf
     section: main
     option: proxy
@@ -12,7 +12,7 @@
     setype: etc_t
 
 - name: "Configure Proxy User for YUM."
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     dest: /etc/yum/yum.conf
     section: main
     option: proxy_username
@@ -23,7 +23,7 @@
     setype: etc_t
 
 - name: "Configure Proxy Password for YUM."
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     dest: /etc/yum/yum.conf
     section: main
     option: proxy_password

@@ -1,6 +1,6 @@
 ---
 - name: "Configure Proxy for DNF."
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     dest: /etc/dnf/dnf.conf
     section: main
     option: proxy
@@ -11,7 +11,7 @@
     mode: 0644
 
 - name: "Configure Proxy User for DNF."
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     dest: /etc/dnf/dnf.conf
     section: main
     option: proxy_username
@@ -23,7 +23,7 @@
     setype: etc_t
 
 - name: "Configure Proxy Password for DNF."
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     dest: /etc/dnf/dnf.conf
     section: main
     option: proxy_password
