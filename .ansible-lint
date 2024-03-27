@@ -9,6 +9,8 @@ exclude_paths:
   - .vagrant/
   - changelogs/
   - docs/
+  - molecule/
+
 # parseable: true
 # quiet: true
 # verbosity: 1

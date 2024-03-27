@@ -1,9 +1,7 @@
 ---
 parseable: true
-skip_list:
-  - ANSIBLE0006
-  - ANSIBLE0012
-  - ANSIBLE0013
+skip_list: []
 use_default_rules: true
 verbosity: 1
-exclude_paths: []
+exclude_paths:
+  - molecule/
