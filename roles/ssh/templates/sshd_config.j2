@@ -1,29 +1,29 @@
 # {{ ansible_managed }}
 # This is the sshd server system-wide configuration file.  See
-# sshd_config(5) for more information.
+# ssh_config(5) for more information.
 
-# The strategy used for options in the default sshd_config shipped with
+# The strategy used for options in the default ssh_config shipped with
 # OpenSSH is to specify options with their default value where
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-{% if sshd_port is defined and sshd_port|length %}
-Port {{ sshd_port }}
+{% if ssh_port is defined and ssh_port|length %}
+Port {{ ssh_port }}
 {% else %}
 #Port 22
 {% endif %}
-{% if sshd_protocol is defined and sshd_protocol|length %}
-Protocol {{ sshd_protocol }}
+{% if ssh_protocol is defined and ssh_protocol|length %}
+Protocol {{ ssh_protocol }}
 {% else %}
 #Protocol 2
 {% endif %}
-{% if sshd_address_family is defined and sshd_address_family|length %}
-AddressFamily {{ sshd_address_family }}
+{% if ssh_address_family is defined and ssh_address_family|length %}
+AddressFamily {{ ssh_address_family }}
 {% else %}
 #AddressFamily any
 {% endif %}
-{% if sshd_listen_address is defined and sshd_listen_address|length %}
-ListenAddress {{ sshd_listen_address }}
+{% if ssh_listen_address is defined and ssh_listen_address|length %}
+ListenAddress {{ ssh_listen_address }}
 {% else %}
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -37,19 +37,19 @@ ListenAddress {{ sshd_listen_address }}
 #RekeyLimit default none
 
 # Ciphers
-{% if sshd_ciphers is defined and sshd_ciphers|length %}
-Ciphers {{ sshd_ciphers }}
+{% if ssh_ciphers is defined and ssh_ciphers|length %}
+Ciphers {{ ssh_ciphers }}
 {% endif %}
-{% if sshd_enabled_ciphers is defined and sshd_enabled_ciphers|length %}
-Ciphers +{{ sshd_enabled_ciphers }}
+{% if ssh_enabled_ciphers is defined and ssh_enabled_ciphers|length %}
+Ciphers +{{ ssh_enabled_ciphers }}
 {% endif %}
-{% if sshd_disabled_ciphers is defined and sshd_disabled_ciphers|length %}
+{% if ssh_disabled_ciphers is defined and ssh_disabled_ciphers|length %}
 {% if
 (ansible_distribution == 'Debian' and ansible_distribution_version is version('10', '>='))
 or (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('18', '>='))
 or (ansible_distribution == 'CentOS' and ansible_distribution_version is version('8', '>='))
 %}
-Ciphers -{{ sshd_disabled_ciphers }}
+Ciphers -{{ ssh_disabled_ciphers }}
 {% endif %}
 {% endif %}
 
@@ -60,13 +60,13 @@ Ciphers -{{ sshd_disabled_ciphers }}
 # Authentication:
 
 #LoginGraceTime 2m
-{% if sshd_permit_root_login is defined and sshd_permit_root_login | bool %}
-PermitRootLogin {{ sshd_permit_root_login }}
+{% if ssh_permit_root_login is defined and ssh_permit_root_login | bool %}
+PermitRootLogin {{ ssh_permit_root_login }}
 {% else %}
 #PermitRootLogin prohibit-password
 {% endif %}
-{% if sshd_strict_mode is defined and sshd_strict_mode|length %}
-StrictModes {{ sshd_strict_mode }}
+{% if ssh_strict_mode is defined and ssh_strict_mode|length %}
+StrictModes {{ ssh_strict_mode }}
 {% else %}
 #StrictModes yes
 {% endif %}
@@ -92,21 +92,21 @@ StrictModes {{ sshd_strict_mode }}
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if sshd_permit_password_authentication is defined and sshd_permit_password_authentication|length %}
-PasswordAuthentication {{ sshd_permit_password_authentication }}
+{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication|length %}
+PasswordAuthentication {{ ssh_permit_password_authentication }}
 {% else %}
 #PasswordAuthentication yes
 {% endif %}
-{% if sshd_permit_empty_passwords is defined and sshd_permit_empty_passwords|length %}
-PermitEmptyPasswords {{ sshd_permit_empty_passwords }}
+{% if ssh_permit_empty_passwords is defined and ssh_permit_empty_passwords|length %}
+PermitEmptyPasswords {{ ssh_permit_empty_passwords }}
 {% else %}
 #PermitEmptyPasswords no
 {% endif %}
 
 # Change to yes to enable challenge-response passwords (beware issues with
 # some PAM modules and threads)
-{% if sshd_challenge_response_auth is defined and sshd_challenge_response_auth|length %}
-ChallengeResponseAuthentication {{ sshd_challenge_response_auth }}
+{% if ssh_challenge_response_auth is defined and ssh_challenge_response_auth|length %}
+ChallengeResponseAuthentication {{ ssh_challenge_response_auth }}
 {% else %}
 ChallengeResponseAuthentication no
 {% endif %}
@@ -118,8 +118,8 @@ ChallengeResponseAuthentication no
 #KerberosGetAFSToken no
 
 # GSSAPI options
-{% if sshd_gss_api_authentication is defined and sshd_gss_api_authentication|length %}
-GSSAPIAuthentication {{ sshd_gss_api_authentication }}
+{% if ssh_gss_api_authentication is defined and ssh_gss_api_authentication|length %}
+GSSAPIAuthentication {{ ssh_gss_api_authentication }}
 {% else %}
 #GSSAPIAuthentication no
 {% endif %}
@@ -141,16 +141,16 @@ UsePAM yes
 #AllowAgentForwarding yes
 #AllowTcpForwarding yes
 #GatewayPorts no
-{% if sshd_allow_x11_forwarding is defined and sshd_allow_x11_forwarding|length %}
-X11Forwarding {{ sshd_allow_x11_forwarding }}
+{% if ssh_allow_x11_forwarding is defined and ssh_allow_x11_forwarding|length %}
+X11Forwarding {{ ssh_allow_x11_forwarding }}
 {% else %}
 X11Forwarding no
 {% endif %}
 #X11DisplayOffset 10
 #X11UseLocalhost yes
 #PermitTTY yes
-{% if sshd_print_motd is defined and sshd_print_motd|length %}
-PrintMotd {{ sshd_print_motd }}
+{% if ssh_print_motd is defined and ssh_print_motd|length %}
+PrintMotd {{ ssh_print_motd }}
 {% else %}
 PrintMotd no
 {% endif %}
@@ -167,9 +167,9 @@ PrintMotd no
 #ChrootDirectory none
 #VersionAddendum none
 
-{% if sshd_print_banner is defined and sshd_print_banner|bool %}
-{% if sshd_banner_file is defined and sshd_banner_file|length %}
-Banner {{ sshd_banner_file }}
+{% if ssh_print_banner is defined and ssh_print_banner|bool %}
+{% if ssh_banner_file is defined and ssh_banner_file|length %}
+Banner {{ ssh_banner_file }}
 {% endif %}
 {% else %}
 # no default banner path
@@ -180,7 +180,7 @@ Banner {{ sshd_banner_file }}
 AcceptEnv LANG LC_*
 
 # override default of no subsystems
-Subsystem	sftp	{{ sshd_sftp_path }}
+Subsystem	sftp	{{ ssh_sftp_path }}
 
 # Example of overriding settings on a per-user basis
 #Match User anoncvs
@@ -188,20 +188,20 @@ Subsystem	sftp	{{ sshd_sftp_path }}
 #	AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
-{% if sshd_usedns is defined and sshd_usedns|length %}
-UseDNS {{ sshd_usedns }}
+{% if ssh_usedns is defined and ssh_usedns|length %}
+UseDNS {{ ssh_usedns }}
 {% else %}
 UseDNS no
 {% endif %}
-{% if sshd_allowed_users is defined and sshd_allowed_users|length %}
-AllowUsers {{ sshd_allowed_users }}
+{% if ssh_allowed_users is defined and ssh_allowed_users|length %}
+AllowUsers {{ ssh_allowed_users }}
 {% endif %}
-{% if sshd_allowed_groups is defined and sshd_allowed_groups|length %}
-AllowGroups {{ sshd_allowed_groups }}
+{% if ssh_allowed_groups is defined and ssh_allowed_groups|length %}
+AllowGroups {{ ssh_allowed_groups }}
 {% endif %}
 
 
-{% if sshd_vault_trusted_ca_enable is defined and sshd_vault_trusted_ca_enable | bool %}
+{% if ssh_vault_trusted_ca_enable is defined and ssh_vault_trusted_ca_enable | bool %}
 # Vault CA Keys
-TrustedUserCAKeys /etc/ssh/{{ sshd_vault_ca_cert | default('trusted-user-ca-keys.pem')}}
+TrustedUserCAKeys /etc/ssh/{{ ssh_vault_ca_cert | default('trusted-user-ca-keys.pem')}}
 {% endif %}
