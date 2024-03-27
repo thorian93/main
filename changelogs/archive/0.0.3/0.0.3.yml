@@ -1,0 +1,6 @@
+minor_changes:
+  - Upgrade role - Add trigger for Checkmk APT check.
+  - All roles - Add support for Rocky Linux 9.
+
+removed_features:
+  - All roles - Remove support for CentOS 7.

@@ -7,6 +7,22 @@ thorian93.main Release Notes
 v0.0.3
 ======
 
+Release Summary
+---------------
+
+Spring clean.
+
+Minor Changes
+-------------
+
+- Upgrade role - Add trigger for Checkmk APT check.
+- All roles - Add support for Rocky Linux 9.
+
+Removed Features
+----------------
+
+- All roles - Remove support for CentOS 7.
+
 v0.0.2
 ======
 
