@@ -25,7 +25,7 @@
   failed_when: upgrade_update_list_yum.rc > 100
   when: upgrade_reporting_enable | bool
 
-- name: "Upgrade via YUM."
+- name: "Upgrade via YUM."  # noqa package-latest
   ansible.builtin.yum:
     name: "*"
     state: latest

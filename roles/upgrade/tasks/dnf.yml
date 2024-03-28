@@ -18,7 +18,7 @@
   failed_when: upgrade_update_list_dnf.rc > 100
   when: upgrade_reporting_enable | bool
 
-- name: "Upgrade via DNF."
+- name: "Upgrade via DNF."  # noqa package-latest
   ansible.builtin.dnf:
     name: "*"
     state: latest

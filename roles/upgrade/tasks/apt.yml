@@ -33,7 +33,7 @@
   register: upgrade_update_list_apt
   when: upgrade_reporting_enable | bool
 
-- name: "Upgrade via APT."
+- name: "Upgrade via APT."  # noqa package-latest
   ansible.builtin.apt:
     upgrade: safe
     state: latest

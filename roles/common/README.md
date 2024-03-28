@@ -98,7 +98,7 @@ Configure the timezone.
 
 Configure general paths.
 
-    shopt_options:
+    common_shopt_options:
       - shopt -s cdspell
       - shopt -s nocaseglob
 

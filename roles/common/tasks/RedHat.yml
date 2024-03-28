@@ -4,12 +4,18 @@
     dest: /etc/bashrc
     line: "{{ item }}"
     create: true
-  with_items: "{{ shopt_options }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ common_shopt_options }}"
 
 - name: "Configure Bash Completion."
   ansible.builtin.blockinfile:
     dest: /etc/bashrc
     create: true
+    owner: root
+    group: root
+    mode: 0644
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     content: |
      if ! shopt -oq posix; then

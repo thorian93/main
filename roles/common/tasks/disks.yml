@@ -10,6 +10,5 @@
 
 - name: "Disable disk checks on all ext4 disk devices."
   ansible.builtin.command: "tune2fs -c 0 -i 0 {{ item }}"
-  args:
   with_items: "{{ common_disks_list.stdout_lines }}"
   when: ('container' not in ansible_facts.virtualization_tech_guest)

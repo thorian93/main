@@ -18,7 +18,7 @@
   register: upgrade_update_list_zypper
   when: upgrade_reporting_enable | bool
 
-- name: "Upgrade via ZYPPER."
+- name: "Upgrade via ZYPPER."  # noqa package-latest
   community.general.zypper:
     name: "*"
     state: latest
