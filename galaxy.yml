@@ -43,6 +43,7 @@ tags: [thorian93, linux, administration, infrastructure]
 # range specifiers can be set and are separated by ','
 dependencies:
   "community.general": ">=5.0.0"
+  "ansible.posix": ">=1.4.0"
 
 # The URL of the originating SCM repository
 repository: https://github.com/thorian93/main
