@@ -5,5 +5,4 @@
     state: present
 
 - name: "Configure git to use a Proxy."
-  ansible.builtin.shell: "git config --global http.proxy http://{{ proxy_server }}:{{ proxy_port }}"
-  args:
+  ansible.builtin.command: "git config --global http.proxy http://{{ proxy_server }}:{{ proxy_port }}"
