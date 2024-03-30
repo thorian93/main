@@ -27,9 +27,7 @@ Issue Number: `e.g. #1`
 ## What is the new behavior?
 <!-- Please describe the behavior or changes that are being added by this PR. -->
 
--
--
--
+See [CHANGELOG.rst](https://github.com/thorian93/main/blob/main/CHANGELOG.rst) for details.
 
 ## Other information
 <!-- Any other information that is important to this PR such as screenshots of how the component looks before and after the change. -->

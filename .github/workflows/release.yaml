@@ -108,5 +108,7 @@ jobs:
 
             For a detailed changelog, refer to the [CHANGELOG](https://github.com/thorian93/main/blob/main/CHANGELOG.rst).
 
+            This collection can be found in the [Galaxy](https://galaxy.ansible.com/ui/repo/published/thorian93/main/) as well!
+
       - name: Publish Ansible Collection to the Galaxy
         run: ansible-galaxy collection publish ${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
