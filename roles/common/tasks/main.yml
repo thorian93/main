@@ -16,6 +16,7 @@
     line: "127.0.0.1 {{ common_host_name | default('{{ inventory_hostname }}') }} localhost"
     regexp: "^127.0.0.1"
     state: present
+  when: ('container' not in ansible_facts.virtualization_tech_guest)
 
 - name: "Include Derivate specific Variables."
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
