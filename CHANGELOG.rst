@@ -4,6 +4,30 @@ thorian93.main Release Notes
 
 .. contents:: Topics
 
+v1.0.0
+======
+
+Release Summary
+---------------
+
+Spring clean!
+
+Major Changes
+-------------
+
+- Add webserver role.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Common role - Rename variable `shopt_options` to `common_shopt_options`. Please adapt your inventory if necessary!
+- SSH role - Change prefix for all variables from `sshd_` to `ssh_`. Please adapt your inventory if necessary!
+
+Bugfixes
+--------
+
+- Fix a lot of linting findings across the board.
+
 v0.0.3
 ======
 
@@ -15,11 +39,11 @@ Spring clean.
 Minor Changes
 -------------
 
-- Upgrade role - Add trigger for Checkmk APT check.
 - All roles - Add support for Rocky Linux 9.
+- Upgrade role - Add trigger for Checkmk APT check.
 
-Removed Features
-----------------
+Removed Features (previously deprecated)
+----------------------------------------
 
 - All roles - Remove support for CentOS 7.
 
