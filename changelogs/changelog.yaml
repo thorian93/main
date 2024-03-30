@@ -18,13 +18,28 @@ releases:
     - 0.0.2.yml
     release_date: '2023-04-29'
   0.0.3:
-    release_date: '2024-03-23'
     changes:
       minor_changes:
-      - Upgrade role - Add trigger for Checkmk APT check.
       - All roles - Add support for Rocky Linux 9.
+      - Upgrade role - Add trigger for Checkmk APT check.
+      release_summary: Spring clean.
       removed_features:
       - All roles - Remove support for CentOS 7.
-      release_summary: Spring clean.
     fragments:
     - 0.0.3.yml
+    release_date: '2024-03-23'
+  1.0.0:
+    changes:
+      breaking_changes:
+      - Common role - Rename variable `shopt_options` to `common_shopt_options`. Please
+        adapt your inventory if necessary!
+      - SSH role - Change prefix for all variables from `sshd_` to `ssh_`. Please
+        adapt your inventory if necessary!
+      bugfixes:
+      - Fix a lot of linting findings across the board.
+      major_changes:
+      - Add webserver role.
+      release_summary: Spring clean!
+    fragments:
+    - 1.0.0.yml
+    release_date: '2024-03-30'
