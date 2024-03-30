@@ -1,0 +1,11 @@
+release_summary: "Spring clean!"
+
+bugfixes:
+  - Fix a lot of linting findings across the board.
+
+major_changes:
+  - Add webserver role.
+
+breaking_changes:
+  - Common role - Rename variable `shopt_options` to `common_shopt_options`. Please adapt your inventory if necessary!
+  - SSH role - Change prefix for all variables from `sshd_` to `ssh_`. Please adapt your inventory if necessary!

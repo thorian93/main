@@ -27,7 +27,6 @@ done
 
 echo "# General things to keep in mind:"
 echo "- Did you provide changelogs for all relevant changes?"
-echo "- Did you update SUPPORT.md with the latest compability information?"
 echo
 
 echo "# Changes:"

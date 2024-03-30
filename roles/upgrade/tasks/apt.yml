@@ -33,7 +33,7 @@
   register: upgrade_update_list_apt
   when: upgrade_reporting_enable | bool
 
-- name: "Upgrade via APT."
+- name: "Upgrade via APT."  # noqa package-latest
   ansible.builtin.apt:
     upgrade: safe
     state: latest
@@ -60,7 +60,11 @@
   failed_when: upgrade_apt_mark_status.rc == 1000
 
 - name: "Check for Reboot Hint."
-  ansible.builtin.shell: needrestart -b
+  ansible.builtin.shell: |
+    set -o pipefail
+    needrestart -b
+  args:
+    executable: "/bin/bash"
   register: reboot_hint_apt
   changed_when: "'NEEDRESTART-KSTA: 1' not in reboot_hint_apt.stdout"
 

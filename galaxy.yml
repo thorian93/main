@@ -9,7 +9,7 @@ namespace: thorian93
 name: main
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 0.0.3
+version: 1.0.0
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -41,7 +41,9 @@ tags: [thorian93, linux, administration, infrastructure]
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: {}
+dependencies:
+  "community.general": ">=5.0.0"
+  "ansible.posix": ">=1.4.0"
 
 # The URL of the originating SCM repository
 repository: https://github.com/thorian93/main

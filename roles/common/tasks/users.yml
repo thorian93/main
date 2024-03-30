@@ -2,19 +2,19 @@
 - name: "Concatenate Users Presence Variables."
   ansible.builtin.set_fact:
     common_users_present: >-
-      {{ common_global_users_present | default('') | list  +
-      common_os_users_present | default('') | list  +
-      common_system_users_present | default('') | list  +
-      common_stage_users_present | default('') | list  +
+      {{ common_global_users_present | default('') | list +
+      common_os_users_present | default('') | list +
+      common_system_users_present | default('') | list +
+      common_stage_users_present | default('') | list +
       common_role_users_present | default('') | list }}
 
 - name: "Concatenate Users Absence Variables."
   ansible.builtin.set_fact:
     common_users_absent: >-
-      {{ common_global_users_absent | default('') | list  +
-      common_os_users_absent | default('') | list  +
-      common_system_users_absent | default('') | list  +
-      common_stage_users_absent | default('') | list  +
+      {{ common_global_users_absent | default('') | list +
+      common_os_users_absent | default('') | list +
+      common_system_users_absent | default('') | list +
+      common_stage_users_absent | default('') | list +
       common_role_users_absent | default('') | list }}
 
 - name: "Create Users."
@@ -31,7 +31,7 @@
   no_log: true
 
 - name: "Add Public Keys for Users."
-  ansible.builtin.authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ item.0.name }}"
     state: "{{ item.0.state }}"
     key: "{{ item.1 | default() }}"

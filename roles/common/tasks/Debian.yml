@@ -1,23 +1,27 @@
 ---
 - name: "Configure shopt Preferences."
   ansible.builtin.lineinfile:
-   dest: /etc/bash.bashrc
-   line: "{{ item }}"
-   create: true
-   mode: 0644
-  with_items: "{{ shopt_options }}"
+    dest: /etc/bash.bashrc
+    line: "{{ item }}"
+    create: true
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ common_shopt_options }}"
 
 - name: "Configure Bash Completion."
   ansible.builtin.blockinfile:
-   dest: /etc/bash.bashrc
-   create: true
-   mode: 0644
-   marker: "# {mark} ANSIBLE MANAGED BLOCK"
-   content: |
-    if ! shopt -oq posix; then
-       if [ -f /usr/share/bash-completion/bash_completion ]; then
-          . /usr/share/bash-completion/bash_completion
-       elif [ -f /etc/bash_completion ]; then
-          . /etc/bash_completion
-       fi
-    fi
+    dest: /etc/bash.bashrc
+    create: true
+    owner: root
+    group: root
+    mode: 0644
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    content: |
+      if ! shopt -oq posix; then
+         if [ -f /usr/share/bash-completion/bash_completion ]; then
+            . /usr/share/bash-completion/bash_completion
+         elif [ -f /etc/bash_completion ]; then
+            . /etc/bash_completion
+         fi
+      fi

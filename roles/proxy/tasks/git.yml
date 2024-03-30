@@ -1,9 +1,8 @@
 ---
 - name: "Make sure git is installed."
-  package:
+  ansible.builtin.package:
     name: git
     state: present
 
 - name: "Configure git to use a Proxy."
-  shell: "git config --global http.proxy http://{{ proxy_server }}:{{ proxy_port }}"
-  args:
+  ansible.builtin.command: "git config --global http.proxy http://{{ proxy_server }}:{{ proxy_port }}"

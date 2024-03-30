@@ -90,7 +90,7 @@ common_scripting_scripts_stage: []
 common_scripting_scripts_role: []
 
 # Shopt options
-shopt_options:
+common_shopt_options:
   - shopt -s cdspell
   - shopt -s nocaseglob
 

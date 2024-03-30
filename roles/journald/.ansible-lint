@@ -3,4 +3,5 @@ parseable: true
 skip_list: []
 use_default_rules: true
 verbosity: 1
-exclude_paths: []
+exclude_paths:
+  - molecule/
