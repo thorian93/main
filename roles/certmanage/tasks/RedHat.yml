@@ -5,12 +5,15 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: 0755
 
 - name: Copy the Certificates.
   ansible.builtin.template:
     src: "certificate.pem.j2"
     dest: "/etc/pki/ca-trust/source/anchors/certificate_{{ item.name }}.pem"
+    owner: root
+    group: root
+    mode: 0644
   with_items: "{{ certmanage_certificates }}"
   register: upload_cert_result
 
