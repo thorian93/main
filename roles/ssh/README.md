@@ -15,6 +15,10 @@ No special requirements; note that this role requires root access, so either run
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+    ssh_include_configs: true
+
+Enable inclusion of configuration snippets from `/etc/ssh/sshd_config.d/`.
+
     sshd_port: '22'
 
 Configure the port sshd listens on.
