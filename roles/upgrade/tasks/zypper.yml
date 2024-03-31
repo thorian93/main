@@ -13,7 +13,8 @@
   ansible.builtin.command: zypper al {{ item }}
   with_items: "{{ upgrade_packages_on_hold }}"
 
-- name: "Store List of Updates for further Inspection."
+# We need to run the command instead of the module, so we can store the output in a list.
+- name: "Store List of Updates for further Inspection."  # noqa command-instead-of-module
   ansible.builtin.command: zypper lu
   register: upgrade_update_list_zypper
   when: upgrade_reporting_enable | bool
