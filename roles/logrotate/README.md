@@ -2,10 +2,6 @@
 
 This role sets up a Linux server with basic logrotate configuration.
 
-[![Ansible Role: Logrotate](https://img.shields.io/ansible/role/55136?style=flat-square)](https://galaxy.ansible.com/thorian93/logrotate)
-[![Ansible Role: Logrotate](https://img.shields.io/ansible/quality/55136?style=flat-square)](https://galaxy.ansible.com/thorian93/logrotate)
-[![Ansible Role: Logrotate](https://img.shields.io/ansible/role/d/55136?style=flat-square)](https://galaxy.ansible.com/thorian93/logrotate)
-
 ## Requirements
 
 No special requirements; note that this role requires root access, so either run it in a playbook with a global `become: yes`, or invoke the role in your playbook like:

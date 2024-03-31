@@ -2,10 +2,6 @@
 
 This role ensures persistent logging for journald on Debian/Ubuntu, RHEL/CentOS and Fedora servers.
 
-[![Ansible Role: Journald](https://img.shields.io/ansible/role/55135?style=flat-square)](https://galaxy.ansible.com/thorian93/journald)
-[![Ansible Role: Journald](https://img.shields.io/ansible/quality/55135?style=flat-square)](https://galaxy.ansible.com/thorian93/journald)
-[![Ansible Role: Journald](https://img.shields.io/ansible/role/d/55135?style=flat-square)](https://galaxy.ansible.com/thorian93/journald)
-
 ## Requirements
 
 No special requirements; note that this role requires root access, so either run it in a playbook with a global `become: yes`, or invoke the role in your playbook like:
@@ -32,7 +28,7 @@ This role ensures that it is not used against unsupported or untested operating 
       - CentOS 7
       - Fedora 30
 
-If the combination of distribution and major version number do not match the target system, the role will fail. To allow the role to work add the distribution name and major version name to that variable and you are good to go. But please test the new combination first!
+If the combination of distribution and major version number do not match the target system, the role will fail. To allow the role to work add the distribution name and major version name to that variable, and you are good to go. But please test the new combination first!
 
 Kudos to [HarryHarcourt](https://github.com/HarryHarcourt) for this idea!
 

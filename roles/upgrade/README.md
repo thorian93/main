@@ -2,10 +2,6 @@
 
 This role performs upgrades on Debian/Ubuntu, RHEL/CentOS, Fedora and Suse servers.
 
-[![Ansible Role: Upgrade](https://img.shields.io/ansible/role/55149?style=flat-square)](https://galaxy.ansible.com/thorian93/upgrade)
-[![Ansible Role: Upgrade](https://img.shields.io/ansible/quality/55149?style=flat-square)](https://galaxy.ansible.com/thorian93/upgrade)
-[![Ansible Role: Upgrade](https://img.shields.io/ansible/role/d/55149?style=flat-square)](https://galaxy.ansible.com/thorian93/upgrade)
-
 ## Features
 
 - Reboot detection and automatic reboot
@@ -21,19 +17,19 @@ For RHEL/CentOS it is implemented through the [needs-restarting](https://dnf-plu
 
 The role uses the output or return codes respectively to decide what actions to take. You can configure the behavior through the variables below.
 
-Neither of these methods are perfect but it works reasonably good. You might want to look through the role before using it though.
+Neither of these methods are perfect, but it works reasonably good. You might want to look through the role before using it though.
 
 ## Known issues
 
 - Debian 11: Without setting `ansible_python_interpreter=/usr/bin/python3` explicitly, the `apt` module will try to install `python-apt` on the fly, which fails. See [this issue](https://github.com/ansible/ansible/issues/69053) for more details.
 - CentOS 8: Reboot detection does not work as there is a flag missing for the dnf needs-restarting plugin. No reboot will be performed at any time.
 - Fedora 32 and earlier: Service restart detection does not work as there is a flag missing for the dnf needs-restarting plugin. No service restarts will be performed at any time.
-- **opensuse 15 and 42**: A missing dependency does not allow installation of a dependent tool. A workaround is in place. Also the upgrade process seems unstable. I will list these distributions as stable regarding below mentioned OS compatibility check anyway as currently the role does not seem to break stuff, but please be careful! Also feel free to give me a hint, if you know how to fix this stuff.
+- **opensuse 15 and 42**: A missing dependency does not allow installation of a dependent tool. A workaround is in place. Also, the upgrade process seems unstable. I will list these distributions as stable regarding below-mentionedd OS compatibility check anyway as currently the role does not seem to break stuff, but please be careful! Also feel free to give me a hint, if you know how to fix this stuff.
 - **opensuse 15 and 42**: The service restart detection uses a 'brute force' approach, as the output of `zypper ps -s` is a pain in the bum to parse. So for now these OS will simply reboot if any services need to be restarted.
 
 ## Requirements
 
-When using the reporting via Telegram feature: 
+When using the reporting via Telegram feature:
 
     collections:
     - name: community.general
@@ -69,7 +65,7 @@ Force a reboot of each server independent of the result of the reboot check. Def
 
     upgrade_needrestart_disable_interaction: true
 
-The `needrestart` tool is used to determine necessary reboots and service restarts. Some distributions configure it to run interactively by default, which breaks this role. Therefore the default setting is to disable all interaction. Set this to `false` to keep interaction enabled. See the manpage for further details.
+The `needrestart` tool is used to determine necessary reboots and service restarts. Some distributions configure it to run interactively by default, which breaks this role. Therefore, the default setting is to disable all interaction. Set this to `false` to keep interaction enabled. See the manpage for further details.
 
     upgrade_restart_services: true
 
@@ -80,7 +76,7 @@ Enable automatic service restarts. This causes the role to restart services whic
       - dbus.service
       - systemd-manager.service
 
-Blacklist services that should not or cannot be restarted. The default list ist based on and expanded per experience. Feel free to report services that need to be added here.
+Blacklist services that should not or cannot be restarted. The default list is based on and expanded per experience. Feel free to report services that need to be added here.
 
 ### Reporting Variables
 
@@ -114,7 +110,7 @@ Your Telegram Chat ID.
 
     upgrade_reporting_mail_enable: false
 
-Enable reporting via Mail.
+Enable reporting via eMail.
 
     upgrade_reporting_mail_subject: "Ansible Update Role Reporting"
 

@@ -2,13 +2,9 @@
 
 This role manages proxy settings of Linux systems.
 
-[![Ansible Role: Proxy](https://img.shields.io/ansible/role/55132?style=flat-square)](https://galaxy.ansible.com/thorian93/proxy)
-[![Ansible Role: Proxy](https://img.shields.io/ansible/quality/55132?style=flat-square)](https://galaxy.ansible.com/thorian93/proxy)
-[![Ansible Role: Proxy](https://img.shields.io/ansible/role/d/55132?style=flat-square)](https://galaxy.ansible.com/thorian93/proxy)
-
 ## Here be Dragons!
 
-This role was just created and I can and will not guarantee that it works properly! Use at your own risk! But also feel free to share any findings.
+This role was just created, and I can and will not guarantee that it works properly! Use at your own risk! But also feel free to share any findings.
 
 ## Requirements
 
@@ -58,7 +54,7 @@ Configure proxy for the package manager. Set to blank to remove.
 
 ## Dependencies
 
-  - [thorian93.webserver](https://galaxy.ansible.com/thorian93/webserver)
+  - [thorian93.main.webserver](https://galaxy.ansible.com/thorian93.main.webserver)
 
 ## OS Compatibility
 

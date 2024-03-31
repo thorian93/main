@@ -2,10 +2,6 @@
 
 This role installs and configures NTP on RHEL/CentOS, Debian/Ubuntu, Fedora and Suse servers.
 
-[![Ansible Role: NTP](https://img.shields.io/ansible/role/55142?style=flat-square)](https://galaxy.ansible.com/thorian93/ntp)
-[![Ansible Role: NTP](https://img.shields.io/ansible/quality/55142?style=flat-square)](https://galaxy.ansible.com/thorian93/ntp)
-[![Ansible Role: NTP](https://img.shields.io/ansible/role/d/55142?style=flat-square)](https://galaxy.ansible.com/thorian93/ntp)
-
 ## Requirements
 
 No special requirements; note that this role requires root access, so either run it in a playbook with a global `become: yes`, or invoke the role in your playbook like:

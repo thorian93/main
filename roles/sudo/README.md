@@ -1,9 +1,5 @@
 # Ansible Role: Sudo
 
-[![Ansible Role: Sudo](https://img.shields.io/ansible/role/55145?style=flat-square)](https://galaxy.ansible.com/thorian93/sudo)
-[![Ansible Role: Sudo](https://img.shields.io/ansible/quality/55145?style=flat-square)](https://galaxy.ansible.com/thorian93/sudo)
-[![Ansible Role: Sudo](https://img.shields.io/ansible/role/d/55145?style=flat-square)](https://galaxy.ansible.com/thorian93/sudo)
-
 This role configures sudo on Debian/Ubuntu, RHEL/CentOS, Fedora and opensuse/SLES servers.
 
 ## Here be Dragons!
