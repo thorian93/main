@@ -11,7 +11,7 @@
 
 - name: "Ensure SSHD is installed."
   ansible.builtin.package:
-    name: sshd
+    name: openssh-server
     state: present
 
 - name: "Configure Banner."
