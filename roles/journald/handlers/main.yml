@@ -1,5 +1,6 @@
 ---
-- name: Restart journald
+- name: "Restart Journald Service."
+  listen: restart journald
   ansible.builtin.service:
     name: systemd-journald
     state: restarted
