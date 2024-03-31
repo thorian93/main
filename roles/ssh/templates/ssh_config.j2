@@ -1,28 +1,28 @@
 # {{ ansible_managed }}
 # This is the sshd server system-wide configuration file.  See
-# ssh_config(5) for more information.
+# sshd_config(5) for more information.
 
-# The strategy used for options in the default ssh_config shipped with
+# The strategy used for options in the default sshd_config shipped with
 # OpenSSH is to specify options with their default value where
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-{% if ssh_port is defined and ssh_port|length %}
+{% if ssh_port is defined and ssh_port | length %}
 Port {{ ssh_port }}
 {% else %}
 #Port 22
 {% endif %}
-{% if ssh_protocol is defined and ssh_protocol|length %}
+{% if ssh_protocol is defined and ssh_protocol | length %}
 Protocol {{ ssh_protocol }}
 {% else %}
 #Protocol 2
 {% endif %}
-{% if ssh_address_family is defined and ssh_address_family|length %}
+{% if ssh_address_family is defined and ssh_address_family | length %}
 AddressFamily {{ ssh_address_family }}
 {% else %}
 #AddressFamily any
 {% endif %}
-{% if ssh_listen_address is defined and ssh_listen_address|length %}
+{% if ssh_listen_address is defined and ssh_listen_address | length %}
 ListenAddress {{ ssh_listen_address }}
 {% else %}
 #ListenAddress 0.0.0.0
@@ -37,13 +37,13 @@ ListenAddress {{ ssh_listen_address }}
 #RekeyLimit default none
 
 # Ciphers
-{% if ssh_ciphers is defined and ssh_ciphers|length %}
+{% if ssh_ciphers is defined and ssh_ciphers | length %}
 Ciphers {{ ssh_ciphers }}
 {% endif %}
-{% if ssh_enabled_ciphers is defined and ssh_enabled_ciphers|length %}
+{% if ssh_enabled_ciphers is defined and ssh_enabled_ciphers | length %}
 Ciphers +{{ ssh_enabled_ciphers }}
 {% endif %}
-{% if ssh_disabled_ciphers is defined and ssh_disabled_ciphers|length %}
+{% if ssh_disabled_ciphers is defined and ssh_disabled_ciphers | length %}
 {% if
 (ansible_distribution == 'Debian' and ansible_distribution_version is version('10', '>='))
 or (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('18', '>='))
@@ -60,13 +60,14 @@ Ciphers -{{ ssh_disabled_ciphers }}
 # Authentication:
 
 #LoginGraceTime 2m
-{% if ssh_permit_root_login is defined and ssh_permit_root_login | bool %}
-PermitRootLogin {{ ssh_permit_root_login }}
+{% if ssh_permit_root_login is defined and ssh_permit_root_login | string | length %}
+PermitRootLogin {% if ssh_permit_root_login | bool %}yes{% elif not ssh_permit_root_login | bool %}no{% elif ssh_permit_root_login | string %}{{ ssh_permit_root_login }}{% endif %}
+
 {% else %}
 #PermitRootLogin prohibit-password
 {% endif %}
-{% if ssh_strict_mode is defined and ssh_strict_mode|length %}
-StrictModes {{ ssh_strict_mode }}
+{% if ssh_strict_mode is defined and ssh_strict_mode | bool %}
+StrictModes yes
 {% else %}
 #StrictModes yes
 {% endif %}
@@ -92,12 +93,12 @@ StrictModes {{ ssh_strict_mode }}
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication|length %}
+{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication | bool %}
 PasswordAuthentication {{ ssh_permit_password_authentication }}
 {% else %}
 #PasswordAuthentication yes
 {% endif %}
-{% if ssh_permit_empty_passwords is defined and ssh_permit_empty_passwords|length %}
+{% if ssh_permit_empty_passwords is defined and ssh_permit_empty_passwords | bool %}
 PermitEmptyPasswords {{ ssh_permit_empty_passwords }}
 {% else %}
 #PermitEmptyPasswords no
@@ -105,7 +106,7 @@ PermitEmptyPasswords {{ ssh_permit_empty_passwords }}
 
 # Change to yes to enable challenge-response passwords (beware issues with
 # some PAM modules and threads)
-{% if ssh_challenge_response_auth is defined and ssh_challenge_response_auth|length %}
+{% if ssh_challenge_response_auth is defined and ssh_challenge_response_auth | bool %}
 ChallengeResponseAuthentication {{ ssh_challenge_response_auth }}
 {% else %}
 ChallengeResponseAuthentication no
@@ -118,7 +119,7 @@ ChallengeResponseAuthentication no
 #KerberosGetAFSToken no
 
 # GSSAPI options
-{% if ssh_gss_api_authentication is defined and ssh_gss_api_authentication|length %}
+{% if ssh_gss_api_authentication is defined and ssh_gss_api_authentication | bool %}
 GSSAPIAuthentication {{ ssh_gss_api_authentication }}
 {% else %}
 #GSSAPIAuthentication no
@@ -141,7 +142,7 @@ UsePAM yes
 #AllowAgentForwarding yes
 #AllowTcpForwarding yes
 #GatewayPorts no
-{% if ssh_allow_x11_forwarding is defined and ssh_allow_x11_forwarding|length %}
+{% if ssh_allow_x11_forwarding is defined and ssh_allow_x11_forwarding | bool %}
 X11Forwarding {{ ssh_allow_x11_forwarding }}
 {% else %}
 X11Forwarding no
@@ -149,7 +150,7 @@ X11Forwarding no
 #X11DisplayOffset 10
 #X11UseLocalhost yes
 #PermitTTY yes
-{% if ssh_print_motd is defined and ssh_print_motd|length %}
+{% if ssh_print_motd is defined and ssh_print_motd | bool %}
 PrintMotd {{ ssh_print_motd }}
 {% else %}
 PrintMotd no
@@ -167,8 +168,8 @@ PrintMotd no
 #ChrootDirectory none
 #VersionAddendum none
 
-{% if ssh_print_banner is defined and ssh_print_banner|bool %}
-{% if ssh_banner_file is defined and ssh_banner_file|length %}
+{% if ssh_print_banner is defined and ssh_print_banner | bool %}
+{% if ssh_banner_file is defined and ssh_banner_file | length %}
 Banner {{ ssh_banner_file }}
 {% endif %}
 {% else %}
@@ -188,15 +189,15 @@ Subsystem	sftp	{{ ssh_sftp_path }}
 #	AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
-{% if ssh_usedns is defined and ssh_usedns|length %}
+{% if ssh_usedns is defined and ssh_usedns | bool %}
 UseDNS {{ ssh_usedns }}
 {% else %}
 UseDNS no
 {% endif %}
-{% if ssh_allowed_users is defined and ssh_allowed_users|length %}
+{% if ssh_allowed_users is defined and ssh_allowed_users | length %}
 AllowUsers {{ ssh_allowed_users }}
 {% endif %}
-{% if ssh_allowed_groups is defined and ssh_allowed_groups|length %}
+{% if ssh_allowed_groups is defined and ssh_allowed_groups | length %}
 AllowGroups {{ ssh_allowed_groups }}
 {% endif %}
 
