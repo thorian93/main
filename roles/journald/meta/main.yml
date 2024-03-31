@@ -5,6 +5,8 @@ galaxy_info:
   description: Journald logging daemon
   license: "license (MIT)"
 
+  issue_tracker_url: https://github.com/thorian93/main/issues
+
   min_ansible_version: "2.9"
 
   galaxy_tags:
@@ -14,9 +16,7 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 6
-        - 7
-        - 8
+        - all
     - name: Debian
       versions:
         - Jessie
