@@ -7,6 +7,10 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
+{% if ssh_include_configs is defined and ssh_include_configs | bool %}
+Include /etc/ssh/sshd_config.d/*.conf
+{% endif %}
+
 {% if ssh_port is defined and ssh_port | length %}
 Port {{ ssh_port }}
 {% else %}

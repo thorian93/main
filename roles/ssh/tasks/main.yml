@@ -25,7 +25,7 @@
 
 - name: "Configure SSHD."
   ansible.builtin.template:
-    src: ssh_config.j2
+    src: sshd_config.j2
     dest: /etc/ssh/sshd_config
     backup: true
     owner: root
