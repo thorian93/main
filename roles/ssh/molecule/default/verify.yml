@@ -4,34 +4,224 @@
   gather_facts: false
   tasks:
 
-  # - name: "Test sshd is running."
-  #   ansible.builtin.command: omd status started
-  #   register: checkmk_server_site_started_state
-  #   changed_when: false
-  #   failed_when: (not checkmk_server_site_started_state.rc == 0) and (not checkmk_server_site_started_state.rc == 1)
+    - name: Populate service facts.
+      ansible.builtin.service_facts:
 
-  # - name: "Verify started site is running."
-  #   ansible.builtin.assert:
-  #     that: checkmk_server_site_started_state.rc == 0
+    - name: "Test SSH Service is running."
+      ansible.builtin.assert:
+        that: "'sshd.service' in ansible_facts.services"
 
-  # - name: "Test started site URL returns 200."
-  #   ansible.builtin.uri:
-  #     url: "{{ checkmk_var_server_url }}/started/"
-  #   register: checkmk_server_url_state
+    - name: "Test that SSH is listening on Port {{ ssh_port }}."
+      ansible.builtin.wait_for:
+        port: "{{ ssh_port }}"
+        connect_timeout: 30
+      register: ssh_port_state
 
-  # - name: "Verify started site URL returns 200."
-  #   ansible.builtin.assert:
-  #     that: checkmk_server_url_state.status == 200
+    - name: "Verify that SSH Service is listening on port {{ ssh_port }}."
+      ansible.builtin.assert:
+        that: "(ssh_port_state.port == {{ ssh_port }}) and (ssh_port_state.state == 'started')"
 
-  # - name: "Test if we can talk to the REST API by activating changes."
-  #   checkmk.general.activation:
-  #     server_url: "{{ checkmk_var_server_url }}"
-  #     site: "started"
-  #     automation_user: "{{ checkmk_var_automation_user }}"
-  #     automation_secret: "{{ checkmk_var_automation_secret }}"
-  #     force_foreign_changes: true
-  #   register: checkmk_server_api_state
+    - name: "Read SSHD Configuration File.
+      ansible.builtin.assert:
+        that: "'Port {{ ssh_port }}' in lookup('ansible.builtin.file', '/etc/foo.txt')
 
-  # - name: "Verify REST API call."
-  #   ansible.builtin.assert:
-  #     that: checkmk_server_api_state.msg == "422 - There are no changes to be activated."
+# {% if ssh_port is defined and ssh_port | length %}
+# Port {{ ssh_port }}
+# {% else %}
+# #Port 22
+# {% endif %}
+# {% if ssh_protocol is defined and ssh_protocol | length %}
+# Protocol {{ ssh_protocol }}
+# {% else %}
+# #Protocol 2
+# {% endif %}
+# {% if ssh_address_family is defined and ssh_address_family | length %}
+# AddressFamily {{ ssh_address_family }}
+# {% else %}
+# #AddressFamily any
+# {% endif %}
+# {% if ssh_listen_address is defined and ssh_listen_address | length %}
+# ListenAddress {{ ssh_listen_address }}
+# {% else %}
+# #ListenAddress 0.0.0.0
+# #ListenAddress ::
+# {% endif %}
+
+# #HostKey /etc/ssh/ssh_host_rsa_key
+# #HostKey /etc/ssh/ssh_host_ecdsa_key
+# #HostKey /etc/ssh/ssh_host_ed25519_key
+
+# # Ciphers and keying
+# #RekeyLimit default none
+
+# # Ciphers
+# {% if ssh_ciphers is defined and ssh_ciphers | length %}
+# Ciphers {{ ssh_ciphers }}
+# {% endif %}
+# {% if ssh_enabled_ciphers is defined and ssh_enabled_ciphers | length %}
+# Ciphers +{{ ssh_enabled_ciphers }}
+# {% endif %}
+# {% if ssh_disabled_ciphers is defined and ssh_disabled_ciphers | length %}
+# {% if
+# (ansible_distribution == 'Debian' and ansible_distribution_version is version('10', '>='))
+# or (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('18', '>='))
+# or (ansible_distribution == 'CentOS' and ansible_distribution_version is version('8', '>='))
+# %}
+# Ciphers -{{ ssh_disabled_ciphers }}
+# {% endif %}
+# {% endif %}
+
+# # Logging
+# #SyslogFacility AUTH
+# #LogLevel INFO
+
+# # Authentication:
+
+# #LoginGraceTime 2m
+# {% if ssh_permit_root_login is defined and ssh_permit_root_login | bool %}
+# PermitRootLogin yes
+# {% elif ssh_permit_root_login | string | length %}
+# PermitRootLogin {{ ssh_permit_root_login }}
+# {% else %}
+# #PermitRootLogin prohibit-password
+# {% endif %}
+# {% if ssh_strict_mode is defined and ssh_strict_mode | bool %}
+# StrictModes yes
+# {% else %}
+# #StrictModes yes
+# {% endif %}
+# #MaxAuthTries 6
+# #MaxSessions 10
+
+# #PubkeyAuthentication yes
+
+# # Expect .ssh/authorized_keys2 to be disregarded by default in future.
+# #AuthorizedKeysFile	.ssh/authorized_keys .ssh/authorized_keys2
+
+# #AuthorizedPrincipalsFile none
+
+# #AuthorizedKeysCommand none
+# #AuthorizedKeysCommandUser nobody
+
+# # For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+# #HostbasedAuthentication no
+# # Change to yes if you don't trust ~/.ssh/known_hosts for
+# # HostbasedAuthentication
+# #IgnoreUserKnownHosts no
+# # Don't read the user's ~/.rhosts and ~/.shosts files
+# #IgnoreRhosts yes
+
+# # To disable tunneled clear text passwords, change to no here!
+# {% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication | bool %}
+# PasswordAuthentication {{ ssh_permit_password_authentication }}
+# {% else %}
+# #PasswordAuthentication yes
+# {% endif %}
+# {% if ssh_permit_empty_passwords is defined and ssh_permit_empty_passwords | bool %}
+# PermitEmptyPasswords {{ ssh_permit_empty_passwords }}
+# {% else %}
+# #PermitEmptyPasswords no
+# {% endif %}
+
+# # Change to yes to enable challenge-response passwords (beware issues with
+# # some PAM modules and threads)
+# {% if ssh_challenge_response_auth is defined and ssh_challenge_response_auth | bool %}
+# ChallengeResponseAuthentication {{ ssh_challenge_response_auth }}
+# {% else %}
+# ChallengeResponseAuthentication no
+# {% endif %}
+
+# # Kerberos options
+# #KerberosAuthentication no
+# #KerberosOrLocalPasswd yes
+# #KerberosTicketCleanup yes
+# #KerberosGetAFSToken no
+
+# # GSSAPI options
+# {% if ssh_gss_api_authentication is defined and ssh_gss_api_authentication | bool %}
+# GSSAPIAuthentication {{ ssh_gss_api_authentication }}
+# {% else %}
+# #GSSAPIAuthentication no
+# {% endif %}
+# #GSSAPICleanupCredentials yes
+# #GSSAPIStrictAcceptorCheck yes
+# #GSSAPIKeyExchange no
+
+# # Set this to 'yes' to enable PAM authentication, account processing,
+# # and session processing. If this is enabled, PAM authentication will
+# # be allowed through the ChallengeResponseAuthentication and
+# # PasswordAuthentication.  Depending on your PAM configuration,
+# # PAM authentication via ChallengeResponseAuthentication may bypass
+# # the setting of "PermitRootLogin without-password".
+# # If you just want the PAM account and session checks to run without
+# # PAM authentication, then enable this but set PasswordAuthentication
+# # and ChallengeResponseAuthentication to 'no'.
+# UsePAM yes
+
+# #AllowAgentForwarding yes
+# #AllowTcpForwarding yes
+# #GatewayPorts no
+# {% if ssh_allow_x11_forwarding is defined and ssh_allow_x11_forwarding | bool %}
+# X11Forwarding {{ ssh_allow_x11_forwarding }}
+# {% else %}
+# X11Forwarding no
+# {% endif %}
+# #X11DisplayOffset 10
+# #X11UseLocalhost yes
+# #PermitTTY yes
+# {% if ssh_print_motd is defined and ssh_print_motd | bool %}
+# PrintMotd {{ ssh_print_motd }}
+# {% else %}
+# PrintMotd no
+# {% endif %}
+# #PrintLastLog yes
+# #TCPKeepAlive yes
+# #PermitUserEnvironment no
+# #Compression delayed
+# #ClientAliveInterval 0
+# #ClientAliveCountMax 3
+# #UseDNS no
+# #PidFile /var/run/sshd.pid
+# #MaxStartups 10:30:100
+# #PermitTunnel no
+# #ChrootDirectory none
+# #VersionAddendum none
+
+# {% if ssh_print_banner is defined and ssh_print_banner | bool %}
+# {% if ssh_banner_file is defined and ssh_banner_file | length %}
+# Banner {{ ssh_banner_file }}
+# {% endif %}
+# {% else %}
+# # no default banner path
+# #Banner none
+# {% endif %}
+
+# # Allow client to pass locale environment variables
+# AcceptEnv LANG LC_*
+
+# # override default of no subsystems
+# Subsystem	sftp	{{ ssh_sftp_path }}
+
+# # Example of overriding settings on a per-user basis
+# #Match User anoncvs
+# #	X11Forwarding no
+# #	AllowTcpForwarding no
+# #	PermitTTY no
+# #	ForceCommand cvs server
+# {% if ssh_usedns is defined and ssh_usedns | bool %}
+# UseDNS {{ ssh_usedns }}
+# {% else %}
+# UseDNS no
+# {% endif %}
+# {% if ssh_allowed_users is defined and ssh_allowed_users | length %}
+# AllowUsers {{ ssh_allowed_users }}
+# {% endif %}
+# {% if ssh_allowed_groups is defined and ssh_allowed_groups | length %}
+# AllowGroups {{ ssh_allowed_groups }}
+# {% endif %}
+
+
+# {% if ssh_vault_trusted_ca_enable is defined and ssh_vault_trusted_ca_enable | bool %}
+# # Vault CA Keys
+# TrustedUserCAKeys /etc/ssh/{{ ssh_vault_ca_cert | default('trusted-user-ca-keys.pem')}}
+# {% endif %}
