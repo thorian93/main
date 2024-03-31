@@ -9,6 +9,11 @@
 - name: "Include Derivate specific Variables."
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
+- name: "Ensure SSHD is installed."
+  ansible.builtin.package:
+    name: sshd
+    state: present
+
 - name: "Configure Banner."
   ansible.builtin.template:
     src: banner.j2
