@@ -19,16 +19,16 @@
 
     - name: "Verify that SSH Service is listening on port {{ ssh_port }}."
       ansible.builtin.assert:
-        that: "(ssh_port_state.port == {{ ssh_port }}) and (ssh_port_state.state == 'started')"
+        that: "(ssh_port_state.port == ssh_port) and (ssh_port_state.state == 'started')"
 
-    - name: "Read SSHD Configuration File.
-      ansible.builtin.assert:
-        that: "'Port {{ ssh_port }}' in {{ lookup('ansible.builtin.file', '/etc/foo.txt') }}"
-
-    - name: "Read SSHD Configuration File.
-      ansible.builtin.assert:
-        that: "'Subsystem	sftp	{{ ssh_sftp_path }}' in {{ lookup('ansible.builtin.file', '/etc/foo.txt') }}"
-
+    - name: "Verify SSHD Port."
+      lineinfile:
+        name: /etc/ssh/sshd_config
+        line: "Port {{ ssh_port }}"
+        state: present
+      check_mode: true
+      register: ssh_conf
+      failed_when: (ssh_conf is changed) or (ssh_conf is failed)
 
 # {% if ssh_port is defined and ssh_port | length %}
 # Port {{ ssh_port }}
