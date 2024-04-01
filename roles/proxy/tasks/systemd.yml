@@ -27,5 +27,5 @@
 
 
 - name: "Reload systemd configuration."
-  systemd:
+  ansible.builtin.systemd:
     daemon-reload: true

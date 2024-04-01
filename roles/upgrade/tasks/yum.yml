@@ -18,9 +18,9 @@
     state: present
   with_items: "{{ upgrade_packages_on_hold }}"
 
-- name: "Store List of Updates for further Inspection."
+# We need to run the command instead of the module, so we can store the output in a list.
+- name: "Store List of Updates for further Inspection."  # noqa command-instead-of-module
   ansible.builtin.command: yum check-update
-  args:
   register: upgrade_update_list_yum
   failed_when: upgrade_update_list_yum.rc > 100
   when: upgrade_reporting_enable | bool

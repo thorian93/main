@@ -27,9 +27,9 @@
   changed_when: upgrade_apt_mark_status.rc == 0 or "No packages found" in upgrade_apt_mark_status.stderr
   failed_when: upgrade_apt_mark_status.rc == 1000
 
-- name: "Store List of Updates for further Inspection."
+# We need to run the command instead of the module, so we can store the output in a list.
+- name: "Store List of Updates for further Inspection."  # noqa command-instead-of-module
   ansible.builtin.command: apt list --upgradable
-  args:
   register: upgrade_update_list_apt
   when: upgrade_reporting_enable | bool
 

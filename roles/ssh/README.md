@@ -2,10 +2,6 @@
 
 This role configures SSHD on RHEL/CentOS, Debian/Ubuntu, Fedora and openSUSE servers.
 
-[![Ansible Role: SSH](https://img.shields.io/ansible/role/55144?style=flat-square)](https://galaxy.ansible.com/thorian93/ssh)
-[![Ansible Role: SSH](https://img.shields.io/ansible/quality/55144?style=flat-square)](https://galaxy.ansible.com/thorian93/ssh)
-[![Ansible Role: SSH](https://img.shields.io/ansible/role/d/55144?style=flat-square)](https://galaxy.ansible.com/thorian93/ssh)
-
 ## Requirements
 
 No special requirements; note that this role requires root access, so either run it in a playbook with a global `become: yes`, or invoke the role in your playbook like:
@@ -18,6 +14,10 @@ No special requirements; note that this role requires root access, so either run
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
+
+    ssh_include_configs: true
+
+Enable inclusion of configuration snippets from `/etc/ssh/sshd_config.d/`.
 
     sshd_port: '22'
 
@@ -58,7 +58,7 @@ Use sshd strict mode.
     sshd_allowed_users: []
     sshd_allowed_groups: []
 
-Space separated list of users and groups that may login through SSH. **Be advised that both conditions must be true!**  
+Space separated list of users and groups that may login through SSH. **Be advised that both conditions must be true!**
 For example, if you set `sshd_allowed_users` to `foo`, `foo` can login. If you additionally set `sshd_allowed_groups` to `bar` while `foo` is not a member of `bar`, `foo` will no longer be able to login.
 
     sshd_allow_x11_forwarding: "no"
@@ -92,7 +92,7 @@ Configure a banner which is displayed prior to login. The file set here will be 
 
     sshd_vault_trusted_ca_enable: 'no'
 
-Enable to obtain and configure Vault trusted CA certificates.  
+Enable to obtain and configure Vault trusted CA certificates.
 **This requires a functional [HashiCorp Vault](https://www.vaultproject.io/) instance!**
 
     sshd_vault_server: 'https://127.0.0.1:8200'

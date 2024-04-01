@@ -1,0 +1,10 @@
+---
+- name: "Update CA Trust on RedHat Derivates."  # noqa no-changed-when
+  listen: update trust
+  ansible.builtin.command: update-ca-trust
+  when: ansible_os_family == "RedHat"
+
+- name: "Update CA Trust Debian Derivates."  # noqa no-changed-when
+  listen: update trust
+  ansible.builtin.command: update-ca-certificates
+  when: ansible_os_family == "Debian"

@@ -1,6 +1,6 @@
 ---
 - name: "Obtain trusted SSH Keys from Vault."
   ansible.builtin.get_url:
-    url: "{{ common_sshd_vault_server | default('http://127.0.0.1:8200') }}/v1/ssh-client-signer/public_key"
-    dest: "/etc/ssh/{{ sshd_vault_ca_cert | default('trusted-user-ca-keys.pem') }}"
+    url: "{{ common_ssh_vault_server | default('http://127.0.0.1:8200') }}/v1/ssh-client-signer/public_key"
+    dest: "/etc/ssh/{{ ssh_vault_ca_cert | default('trusted-user-ca-keys.pem') }}"
     mode: '0644'

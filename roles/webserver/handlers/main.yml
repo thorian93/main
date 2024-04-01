@@ -1,48 +1,58 @@
 ---
-- name: restart webserver apache
+- name: "Restart Web Server Apache."
+  listen: restart webserver apache
   ansible.builtin.service:
     name: "{{ webserver_apache_name }}"
     state: restarted
 
-- name: reload webserver apache
+- name: "Reload Web Server Apache."
+  listen: reload webserver apache
   ansible.builtin.service:
     name: "{{ webserver_apache_name }}"
     state: reloaded
 
-- name: restart webserver apache2
+- name: "Restart Web Server Apache2"
+  listen: restart webserver apache2
   ansible.builtin.service:
     name: "{{ webserver_apache_name }}"
     state: restarted
 
-- name: reload webserver apache2
+- name: "Reload Web Server Apache2."
+  listen: reload webserver apache
   ansible.builtin.service:
     name: "{{ webserver_apache_name }}"
     state: reloaded
 
-- name: restart webserver httpd
+- name: "Restart Web Server HTTPD."
+  listen: restart webserver httpd
   ansible.builtin.service:
     name: "{{ webserver_apache_name }}"
     state: restarted
 
-- name: reload webserver httpd
+- name: "Reload Web Server HTTPD."
+  listen: resload webserver httpd
   ansible.builtin.service:
     name: "{{ webserver_apache_name }}"
     state: reloaded
 
-- name: restart webserver nginx
+- name: "Restart webserver NGINX."
+  listen: restart webserver nginx
   ansible.builtin.service:
     name: "{{ webserver_nginx_name }}"
     state: restarted
 
-- name: reload webserver nginx
+- name: "Reload Web Server NGINX"
+  listen: reload webserver nginx
   ansible.builtin.service:
     name: "{{ webserver_nginx_name }}"
     state: reloaded
 
-- name: restart webserver none
+- name: "Restart Web Server None"
+  listen: restart webserver none
   ansible.builtin.debug:
     msg: "No webserver could be detected! Make sure you have a webserver installed!"
 
-- name: reload webserver none
+- name: "Reload Web Server None"
+  listen: reload webserver none
   ansible.builtin.debug:
     msg: "No webserver could be detected! Make sure you have a webserver installed!"

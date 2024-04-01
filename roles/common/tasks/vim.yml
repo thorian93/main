@@ -4,6 +4,9 @@
     dest: "{{ common_vimrc_path }}"
     line: "let g:skip_defaults_vim = 1"
     regexp: "(# |^)let g:skip_defaults_vim.*"
+    owner: root
+    group: root
+    mode: 0644
     state: present
     backup: true
     create: true

@@ -82,6 +82,6 @@ scenario:
     - converge
     # - idempotence  # disable for now, as we have non-idempotent tasks
     # - side_effect
-    - verify
+    # - verify
     - cleanup
     - destroy

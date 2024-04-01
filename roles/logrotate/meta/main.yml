@@ -5,6 +5,8 @@ galaxy_info:
   description: Logrotate log rotation daemon
   license: "license (MIT)"
 
+  issue_tracker_url: https://github.com/thorian93/main/issues
+
   min_ansible_version: "2.9"
 
   galaxy_tags:
@@ -17,8 +19,7 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 7
-        - 8
+        - all
     - name: Debian
       versions:
         - Stretch
@@ -47,4 +48,4 @@ galaxy_info:
         - Focal
 
 dependencies:
-  - role: thorian93.webserver
+  - role: thorian93.main.webserver

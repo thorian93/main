@@ -12,10 +12,10 @@
 - name: "Concatenate additional sudoers Permissions Variables."
   ansible.builtin.set_fact:
     sudo_sudoers_config: >-
-      {{ sudo_sudoers_config_global | default('') | list  +
-      sudo_sudoers_config_os | default('') | list  +
-      sudo_sudoers_config_system | default('') | list  +
-      sudo_sudoers_config_stage | default('') | list  +
+      {{ sudo_sudoers_config_global | default('') | list +
+      sudo_sudoers_config_os | default('') | list +
+      sudo_sudoers_config_system | default('') | list +
+      sudo_sudoers_config_stage | default('') | list +
       sudo_sudoers_config_role | default('') | list }}
 
 - name: "Configure main sudo Configuration."

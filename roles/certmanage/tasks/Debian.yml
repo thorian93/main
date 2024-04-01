@@ -15,8 +15,4 @@
     group: root
     mode: 0644
   with_items: "{{ certmanage_certificates }}"
-  register: upload_cert_result
-
-- name: Update CA Trust.
-  ansible.builtin.command: update-ca-certificates
-  when: upload_cert_result.changed
+  notify: update trust

@@ -1,19 +1,6 @@
 # Ansible Role: Webserver
 
----
-
-## Unmaintained! Moved to collection!
-This role has moved to my [**web** collection](https://github.com/thorian93/web).  
-It is **not** maintained here anymore!  
-Head over to the [collection](https://github.com/thorian93/web) for up to date content.
-
----
-
-This role is a meta role to enable unified usage of webserver roles. It provides variables to be used in different roles.
-
-[![Ansible Role: Webserver](https://img.shields.io/ansible/role/55151?style=flat-square)](https://galaxy.ansible.com/thorian93/webserver)
-[![Ansible Role: Webserver](https://img.shields.io/ansible/quality/55151?style=flat-square)](https://galaxy.ansible.com/thorian93/webserver)
-[![Ansible Role: Webserver](https://img.shields.io/ansible/role/d/55151?style=flat-square)](https://galaxy.ansible.com/thorian93/webserver)
+This role is a meta role to enable unified usage of web server roles. It provides variables to be used in different roles.
 
 ## Here be Dragons!
 
@@ -25,7 +12,7 @@ No special requirements; note that this role requires root access, so either run
 
     - hosts: foobar
       roles:
-        - role: thorian93.webserver
+        - role: thorian93.main.webserver
           become: yes
 
 ## Role Variables
@@ -36,15 +23,15 @@ Rather refer to the variables this role discovers:
 
     webserver_name: []
 
-The name of the webserver. Currently the following can be discovered: `apache2`, `httpd` and `nginx`.
+The name of the web server. Currently, the following can be discovered: `apache2`, `httpd` and `nginx`.
 
     webserver_user: []
 
-The user the webserver runs as. See the corresponding file in `vars/` for details.
+The user the web server runs as. See the corresponding file in `vars/` for details.
 
     webserver_conf_file: []
 
-The main configuration file of the webserver. See the corresponding file in `vars/` for details.
+The main configuration file of the web server. See the corresponding file in `vars/` for details.
 
 ---
 
@@ -56,7 +43,7 @@ For full disclosure the variables from `vars/Debian.yml`, `vars/RedHat.yml` and 
     webserver_apache_manager: apache2ctl
     webserver_apache_site_dir: "/etc/{{ webserver_apache_name }}/sites-available"
 
-These variables describe the Apache2 webserver.
+These variables describe the Apache2 web server.
 
     webserver_nginx_name: nginx
     webserver_nginx_user: nginx
@@ -64,7 +51,7 @@ These variables describe the Apache2 webserver.
     webserver_nginx_manager: nginx
     webserver_nginx_site_dir: "/etc/{{ webserver_nginx_name }}/conf.d"
 
-These variables describe the NGINX webserver.
+These variables describe the NGINX web server.
 
 ## Dependencies
 

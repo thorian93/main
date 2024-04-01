@@ -16,12 +16,15 @@
     src: zshrc.j2
     dest: "/{% if 'root' in item %}{{ item }}{% else %}home/{{ item }}{% endif %}/.zshrc"
     backup: true
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0640
   with_items: "{{ common_zsh_users }}"
 
-- name: "Determine ZSH binary location."
+- name: "Determine ZSH binary location."  # noqa no-changed-when
   ansible.builtin.command: which zsh
   register: common_zsh_binary_location
 
-- name: "Enable ZSH as default shell."
+- name: "Enable ZSH as default shell."  # noqa no-changed-when
   ansible.builtin.command: "chsh -s {{ common_zsh_binary_location.stdout }} {{ item }}"
   with_items: "{{ common_zsh_users }}"

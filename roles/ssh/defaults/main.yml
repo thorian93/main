@@ -41,11 +41,12 @@ ssh_enabled_ciphers: []
 ssh_disabled_ciphers: []
 
 # Misc
+ssh_include_configs: false
 ssh_allow_x11_forwarding: false
 ssh_usedns: false
 ssh_print_motd: false
 ssh_print_banner: false
-ssh_banner_file: '/etc/banner'  # Will be created when a banner text is defined. To use it enable sshd_print_banner.
+ssh_banner_file: '/etc/banner'  # Will be created when a banner text is defined. To use it enable ssh_print_banner.
 ssh_banner_text: ''
 
 # Hashicorp Vault Settings

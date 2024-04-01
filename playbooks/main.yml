@@ -1,47 +1,47 @@
 ---
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - certmanage
 
-- hosts: my_test_host
+- hosts: all
   name: "Common."
   become: true
   roles:
     - common
 
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - journald
 
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - logrotate
 
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - ntp
 
-- hosts: my_test_host
+- hosts: all
   name: "Proxy."
   become: true
   roles:
     - proxy
 
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - ssh
 
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - sudo
 
-- hosts: my_test_host
+- hosts: all
   become: true
   roles:
     - upgrade

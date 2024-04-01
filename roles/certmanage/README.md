@@ -2,10 +2,6 @@
 
 This role installs custom CA certificates on Debian/Ubuntu, RHEL/CentOS and Fedora servers.
 
-[![Ansible Role: Certmanage](https://img.shields.io/ansible/role/55130?style=flat-square)](https://galaxy.ansible.com/thorian93/certmanage)
-[![Ansible Role: Certmanage](https://img.shields.io/ansible/quality/55130?style=flat-square)](https://galaxy.ansible.com/thorian93/certmanage)
-[![Ansible Role: Certmanage](https://img.shields.io/ansible/role/d/55130?style=flat-square)](https://galaxy.ansible.com/thorian93/certmanage)
-
 ## Here be Dragons!
 
 This role only installs certificates, it does not handle removal of certificates currently.
@@ -46,7 +42,7 @@ This role ensures that it is not used against unsupported or untested operating 
       - CentOS 7
       - Fedora 30
 
-If the combination of distribution and major version number do not match the target system, the role will fail. To allow the role to work add the distribution name and major version name to that variable and you are good to go. But please test the new combination first!
+If the combination of distribution and major version number do not match the target system, the role will fail. To allow the role to work add the distribution name and major version name to that variable, and you are good to go. But please test the new combination first!
 
 Kudos to [HarryHarcourt](https://github.com/HarryHarcourt) for this idea!
 

@@ -4,34 +4,28 @@
   gather_facts: false
   tasks:
 
-  # - name: "Test sshd is running."
-  #   ansible.builtin.command: omd status started
-  #   register: checkmk_server_site_started_state
-  #   changed_when: false
-  #   failed_when: (not checkmk_server_site_started_state.rc == 0) and (not checkmk_server_site_started_state.rc == 1)
+    - name: Populate service facts.
+      ansible.builtin.service_facts:
 
-  # - name: "Verify started site is running."
-  #   ansible.builtin.assert:
-  #     that: checkmk_server_site_started_state.rc == 0
+    - name: "Test SSH Service is running."
+      ansible.builtin.assert:
+        that: "'sshd.service' in ansible_facts.services"
 
-  # - name: "Test started site URL returns 200."
-  #   ansible.builtin.uri:
-  #     url: "{{ checkmk_var_server_url }}/started/"
-  #   register: checkmk_server_url_state
+    - name: "Test that SSH is listening on Port {{ ssh_port }}."
+      ansible.builtin.wait_for:
+        port: "{{ ssh_port }}"
+        connect_timeout: 30
+      register: ssh_port_state
 
-  # - name: "Verify started site URL returns 200."
-  #   ansible.builtin.assert:
-  #     that: checkmk_server_url_state.status == 200
+    - name: "Verify that SSH Service is listening on port {{ ssh_port }}."
+      ansible.builtin.assert:
+        that: "(ssh_port_state.port == ssh_port) and (ssh_port_state.state == 'started')"
 
-  # - name: "Test if we can talk to the REST API by activating changes."
-  #   checkmk.general.activation:
-  #     server_url: "{{ checkmk_var_server_url }}"
-  #     site: "started"
-  #     automation_user: "{{ checkmk_var_automation_user }}"
-  #     automation_secret: "{{ checkmk_var_automation_secret }}"
-  #     force_foreign_changes: true
-  #   register: checkmk_server_api_state
-
-  # - name: "Verify REST API call."
-  #   ansible.builtin.assert:
-  #     that: checkmk_server_api_state.msg == "422 - There are no changes to be activated."
+    - name: "Verify SSHD Port."
+      lineinfile:
+        name: /etc/ssh/sshd_config
+        line: "Port {{ ssh_port }}"
+        state: present
+      check_mode: true
+      register: ssh_conf
+      failed_when: (ssh_conf is changed) or (ssh_conf is failed)

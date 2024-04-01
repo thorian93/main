@@ -8,7 +8,7 @@
   failed_when: common_disks_list.rc > 1
   when: ('container' not in ansible_facts.virtualization_tech_guest)
 
-- name: "Disable disk checks on all ext4 disk devices."
+- name: "Disable disk checks on all ext4 disk devices."  # noqa no-changed-when
   ansible.builtin.command: "tune2fs -c 0 -i 0 {{ item }}"
   with_items: "{{ common_disks_list.stdout_lines }}"
   when: ('container' not in ansible_facts.virtualization_tech_guest)

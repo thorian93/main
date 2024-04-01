@@ -29,7 +29,7 @@
 
 - name: "Send Reports via Mail."
   become: false
-  ansible.builtin.mail:
+  community.general.mail:
     host: "{{ upgrade_reporting_mail_host }}"
     port: "{{ upgrade_reporting_mail_port }}"
     username: "{{ upgrade_reporting_mail_user | default(omit) }}"

@@ -26,6 +26,6 @@
         fi
      fi
 
-- name: "Workaround - Install python-xml."
+- name: "Workaround - Install python-xml."  # noqa no-changed-when
   ansible.builtin.command: zypper in -y python-xml
   when: ansible_distribution == "opensuse Leap" and ansible_distribution_major_version == "15"

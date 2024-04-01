@@ -7,7 +7,8 @@
         (ansible_distribution+" "+ansible_distribution_major_version not in journald_stable_os)
 
 - name: "Alert if systemd is not there."
-  ansible.builtin.fail: msg="No systemd init system found, so no journald is available!"
+  ansible.builtin.fail:
+    msg: "No systemd init system found, so no journald is available!"
   when: ansible_service_mgr != "systemd"
 
 - name: "Ensure the logging directory exists."
