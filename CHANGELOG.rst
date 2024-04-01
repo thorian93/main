@@ -4,6 +4,25 @@ thorian93.main Release Notes
 
 .. contents:: Topics
 
+v1.1.0
+======
+
+Release Summary
+---------------
+
+Trying to keep it clean.
+
+Minor Changes
+-------------
+
+- Common role - Skip `/etc/hosts` configuration in containers.
+- SSH role - Enable configuration of the`Include` directive.
+
+Bugfixes
+--------
+
+- All roles - Fix another batch of linting issues.
+
 v1.0.0
 ======
 
