@@ -4,15 +4,15 @@
 
   pre_tasks:
 
-  - name: "Ensure SSHD is installed."
-    ansible.builtin.package:
-      name: openssh-server
-      state: present
+    - name: "Ensure SSHD is installed."
+      ansible.builtin.package:
+        name: openssh-server
+        state: present
 
-  - name: "Ensure SSHD is running."
-    ansible.builtin.service:
-      name: sshd
-      state: started
+    - name: "Ensure SSHD is running."
+      ansible.builtin.service:
+        name: sshd
+        state: started
 
   tasks:
 
