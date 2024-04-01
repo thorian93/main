@@ -1,0 +1,8 @@
+release_summary: "Trying to keep it clean."
+
+minor_changes:
+  - Common role - Skip `/etc/hosts` configuration in containers.
+  - SSH role - Enable configuration of the`Include` directive.
+
+bugfixes:
+  - All roles - Fix another batch of linting issues.
