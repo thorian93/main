@@ -41,7 +41,7 @@ ssh_enabled_ciphers: []
 ssh_disabled_ciphers: []
 
 # Misc
-ssh_include_configs: true
+ssh_include_configs: false
 ssh_allow_x11_forwarding: false
 ssh_usedns: false
 ssh_print_motd: false
