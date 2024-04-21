@@ -43,3 +43,14 @@ releases:
     fragments:
     - 1.0.0.yml
     release_date: '2024-03-30'
+  1.1.0:
+    changes:
+      bugfixes:
+      - All roles - Fix another batch of linting issues.
+      minor_changes:
+      - Common role - Skip `/etc/hosts` configuration in containers.
+      - SSH role - Enable configuration of the`Include` directive.
+      release_summary: Trying to keep it clean.
+    fragments:
+    - 1.1.0.yml
+    release_date: '2024-04-01'
