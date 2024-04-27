@@ -19,6 +19,7 @@ proxy_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 # Common Management Selections:
 proxy_apache2_configure: false

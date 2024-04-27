@@ -21,6 +21,7 @@ sudo_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 ## Custom sudoers config can be defined on several levels and will be concatenated
 ## Make sure to use a filename you recognize

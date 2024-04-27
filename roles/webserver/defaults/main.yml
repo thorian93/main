@@ -20,6 +20,7 @@ webserver_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 webserver_name: []
 webserver_user: []

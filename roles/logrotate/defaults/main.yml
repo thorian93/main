@@ -20,6 +20,7 @@ logrotate_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 logrotate_manage_mysql: false
 logrotate_manage_webserver: false
