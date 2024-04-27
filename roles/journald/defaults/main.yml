@@ -16,6 +16,7 @@ journald_stable_os:
   - Fedora 35
   - openSUSE Leap 15
   - openSUSE Leap 42
+  - Rocky 9
   - Ubuntu 14
   - Ubuntu 16
   - Ubuntu 18
