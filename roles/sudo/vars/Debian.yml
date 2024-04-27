@@ -1,2 +1,2 @@
 ---
-common_admin_group: sudo
+sudo_admin_group: sudo

@@ -1,5 +1,6 @@
 ---
 - name: "Configure Proxy for systemd."
+  when: ( proxy_server | length ) and ( proxy_port | length )
   block:
     - name: "Ensure systemd configuration directory exists."
       ansible.builtin.file:
@@ -17,14 +18,11 @@
         owner: root
         group: root
 
-  when: ( proxy_server | length ) and ( proxy_port | length )
-
 - name: "Remove proxy from systemd default."
+  when: ( not proxy_server | length ) or ( not proxy_port | length )
   ansible.builtin.file:
     dest: /etc/systemd/system.conf.d/99proxy.conf
     state: absent
-  when: ( not proxy_server | length ) or ( not proxy_port | length )
-
 
 - name: "Reload systemd configuration."
   ansible.builtin.systemd:

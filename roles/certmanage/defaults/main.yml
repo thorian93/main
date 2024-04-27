@@ -17,6 +17,7 @@ certmanage_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 certmanage_certificates:
   - name: example_certificate

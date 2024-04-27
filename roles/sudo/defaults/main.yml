@@ -21,6 +21,7 @@ sudo_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 ## Custom sudoers config can be defined on several levels and will be concatenated
 ## Make sure to use a filename you recognize
@@ -50,8 +51,8 @@ sudo_defaults:
   - line: "# ALL ALL=(ALL) ALL # WARNING! Only use this together with 'Defaults targetpw'!"
     regex: '^ALL\s*ALL=\(ALL\)\s*ALL.*'
     state: 'present'
-  - line: '%{{ common_admin_group }} ALL=({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
-    regex: '(# |^)\%{{ common_admin_group }}\s*ALL=\({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
+  - line: '%{{ sudo_admin_group }} ALL=({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
+    regex: '(# |^)\%{{ sudo_admin_group }}\s*ALL=\({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
     state: 'present'
   - line: "#includedir /etc/sudoers.d"
     regex: '^#includedir\s*/etc/sudoers.d.*'

@@ -1,8 +1,5 @@
 ---
 ntp_stable_os:
-  - CentOS 6
-  - CentOS 7
-  #  - CentOS 8 # Has no ntp package anymore! Only chrony is available.
   - Debian 8
   - Debian 9
   - Debian 10
@@ -20,6 +17,7 @@ ntp_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 ntp_driftfile: /var/lib/ntp/drift
 ntp_server:

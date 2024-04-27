@@ -15,13 +15,13 @@
     mode: 0640
   delegate_to: localhost
 
-- name: "Prepare Full Report File."
+- name: "Prepare Full Report File."  # noqa no-changed-when
   become: false
   ansible.builtin.shell: '/bin/printf "Generated: $(date)\n\n" > "{{ upgrade_reporting_path }}/report_full.txt"'
   delegate_to: localhost
   run_once: true
 
-- name: "Concatenate Report Files."
+- name: "Concatenate Report Files."  # noqa no-changed-when
   become: false
   ansible.builtin.shell: 'cat {{ upgrade_reporting_path }}/report_{{ inventory_hostname }}.txt >> {{ upgrade_reporting_path }}/report_full.txt'
   delegate_to: localhost

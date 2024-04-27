@@ -43,107 +43,65 @@ Vagrant.configure("2") do |config|
     srv.vm.synced_folder "./", "/home/vagrant/ansible_collections/thorian93/main", type: "9p"
   end
 
-  # Molecule
-  config.vm.define "molecule", autostart: false , primary: false do |srv|
-    srv.vm.box = "generic/ubuntu2004"
+  # Ubuntu
+  config.vm.define "ansibuntu", autostart: false , primary: false do |srv|
+    srv.vm.box = "generic/ubuntu2204"
+    srv.vm.network :private_network,
+    :ip                         => "192.168.122.103",
+    :libvirt__netmask           => "255.255.255.0"
     srv.ssh.insert_key = false
     srv.vm.provider "libvirt" do |libvirt|
       libvirt.default_prefix = "ansible_"
-      libvirt.description = 'This box is used for molecule testing of my Ansible collections.'
-      libvirt.memory = 6144
-      libvirt.cpus = 4
-      libvirt.title = 'molecule'
-      libvirt.keymap = "de"
+      libvirt.description = 'This box is used to test roles against.'
+      libvirt.memory = 2048
+      libvirt.cpus = 2
+      libvirt.title = "ansibuntu"
       libvirt.memorybacking :access, :mode => 'shared'
       libvirt.memorybacking :source, :type => 'memfd'
     end
-    $script = <<-SCRIPT
-    apt-get -y update --quiet
-    apt-get -y install python3-pip ca-certificates curl gnupg lsb-release
-    python3 -m pip install pip --upgrade
-    python3 -m pip install -r /home/vagrant/ansible_collections/thorian93/main/requirements.txt
-    python3 -m pip install molecule molecule-plugins[docker]
-    sudo -u vagrant ansible-galaxy collection install -f -r /home/vagrant/ansible_collections/thorian93/main/requirements.yml
-    mkdir -p /home/vagrant/ansible_collections/thorian93/main
-    mkdir -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-    apt-get update
-    apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-    usermod -aG docker vagrant
-    grep "alias ic=" /home/vagrant/.bashrc || echo "alias ic='ansible-galaxy collection build --force ~/ansible_collections/thorian93/main && ansible-galaxy collection install -f ./checkmk-general-*.tar.gz && rm ./checkmk-general-*.tar.gz'" >> /home/vagrant/.bashrc
-    grep "alias ap=" /home/vagrant/.bashrc || echo "alias ap='ansible-playbook -i vagrant, '" >> /home/vagrant/.bashrc
-    hostnamectl set-hostname molecule
-    SCRIPT
-    srv.vm.provision "shell", inline: $script
-    srv.vm.synced_folder "./", "/home/vagrant/ansible_collections/thorian93/main", type: "9p"
+    srv.vm.provision "shell",
+          inline: "apt-get -y update --quiet && apt-get -y install vim htop curl wget git"
   end
 
-  # # Ubuntu
-  # config.vm.define "ansibuntu", autostart: false , primary: false do |srv|
-  #   srv.vm.box = "generic/ubuntu2204"
-  #   srv.vm.network :private_network,
-  #   :ip                         => "192.168.124.61",
-  #   :libvirt__netmask           => "255.255.255.0",
-  #   :libvirt__network_name      => "ansible_collection",
-  #   :libvirt__network_address   => "192.168.124.0"
-  #   srv.ssh.insert_key = false
-  #   srv.vm.provider "libvirt" do |libvirt|
-  #     libvirt.default_prefix = "ansible_"
-  #     libvirt.description = 'This box is used to test roles against.'
-  #     libvirt.memory = 2048
-  #     libvirt.cpus = 2
-  #     libvirt.title = "ansibuntu"
-  #     libvirt.memorybacking :access, :mode => 'shared'
-  #     libvirt.memorybacking :source, :type => 'memfd'
-  #   end
-  #   srv.vm.provision "shell",
-  #         inline: "apt-get -y update --quiet && apt-get -y install vim htop curl wget git"
-  # end
+  # Debian
+  config.vm.define "debsible", autostart: false , primary: false do |srv|
+    srv.vm.box = "generic/debian12"
+    srv.vm.network :private_network,
+    :ip                         => "192.168.122.104",
+    :libvirt__netmask           => "255.255.255.0"
+    srv.ssh.insert_key = false
+    srv.vm.provider "libvirt" do |libvirt|
+      libvirt.default_prefix = "ansible_"
+      libvirt.description = 'This box is used to test roles against.'
+      libvirt.memory = 2048
+      libvirt.cpus = 2
+      libvirt.title = "debsible"
+      libvirt.memorybacking :access, :mode => 'shared'
+      libvirt.memorybacking :source, :type => 'memfd'
+    end
+    srv.vm.provision "shell",
+      inline: "apt-get -y update --quiet && apt-get -y install vim htop curl wget git"
+  end
 
-  # # Debian
-  # config.vm.define "debsible", autostart: false , primary: false do |srv|
-  #   srv.vm.box = "generic/debian12"
-  #   srv.vm.network :private_network,
-  #   :ip                         => "192.168.124.62",
-  #   :libvirt__netmask           => "255.255.255.0",
-  #   :libvirt__network_name      => "ansible_collection",
-  #   :libvirt__network_address   => "192.168.124.0"
-  #   srv.ssh.insert_key = false
-  #   srv.vm.provider "libvirt" do |libvirt|
-  #     libvirt.default_prefix = "ansible_"
-  #     libvirt.description = 'This box is used to test roles against.'
-  #     libvirt.memory = 2048
-  #     libvirt.cpus = 2
-  #     libvirt.title = "debsible"
-  #     libvirt.memorybacking :access, :mode => 'shared'
-  #     libvirt.memorybacking :source, :type => 'memfd'
-  #   end
-  #   srv.vm.provision "shell",
-  #     inline: "apt-get -y update --quiet && apt-get -y install vim htop curl wget git"
-  # end
-
-  # # CentOS Stream
-  # config.vm.define "anstream", autostart: false , primary: false do |srv|
-  #   srv.vm.box = "generic/centos9s"
-  #   srv.vm.network :private_network,
-  #   :ip                         => "192.168.124.63",
-  #   :libvirt__netmask           => "255.255.255.0",
-  #   :libvirt__network_name      => "ansible_collection",
-  #   :libvirt__network_address   => "192.168.124.0"
-  #   srv.ssh.insert_key = false
-  #   srv.vm.provider "libvirt" do |libvirt|
-  #     libvirt.default_prefix = "ansible_"
-  #     libvirt.description = 'This box is used to test roles against.'
-  #     libvirt.memory = 2048
-  #     libvirt.cpus = 2
-  #     libvirt.title = "anstream"
-  #     libvirt.memorybacking :access, :mode => 'shared'
-  #     libvirt.memorybacking :source, :type => 'memfd'
-  #   end
-  #   srv.vm.provision "shell",
-  #     inline: "dnf --quiet check-update ; dnf -y install vim curl wget git"
-  # end
+  # CentOS Stream
+  config.vm.define "anstream", autostart: false , primary: false do |srv|
+    srv.vm.box = "generic/centos9s"
+    srv.vm.network :private_network,
+    :ip                         => "192.168.122.105",
+    :libvirt__netmask           => "255.255.255.0"
+    srv.ssh.insert_key = false
+    srv.vm.provider "libvirt" do |libvirt|
+      libvirt.default_prefix = "ansible_"
+      libvirt.description = 'This box is used to test roles against.'
+      libvirt.memory = 2048
+      libvirt.cpus = 2
+      libvirt.title = "anstream"
+      libvirt.memorybacking :access, :mode => 'shared'
+      libvirt.memorybacking :source, :type => 'memfd'
+    end
+    srv.vm.provision "shell",
+      inline: "dnf --quiet check-update ; dnf -y install vim curl wget git"
+  end
 
   # # openSUSE
   # config.vm.define "ansuse", autostart: false , primary: false do |srv|

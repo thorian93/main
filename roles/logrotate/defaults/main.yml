@@ -16,10 +16,12 @@ logrotate_stable_os:
   - SLES 12
   - openSUSE Leap 15
   - openSUSE Leap 42
+  - Rocky 9
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 logrotate_manage_mysql: false
 logrotate_manage_webserver: false

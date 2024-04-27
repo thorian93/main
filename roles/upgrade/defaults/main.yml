@@ -10,6 +10,7 @@ upgrade_stable_os:
   - Fedora 35
   - Fedora 36
   - Fedora 37
+  - Fedora 40
   - openSUSE Leap 15
   - openSUSE Leap 42
   - Rocky 9
@@ -19,6 +20,7 @@ upgrade_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 # Basic
 upgrade_packages_on_hold: []

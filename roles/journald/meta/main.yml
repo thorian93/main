@@ -12,36 +12,8 @@ galaxy_info:
   galaxy_tags:
     - linux
     - server
-
-  platforms:
-    - name: EL
-      versions:
-        - all
-    - name: Debian
-      versions:
-        - Jessie
-        - Stretch
-        - Buster
-        - Bullseye
-    - name: Fedora
-      versions:
-        - 30
-        - 31
-        - 32
-        - 33
-        - 34
-        - 35
-    - name: SLES
-      versions:
-        - 11
-        - 12
-    - name: opensuse
-      versions:
-        - 15.2
-        - 42.2
-    - name: Ubuntu
-      versions:
-        - Trusty
-        - Xenial
-        - Bionic
-        - Focal
+    - system
+    - logging
+    - logs
+    - journald
+    - journalctl

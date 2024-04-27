@@ -12,7 +12,6 @@ help:
 	@echo "kvm             - Only copy the correct Vagrantfile for use with KVM."
 	@echo ""
 	@echo "vm              - Create a virtual development environment."
-	@echo "molecule        - Create a virtual environment for molecule tests."
 	@echo "vms        	   - Create a virtual environment with all boxes (exept for the development ones and ansidows)."
 	@echo "vms-debian 	   - Create a virtual environment with all Debian family OSes."
 	@echo "vms-redhat 	   - Create a virtual environment with all RedHat family OSes."
@@ -82,9 +81,6 @@ clean: clean-vm
 
 clean-vm:
 	@vagrant destroy --force
-
-molecule:
-	@vagrant up molecule
 
 vm:
 	@vagrant up collection
