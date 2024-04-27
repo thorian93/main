@@ -98,6 +98,7 @@ platforms:
   - name: rockylinux9
     image: geerlingguy/docker-rockylinux9-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
