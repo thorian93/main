@@ -1,6 +1,7 @@
 ---
 common_apps_derivate:
   - iptstate
+  - lsb_release
   - tig
   - xz
   - yum-utils
