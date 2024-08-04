@@ -49,12 +49,6 @@ setup-python:
 	@python3 -m pip install pip --upgrade
 	@python3 -m pip install -r requirements.txt
 
-kvm:
-	if [ -f Vagrantfile ] ; then cp Vagrantfile Vagrantfile.bak ; fi
-	cp Vagrantfile.kvm Vagrantfile
-	if [ -f playbooks/hosts ] ; then cp playbooks/hosts playbooks/hosts.bak ; fi
-	cp playbooks/hosts.kvm playbooks/hosts
-
 setup-kvm: kvm
 	@sudo apt update -y
 	@sudo apt install -y \
