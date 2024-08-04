@@ -97,8 +97,9 @@ StrictModes yes
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication | bool %}
-PasswordAuthentication {{ ssh_permit_password_authentication }}
+{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication | string | length %}
+PasswordAuthentication {% if ssh_permit_password_authentication | bool %}yes{% elif not ssh_permit_password_authentication | bool %}no{% endif %}
+
 {% else %}
 #PasswordAuthentication yes
 {% endif %}
