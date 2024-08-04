@@ -11,7 +11,7 @@
 Include /etc/ssh/sshd_config.d/*.conf
 {% endif %}
 
-{% if ssh_port is defined and ssh_port | length %}
+{% if ssh_port is defined and ssh_port | string | length %}
 Port {{ ssh_port }}
 {% else %}
 #Port 22
@@ -65,7 +65,7 @@ Ciphers -{{ ssh_disabled_ciphers }}
 
 #LoginGraceTime 2m
 {% if ssh_permit_root_login is defined and ssh_permit_root_login | string | length %}
-PermitRootLogin {% if ssh_permit_root_login | bool %}yes{% elif not ssh_permit_root_login | bool %}no{% elif ssh_permit_root_login | string %}{{ ssh_permit_root_login }}{% endif %}
+PermitRootLogin {{ ssh_permit_root_login }}
 
 {% else %}
 #PermitRootLogin prohibit-password
