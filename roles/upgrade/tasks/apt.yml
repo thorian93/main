@@ -76,7 +76,7 @@
   args:
     executable: "/bin/bash"
   register: service_restarts_apt
-  changed_when: "service_restarts_apt.stdout_lines | length"
+  changed_when: "service_restarts_apt.stdout_lines | length | bool"
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
@@ -86,7 +86,7 @@
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
     service_restarts: "{{ service_restarts_apt.stdout_lines }}"
-  when: "service_restarts_apt.stdout_lines | length"
+  when: "service_restarts_apt.stdout_lines | length | bool"
 
 - name: "Trigger Checkmk APT Plugin."
   ansible.builtin.file:
