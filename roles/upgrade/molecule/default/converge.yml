@@ -9,7 +9,8 @@
         update_cache: true
         cache_valid_time: 600
       when: ansible_os_family == 'Debian'
-    - name: "Install prerequisites."
+
+    - name: "Install Prerequisites."
       ansible.builtin.apt:
         name: "{{ item }}"
         state: present
@@ -17,6 +18,7 @@
         - apt-utils
         - man
       when: ansible_os_family == 'Debian'
+
     - name: "Create '/usr/share/man/man8/' on Ubuntu."
       ansible.builtin.file:
         path: /usr/share/man/man8/

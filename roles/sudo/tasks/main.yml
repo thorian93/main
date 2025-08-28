@@ -54,6 +54,9 @@
   ansible.builtin.file:
     path: "/etc/sudoers.d/{{ item.filename }}"
     state: "{{ item.state }}"
+    owner: root
+    group: root
+    mode: 0640
   when: sudo_sudoers_config is defined and item.state == "absent"
   with_items:
     - "{{ sudo_sudoers_config }}"

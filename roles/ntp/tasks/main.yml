@@ -28,5 +28,8 @@
     src: "ntp.conf.j2"
     dest: "/etc/ntp.conf"
     backup: true
+    owner: root
+    group: root
+    mode: 0640
   notify:
     - restart ntp

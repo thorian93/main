@@ -15,7 +15,14 @@
         name: openssh-server
         state: present
 
-    - name: "Ensure SSHD is running."
+    - name: "Ensure SSHD is running on Debian Derivates."
+      when: ansible_os_family == "Debian"
+      ansible.builtin.service:
+        name: ssh
+        state: started
+
+    - name: "Ensure SSHD is running on RedHat Derivates."
+      when: ansible_os_family == "RedHat"
       ansible.builtin.service:
         name: sshd
         state: started

@@ -21,6 +21,7 @@ ssh_stable_os:
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 # Basic
 ssh_port: '22'
@@ -28,7 +29,7 @@ ssh_protocol: '2'
 ssh_address_family: 'inet'
 
 # Authentication:
-ssh_permit_root_login: false
+ssh_permit_root_login: "without-password"
 ssh_permit_password_authentication: false
 ssh_permit_empty_passwords: false
 ssh_challenge_response_auth: false

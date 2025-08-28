@@ -12,4 +12,4 @@
   ansible.builtin.file:
     path: '/etc/apt/apt.conf.d/99proxy'
     state: absent
-  when: ( not proxy_package_proxy_server | length ) or ( not proxy_package_proxy_port | length )
+  when: ( not proxy_package_proxy_server | length ) or ( not proxy_package_proxy_port | string | length )

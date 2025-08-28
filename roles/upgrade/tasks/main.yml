@@ -6,6 +6,9 @@
         (ansible_distribution_version is not defined) or
         (ansible_distribution+" "+ansible_distribution_major_version not in upgrade_stable_os)
 
+- name: Populate Service Facts.
+  service_facts:
+
 - name: "Include Package Manager specific Playbook."
   ansible.builtin.include_tasks: "{{ ansible_pkg_mgr }}.yml"
 
@@ -20,6 +23,7 @@
     - (service_restarts is defined and service_restarts | length)
     - (upgrade_restart_services | bool)
     - (item not in upgrade_restart_services_blacklist)
+    - (services[item].status != "masked")
 
 - name: "Reboot Server."
   become: true

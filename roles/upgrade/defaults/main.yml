@@ -10,6 +10,7 @@ upgrade_stable_os:
   - Fedora 35
   - Fedora 36
   - Fedora 37
+  - Fedora 40
   - openSUSE Leap 15
   - openSUSE Leap 42
   - Rocky 9

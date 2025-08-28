@@ -1,52 +1,78 @@
 ---
+# cgroupv2 support: https://github.com/geerlingguy/docker-ubuntu2204-ansible/issues/6
 dependency:
   name: galaxy
 driver:
   name: docker
 platforms:
   - name: ubuntu1804
-    image: docker.io/geerlingguy/docker-ubuntu1804-ansible
+    image: geerlingguy/docker-ubuntu1804-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: ubuntu2004
     image: geerlingguy/docker-ubuntu2004-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: ubuntu2204
     image: geerlingguy/docker-ubuntu2204-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    privileged: true
+    pre_build_image: true
+  - name: ubuntu2404
+    image: geerlingguy/docker-ubuntu2404-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
+    tmpfs:
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: debian10
-    image: docker.io/geerlingguy/docker-debian10-ansible
+    image: geerlingguy/docker-debian10-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    privileged: true
+    pre_build_image: true
+  - name: debian11
+    image: geerlingguy/docker-debian11-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
+    tmpfs:
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: debian12
     image: geerlingguy/docker-debian12-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: centos7
@@ -55,25 +81,27 @@ platforms:
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: centos8
     image: geerlingguy/docker-centos8-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
   - name: rockylinux9
     image: geerlingguy/docker-rockylinux9-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
+    cgroupns_mode: host
     tmpfs:
       - /run
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
     pre_build_image: true
 provisioner:

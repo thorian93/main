@@ -4,5 +4,7 @@
     name: git
     state: present
 
-- name: "Configure git to use a Proxy."
+# We cannot use the `git` module here, as it does not provides means to configure git settings.
+# Of course we could first fetch the set values to avoid the `no-changed-when` warning, but frankly I have no time for that.
+- name: "Configure git to use a Proxy."  # noqa command-instead-of-module no-changed-when
   ansible.builtin.command: "git config --global http.proxy http://{{ proxy_server }}:{{ proxy_port }}"

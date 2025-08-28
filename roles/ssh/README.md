@@ -31,9 +31,10 @@ Configure the sshd protocol to use. It is **highly** recommended to keep this at
 
 Configure the IP address family sshd uses. Can be either `any`, `inet` or `inet6`.
 
-    sshd_permit_root_login: 'no'
+    sshd_permit_root_login: 'without-password'
 
-Allow login as root user.
+Allow login as root user. This has to be one of the supported values, e.g. `yes`, `no` or `without-password`.
+Booleans will not work here as you might expect, so stick to the exact values as defined by the OpenSSH documentation.
 
     sshd_permit_password_authentication: "no"
 

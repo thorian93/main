@@ -15,10 +15,12 @@ proxy_stable_os:
   - Fedora 36
   - openSUSE Leap 15
   - openSUSE Leap 42
+  - Rocky 9
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
+  - Ubuntu 24
 
 # Common Management Selections:
 proxy_apache2_configure: false
