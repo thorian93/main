@@ -5,6 +5,7 @@ upgrade_stable_os:
   - Debian 10
   - Debian 11
   - Debian 12
+  - Debian 13
   - Fedora 33
   - Fedora 34
   - Fedora 35
