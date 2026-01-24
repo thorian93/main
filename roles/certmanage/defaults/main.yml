@@ -6,13 +6,8 @@ certmanage_stable_os:
   - Debian 10
   - Debian 11
   - Debian 12
-  - Fedora 30
-  - Fedora 31
-  - Fedora 32
-  - Fedora 33
-  - Fedora 34
-  - Fedora 35
-  - Fedora 36
+  - Debian 13
+  - Fedora 42
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20

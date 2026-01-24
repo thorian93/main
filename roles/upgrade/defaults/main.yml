@@ -1,7 +1,6 @@
 ---
 upgrade_stable_os:
   - CentOS 8
-  - Debian 9
   - Debian 10
   - Debian 11
   - Debian 12
@@ -12,12 +11,13 @@ upgrade_stable_os:
   - Fedora 36
   - Fedora 37
   - Fedora 40
+  - Fedora 42
   - openSUSE Leap 15
   - openSUSE Leap 42
   - Rocky 9
+  - Rocky 10
   - SLES 11
   - SLES 12
-  - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22

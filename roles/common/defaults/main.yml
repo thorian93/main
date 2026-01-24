@@ -6,15 +6,14 @@ common_stable_os:
   - Debian 10
   - Debian 11
   - Debian 12
-  - Fedora 33
-  - Fedora 34
-  - Fedora 35
-  - Fedora 36
+  - Debian 13
+  - Fedora 42
   - SLES 11
   - SLES 12
   - openSUSE Leap 15
   - openSUSE Leap 42
   - Rocky 9
+  - Rocky 10
   - Ubuntu 16
   - Ubuntu 18
   - Ubuntu 20

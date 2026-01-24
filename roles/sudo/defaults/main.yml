@@ -1,23 +1,17 @@
 ---
 sudo_stable_os:
-  - CentOS 7
   - CentOS 8
-  - Debian 9
   - Debian 10
   - Debian 11
   - Debian 12
-  - Fedora 30
-  - Fedora 31
-  - Fedora 32
-  - Fedora 33
-  - Fedora 34
-  - Fedora 35
+  - Debian 13
+  - Fedora 42
   - SLES 11
   - SLES 12
   - openSUSE Leap 15
   - openSUSE Leap 42
   - Rocky 9
-  - Ubuntu 16
+  - Rocky 10
   - Ubuntu 18
   - Ubuntu 20
   - Ubuntu 22
@@ -51,8 +45,8 @@ sudo_defaults:
   - line: "# ALL ALL=(ALL) ALL # WARNING! Only use this together with 'Defaults targetpw'!"
     regex: '^ALL\s*ALL=\(ALL\)\s*ALL.*'
     state: 'present'
-  - line: '%{{ sudo_admin_group }} ALL=({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
-    regex: '(# |^)\%{{ sudo_admin_group }}\s*ALL=\({% if ansible_os_family == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
+  - line: '%{{ sudo_admin_group }} ALL=({% if ansible_facts[os_family] == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
+    regex: '(# |^)\%{{ sudo_admin_group }}\s*ALL=\({% if ansible_facts[os_family] == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
     state: 'present'
   - line: "#includedir /etc/sudoers.d"
     regex: '^#includedir\s*/etc/sudoers.d.*'
