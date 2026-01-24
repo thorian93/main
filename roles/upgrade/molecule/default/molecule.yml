@@ -41,7 +41,7 @@ platforms:
     privileged: true
     systemd: always
   - name: fedora42
-    image: geerlingguy/docker-fedora42-ansible
+    image: docker.io/geerlingguy/docker-fedora42-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     pre_build_image: true
     privileged: true
