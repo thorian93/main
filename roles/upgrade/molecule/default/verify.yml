@@ -4,7 +4,7 @@
   gather_facts: false
   tasks:
 
-    - name: "Test Server is upgraded."
+    - name: "Test Server is upgraded."   # noqa package-latest
       ansible.builtin.package:
         name: "*"
         state: "latest"
