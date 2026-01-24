@@ -1,27 +1,21 @@
 ---
 logrotate_stable_os:
-  - CentOS 7
-  - CentOS 8
-  - Debian 9
-  - Debian 10
-  - Debian 11
-  - Debian 12
-  - Fedora 30
-  - Fedora 31
-  - Fedora 32
-  - Fedora 33
-  - Fedora 34
-  - Fedora 35
-  - SLES 11
-  - SLES 12
-  - openSUSE Leap 15
-  - openSUSE Leap 42
-  - Rocky 9
-  - Ubuntu 16
-  - Ubuntu 18
-  - Ubuntu 20
-  - Ubuntu 22
-  - Ubuntu 24
+  - CentOS-8
+  - Debian-10
+  - Debian-11
+  - Debian-12
+  - Debian-13
+  - Fedora-42
+  - openSUSE Leap-15
+  - openSUSE Leap-42
+  - SLES-11
+  - SLES-12
+  - Rocky-9
+  - Rocky-10
+  - Ubuntu-18
+  - Ubuntu-20
+  - Ubuntu-22
+  - Ubuntu-24
 
 logrotate_manage_mysql: false
 logrotate_manage_webserver: false

@@ -1,21 +1,21 @@
 ---
 sudo_stable_os:
-  - CentOS 8
-  - Debian 10
-  - Debian 11
-  - Debian 12
-  - Debian 13
-  - Fedora 42
-  - SLES 11
-  - SLES 12
-  - openSUSE Leap 15
-  - openSUSE Leap 42
-  - Rocky 9
-  - Rocky 10
-  - Ubuntu 18
-  - Ubuntu 20
-  - Ubuntu 22
-  - Ubuntu 24
+  - CentOS-8
+  - Debian-10
+  - Debian-11
+  - Debian-12
+  - Debian-13
+  - Fedora-42
+  - openSUSE Leap-15
+  - openSUSE Leap-42
+  - SLES-11
+  - SLES-12
+  - Rocky-9
+  - Rocky-10
+  - Ubuntu-18
+  - Ubuntu-20
+  - Ubuntu-22
+  - Ubuntu-24
 
 ## Custom sudoers config can be defined on several levels and will be concatenated
 ## Make sure to use a filename you recognize
