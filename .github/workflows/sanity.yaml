@@ -37,9 +37,9 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-          - stable-2.17
           - stable-2.18
           - stable-2.19
+          - stable-2.20
           - devel
 
     steps:
@@ -49,14 +49,20 @@ jobs:
         with:
           path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: "Install uv."
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: '3.12'
+          enable-cache: true
+          working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+
+      - name: "Create uv venv."
+        run: uv venv
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
       - name: Install ansible-base (${{ matrix.ansible }})
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+        run: uv pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
       - name: Run sanity tests
-        run: ansible-test sanity --docker -v --color --coverage
+        run: uv run ansible-test sanity --docker -v --color --coverage
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
