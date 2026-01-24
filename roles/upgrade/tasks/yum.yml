@@ -56,7 +56,7 @@
   args:
     executable: "/bin/bash"
   register: upgrade_service_restarts_yum
-  changed_when: "upgrade_service_restarts_yum.stdout | length"
+  changed_when: "upgrade_service_restarts_yum.stdout | length > 0"
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
@@ -66,4 +66,4 @@
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
     upgrade_service_restarts: "{{ upgrade_service_restarts_yum.stdout_lines }}"
-  when: "upgrade_service_restarts_yum.stdout_lines | length"
+  when: "upgrade_service_restarts_yum.stdout_lines | length > 0"

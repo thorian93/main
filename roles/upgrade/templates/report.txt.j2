@@ -3,7 +3,7 @@ Update Report for {{ inventory_hostname }}:
 Reboots and Services:
 {% if (upgrade_reboot_hint is defined and upgrade_reboot_hint | bool) and ((upgrade_unattended_reboot | bool) or (upgrade_force_reboot | bool)) %}
 Server was rebooted.
-{% elif upgrade_service_restarts is defined and upgrade_service_restarts | length %}
+{% elif upgrade_service_restarts is defined and upgrade_service_restarts | length > 0 %}
 The following services have been restarted:
 {% for service in upgrade_service_restarts %}
 {{ service }}{% if service in upgrade_restart_services_blacklist %} (skipped due to blacklist){% endif %} 

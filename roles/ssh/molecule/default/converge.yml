@@ -8,7 +8,7 @@
       ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 600
-      when: ansible_os_family == 'Debian'
+      when: ansible_facts[os_family] == 'Debian'
 
     - name: "Ensure SSHD is installed."
       ansible.builtin.package:
@@ -16,13 +16,13 @@
         state: present
 
     - name: "Ensure SSHD is running on Debian Derivates."
-      when: ansible_os_family == "Debian"
+      when: ansible_facts[os_family] == "Debian"
       ansible.builtin.service:
         name: ssh
         state: started
 
     - name: "Ensure SSHD is running on RedHat Derivates."
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts[os_family] == "RedHat"
       ansible.builtin.service:
         name: sshd
         state: started

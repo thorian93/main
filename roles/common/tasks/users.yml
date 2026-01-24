@@ -27,7 +27,7 @@
     system: "{{ item.system }}"
     state: "{{ item.state }}"
   with_items: "{{ common_users_present }}"
-  when: common_users_present | length
+  when: common_users_present | length > 0
   no_log: true
 
 - name: "Add Public Keys for Users."
@@ -38,7 +38,7 @@
   with_subelements:
     - "{{ common_users_present }}"
     - keys
-  when: common_users_present | length
+  when: common_users_present | length > 0
   no_log: true
 
 - name: "Remove Users."
@@ -47,5 +47,5 @@
     state: "{{ item.state }}"
     remove: "{{ item.remove }}"
   with_items: "{{ common_users_absent }}"
-  when: common_users_absent | length
+  when: common_users_absent | length > 0
   no_log: true

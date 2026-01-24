@@ -47,8 +47,8 @@
   args:
     executable: "/bin/bash"
   register: upgrade_service_restarts_dnf
-  changed_when: "upgrade_service_restarts_dnf.stdout_lines | length"
-  when: not (ansible_distribution == "Fedora" and ansible_distribution_major_version | int < 33)
+  changed_when: "upgrade_service_restarts_dnf.stdout_lines | length > 0"
+  when: not (ansible_facts[distribution] == "Fedora" and ansible_facts['distribution_major_version'] | int < 33)
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
@@ -58,4 +58,4 @@
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
     upgrade_service_restarts: "{{ upgrade_service_restarts_dnf.stdout_lines }}"
-  when: not (ansible_distribution == "Fedora" and ansible_distribution_major_version | int < 33) and "upgrade_service_restarts_dnf.stdout_lines | length"
+  when: not (ansible_facts[distribution] == "Fedora" and ansible_facts['distribution_major_version'] | int < 33) and "upgrade_service_restarts_dnf.stdout_lines | length > 0"

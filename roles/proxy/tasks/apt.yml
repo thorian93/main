@@ -6,10 +6,10 @@
     owner: root
     group: root
     mode: "0644"
-  when: proxy_package_proxy_server | length
+  when: proxy_package_proxy_server | length > 0
 
 - name: "Remove proxy for APT."
   ansible.builtin.file:
     path: '/etc/apt/apt.conf.d/99proxy'
     state: absent
-  when: ( not proxy_package_proxy_server | length ) or ( not proxy_package_proxy_port | string | length )
+  when: ( not proxy_package_proxy_server | length > 0 ) or ( not proxy_package_proxy_port | string | length > 0 )

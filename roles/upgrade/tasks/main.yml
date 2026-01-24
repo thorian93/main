@@ -1,10 +1,10 @@
 ---
 - name: "Preflight - Fail if target host is not stable for this Role."
   ansible.builtin.fail:
-    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
-  when: (ansible_distribution is not defined) or
+    msg: "This role is not stable for the target operating system, {{ ansible_facts[distribution] }} {{ ansible_facts['distribution_major_version'] }}."
+  when: (ansible_facts[distribution] is not defined) or
         (ansible_distribution_version is not defined) or
-        (ansible_distribution+" "+ansible_distribution_major_version not in upgrade_stable_os)
+        (ansible_facts[distribution]+" "+ansible_facts['distribution_major_version'] not in upgrade_stable_os)
 
 - name: Populate Service Facts.
   ansible.builtin.service_facts:
@@ -20,7 +20,7 @@
   loop: "{{ upgrade_service_restarts }}"
   when:
     - ((upgrade_reboot_hint is not defined) or upgrade_reboot_hint is defined and not (upgrade_unattended_reboot | bool))
-    - (upgrade_service_restarts is defined and upgrade_service_restarts | length)
+    - (upgrade_service_restarts is defined and upgrade_service_restarts | length > 0)
     - (upgrade_restart_services | bool)
     - (item not in upgrade_restart_services_blacklist)
     - (services[item].status != "masked")

@@ -1,7 +1,7 @@
 ---
 - name: "Workaround - Install python-xml."  # noqa command-instead-of-module no-changed-when
   ansible.builtin.command: zypper in -y python-xml
-  when: ansible_distribution == "openSUSE Leap" and ansible_distribution_major_version == "42"
+  when: ansible_facts[distribution] == "openSUSE Leap" and ansible_facts['distribution_major_version'] == "42"
   ignore_errors: true  # noqa ignore-errors
 
 - name: "Ensure Dependencies are present."

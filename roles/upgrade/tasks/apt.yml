@@ -76,7 +76,7 @@
   args:
     executable: "/bin/bash"
   register: upgrade_upgrade_service_restarts_apt
-  changed_when: "upgrade_upgrade_service_restarts_apt.stdout_lines | length | bool"
+  changed_when: "upgrade_upgrade_service_restarts_apt.stdout_lines | length > 0 | bool"
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
@@ -86,7 +86,7 @@
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
     upgrade_service_restarts: "{{ upgrade_upgrade_service_restarts_apt.stdout_lines }}"
-  when: "upgrade_upgrade_service_restarts_apt.stdout_lines | length | bool"
+  when: "upgrade_upgrade_service_restarts_apt.stdout_lines | length > 0 | bool"
 
 - name: "Trigger Checkmk APT Plugin."
   ansible.builtin.file:

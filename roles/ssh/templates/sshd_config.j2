@@ -11,22 +11,22 @@
 Include /etc/ssh/sshd_config.d/*.conf
 {% endif %}
 
-{% if ssh_port is defined and ssh_port | string | length %}
+{% if ssh_port is defined and ssh_port | string | length > 0 %}
 Port {{ ssh_port }}
 {% else %}
 #Port 22
 {% endif %}
-{% if ssh_protocol is defined and ssh_protocol | length %}
+{% if ssh_protocol is defined and ssh_protocol | length > 0 %}
 Protocol {{ ssh_protocol }}
 {% else %}
 #Protocol 2
 {% endif %}
-{% if ssh_address_family is defined and ssh_address_family | length %}
+{% if ssh_address_family is defined and ssh_address_family | length > 0 %}
 AddressFamily {{ ssh_address_family }}
 {% else %}
 #AddressFamily any
 {% endif %}
-{% if ssh_listen_address is defined and ssh_listen_address | length %}
+{% if ssh_listen_address is defined and ssh_listen_address | length > 0 %}
 ListenAddress {{ ssh_listen_address }}
 {% else %}
 #ListenAddress 0.0.0.0
@@ -41,17 +41,17 @@ ListenAddress {{ ssh_listen_address }}
 #RekeyLimit default none
 
 # Ciphers
-{% if ssh_ciphers is defined and ssh_ciphers | length %}
+{% if ssh_ciphers is defined and ssh_ciphers | length > 0 %}
 Ciphers {{ ssh_ciphers }}
 {% endif %}
-{% if ssh_enabled_ciphers is defined and ssh_enabled_ciphers | length %}
+{% if ssh_enabled_ciphers is defined and ssh_enabled_ciphers | length > 0 %}
 Ciphers +{{ ssh_enabled_ciphers }}
 {% endif %}
-{% if ssh_disabled_ciphers is defined and ssh_disabled_ciphers | length %}
+{% if ssh_disabled_ciphers is defined and ssh_disabled_ciphers | length > 0 %}
 {% if
-(ansible_distribution == 'Debian' and ansible_distribution_version is version('10', '>='))
-or (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('18', '>='))
-or (ansible_distribution == 'CentOS' and ansible_distribution_version is version('8', '>='))
+(ansible_facts[distribution] == 'Debian' and ansible_distribution_version is version('10', '>='))
+or (ansible_facts[distribution] == 'Ubuntu' and ansible_distribution_version is version('18', '>='))
+or (ansible_facts[distribution] == 'CentOS' and ansible_distribution_version is version('8', '>='))
 %}
 Ciphers -{{ ssh_disabled_ciphers }}
 {% endif %}
@@ -64,7 +64,7 @@ Ciphers -{{ ssh_disabled_ciphers }}
 # Authentication:
 
 #LoginGraceTime 2m
-{% if ssh_permit_root_login is defined and ssh_permit_root_login | string | length %}
+{% if ssh_permit_root_login is defined and ssh_permit_root_login | string | length > 0 %}
 PermitRootLogin {{ ssh_permit_root_login }}
 
 {% else %}
@@ -97,7 +97,7 @@ StrictModes yes
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication | string | length %}
+{% if ssh_permit_password_authentication is defined and ssh_permit_password_authentication | string | length > 0 %}
 PasswordAuthentication {% if ssh_permit_password_authentication | bool %}yes{% elif not ssh_permit_password_authentication | bool %}no{% endif %}
 
 {% else %}
@@ -174,7 +174,7 @@ PrintMotd no
 #VersionAddendum none
 
 {% if ssh_print_banner is defined and ssh_print_banner | bool %}
-{% if ssh_banner_file is defined and ssh_banner_file | length %}
+{% if ssh_banner_file is defined and ssh_banner_file | length > 0 %}
 Banner {{ ssh_banner_file }}
 {% endif %}
 {% else %}
@@ -199,10 +199,10 @@ UseDNS {{ ssh_usedns }}
 {% else %}
 UseDNS no
 {% endif %}
-{% if ssh_allowed_users is defined and ssh_allowed_users | length %}
+{% if ssh_allowed_users is defined and ssh_allowed_users | length > 0 %}
 AllowUsers {{ ssh_allowed_users }}
 {% endif %}
-{% if ssh_allowed_groups is defined and ssh_allowed_groups | length %}
+{% if ssh_allowed_groups is defined and ssh_allowed_groups | length > 0 %}
 AllowGroups {{ ssh_allowed_groups }}
 {% endif %}
 

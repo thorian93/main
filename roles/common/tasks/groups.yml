@@ -28,11 +28,11 @@
     state: "{{ item.state }}"
     system: "{{ item.system }}"
   with_items: "{{ common_groups_present }}"
-  when: common_groups_present | length
+  when: common_groups_present | length > 0
 
 - name: "Remove groups."
   ansible.builtin.group:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   with_items: "{{ common_groups_absent }}"
-  when: common_groups_absent | length
+  when: common_groups_absent | length > 0
