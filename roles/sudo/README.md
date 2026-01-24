@@ -52,8 +52,8 @@ See the user variables above for the logic behind these variables. Users listed 
       - line: "# ALL ALL=(ALL) ALL # WARNING! Only use this together with 'Defaults targetpw'!"
         regex: '^ALL\s*ALL=\(ALL\)\s*ALL.*'
         state: 'present'
-      - line: '%{{ sudo_admin_group }} ALL=({% if ansible_facts[os_family] == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
-        regex: '(# |^)\%{{ sudo_admin_group }}\s*ALL=\({% if ansible_facts[os_family] == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
+      - line: '%{{ sudo_admin_group }} ALL=({% if ansible_facts['os_family'] == "Debian" %}ALL:ALL{% else %}ALL{% endif %}) ALL'
+        regex: '(# |^)\%{{ sudo_admin_group }}\s*ALL=\({% if ansible_facts['os_family'] == "Debian" %}ALL:ALL{% else %}ALL{% endif %}\)\s*ALL.*'
         state: 'present'
       - line: "#includedir /etc/sudoers.d"
         regex: '^#includedir\s*/etc/sudoers.d.*'

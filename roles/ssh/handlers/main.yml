@@ -1,28 +1,28 @@
 ---
 - name: "Restart SSH Service on Debian Derivates."
   listen: restart ssh
-  when: ansible_facts[os_family] == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.service:
     name: ssh
     state: restarted
 
 - name: "Reload SSH Service on Debian Derivates."
   listen: reload ssh
-  when: ansible_facts[os_family] == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.service:
     name: ssh
     state: reloaded
 
 - name: "Restart SSH Service on RedHat Derivates."
   listen: restart ssh
-  when: ansible_facts[os_family] == "RedHat"
+  when: ansible_facts['os_family'] == "RedHat"
   ansible.builtin.service:
     name: sshd
     state: restarted
 
 - name: "Reload SSH Service on RedHat Derivates."
   listen: reload ssh
-  when: ansible_facts[os_family] == "RedHat"
+  when: ansible_facts['os_family'] == "RedHat"
   ansible.builtin.service:
     name: sshd
     state: reloaded

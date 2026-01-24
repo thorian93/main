@@ -1,13 +1,13 @@
 ---
 - name: "Preflight - Fail if target host is not stable for this Role."
   ansible.builtin.fail:
-    msg: "This role is not stable for the target operating system, {{ ansible_facts[distribution] }} {{ ansible_facts['distribution_major_version'] }}."
-  when: (ansible_facts[distribution] is not defined) or
-        (ansible_distribution_version is not defined) or
-        (ansible_facts[distribution]+" "+ansible_facts['distribution_major_version'] not in sudo_stable_os)
+    msg: "This role is not stable for the target operating system: {{ ansible_facts['distribution'] + '-' + ansible_facts['distribution_major_version'] }}."
+  when: (ansible_facts['distribution'] is not defined) or
+        (ansible_facts['distribution_version'] is not defined) or
+        (ansible_facts['distribution'] + "-" + ansible_facts['distribution_major_version'] not in sudo_stable_os)
 
 - name: "Include Derivate specific Variables."
-  ansible.builtin.include_vars: "{{ ansible_facts[os_family] }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_facts['os_family'] }}.yml"
 
 - name: "Concatenate additional sudoers Permissions Variables."
   ansible.builtin.set_fact:

@@ -30,4 +30,4 @@
   ansible.builtin.package:
     name: epel-release
     state: present
-  when: common_epel_enabled and ansible_facts[distribution] == "CentOS"
+  when: common_epel_enabled and ansible_facts['distribution'] == "CentOS"

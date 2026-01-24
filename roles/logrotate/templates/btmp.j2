@@ -3,7 +3,7 @@
 /var/log/btmp {
     missingok
     monthly
-{% if ansible_facts[distribution] == "Ubuntu" %}
+{% if ansible_facts['distribution'] == "Ubuntu" %}
     # use the utmp group as ubuntu fails otherwise
     su root utmp
 {% endif %}
