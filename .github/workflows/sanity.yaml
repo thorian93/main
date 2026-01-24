@@ -10,7 +10,8 @@ env:
 name: Sanity Tests
 on:
   workflow_dispatch:
-  push:
+  pull_request:
+    types: [opened]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'docs/**'
@@ -18,8 +19,7 @@ on:
       - '**.md'
       - '**.rst'
       - 'roles/**'
-  pull_request:
-    types: [opened]
+  push:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'docs/**'
