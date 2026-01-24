@@ -60,6 +60,6 @@ jobs:
 
       - name: "Run Molecule."
         run: |
-          cd roles/server/
+          # cd roles/server/
           uv run molecule test --report -s ${{ matrix.checkmk }}
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/roles/server/
