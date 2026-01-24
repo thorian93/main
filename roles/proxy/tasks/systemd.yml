@@ -6,7 +6,7 @@
       ansible.builtin.file:
         dest: /etc/systemd/system.conf.d
         state: directory
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
 
@@ -14,7 +14,7 @@
       ansible.builtin.template:
         dest: /etc/systemd/system.conf.d/99proxy.conf
         src: 99proxy.conf.j2
-        mode: 0644
+        mode: "0644"
         owner: root
         group: root
 

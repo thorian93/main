@@ -39,6 +39,9 @@
         - name: "Create file."
           ansible.builtin.file:
             path: /var/lib/check_mk_agent/cache/plugins_mk_apt.cache
+            mode: "0664"
+            owner: root
+            group: root
             state: touch
 
   tasks:

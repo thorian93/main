@@ -8,7 +8,7 @@
     state: "{{ proxy_state }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: "Configure Proxy User for DNF."
   community.general.ini_file:
@@ -16,10 +16,10 @@
     section: main
     option: proxy_username
     value: "{{ proxy_package_proxy_username }}"
-    state: "{{ username_state }}"
+    state: "{{ proxy_username_state }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     setype: etc_t
 
 - name: "Configure Proxy Password for DNF."
@@ -28,8 +28,8 @@
     section: main
     option: proxy_password
     value: "{{ proxy_package_proxy_password }}"
-    state: "{{ password_state }}"
+    state: "{{ proxy_password_state }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     setype: etc_t

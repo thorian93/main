@@ -21,7 +21,7 @@
     src: resolv.conf.j2
     dest: /etc/resolv.conf
     backup: true
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
     setype: net_conf_t

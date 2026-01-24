@@ -5,4 +5,4 @@
    src: 99proxy.sh.j2
    owner: root
    group: root
-   mode: 0644
+   mode: "0644"

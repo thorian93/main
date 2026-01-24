@@ -13,8 +13,8 @@
 - name: "Prepare state of settings."
   ansible.builtin.set_fact:
     proxy_state: "{{ 'absent' if (proxy_package_proxy_server == '' or proxy_package_proxy_port == '') else 'present' }}"
-    username_state: "{{ 'absent' if proxy_package_proxy_username == '' else 'present' }}"
-    password_state: "{{ 'absent' if proxy_package_proxy_password == '' else 'present' }}"
+    proxy_username_state: "{{ 'absent' if proxy_package_proxy_username == '' else 'present' }}"
+    proxy_password_state: "{{ 'absent' if proxy_package_proxy_password == '' else 'present' }}"
 
 - name: "Include Proxy for Profile Playbook."
   ansible.builtin.include_tasks: profile.yml

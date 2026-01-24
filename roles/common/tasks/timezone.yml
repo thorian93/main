@@ -22,5 +22,5 @@
     state: link
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: common_zoneinfo.stat.exists is defined and common_zoneinfo.stat.exists

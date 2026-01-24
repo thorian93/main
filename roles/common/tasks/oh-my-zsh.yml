@@ -18,7 +18,7 @@
     backup: true
     owner: "{{ item }}"
     group: "{{ item }}"
-    mode: 0640
+    mode: "0640"
   with_items: "{{ common_zsh_users }}"
 
 - name: "Determine ZSH binary location."  # noqa no-changed-when

@@ -22,7 +22,7 @@
         that: "(ssh_port_state.port == ssh_port) and (ssh_port_state.state == 'started')"
 
     - name: "Verify SSHD Port."
-      lineinfile:
+      ansible.builtin.lineinfile:
         name: /etc/ssh/sshd_config
         line: "Port {{ ssh_port }}"
         state: present

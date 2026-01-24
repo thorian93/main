@@ -47,23 +47,23 @@
   ansible.builtin.shell: needs-restarting -r
   args:
     executable: "/bin/bash"
-  register: reboot_hint_yum
-  failed_when: reboot_hint_yum.rc >= 2
-  changed_when: reboot_hint_yum.rc == 1
+  register: upgrade_upgrade_reboot_hint_yum
+  failed_when: upgrade_upgrade_reboot_hint_yum.rc >= 2
+  changed_when: upgrade_upgrade_reboot_hint_yum.rc == 1
 
 - name: "Check for Service Restarts."
   ansible.builtin.shell: needs-restarting -s
   args:
     executable: "/bin/bash"
-  register: service_restarts_yum
-  changed_when: "service_restarts_yum.stdout | length"
+  register: upgrade_service_restarts_yum
+  changed_when: "upgrade_service_restarts_yum.stdout | length"
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
-    reboot_hint: true
-  when: reboot_hint_yum.rc == 1
+    upgrade_reboot_hint: true
+  when: upgrade_upgrade_reboot_hint_yum.rc == 1
 
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
-    service_restarts: "{{ service_restarts_yum.stdout_lines }}"
-  when: "service_restarts_yum.stdout_lines | length"
+    upgrade_service_restarts: "{{ upgrade_service_restarts_yum.stdout_lines }}"
+  when: "upgrade_service_restarts_yum.stdout_lines | length"
