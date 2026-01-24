@@ -4,12 +4,6 @@ dependency:
 driver:
   name: podman
 platforms:
-  - name: ubuntu2004
-    image: geerlingguy/docker-ubuntu2004-ansible
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    pre_build_image: true
-    privileged: true
-    systemd: always
   - name: ubuntu2204
     image: docker.io/geerlingguy/docker-ubuntu2204-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
@@ -22,12 +16,6 @@ platforms:
     pre_build_image: true
     privileged: true
     systemd: always
-  - name: debian11
-    image: docker.io/geerlingguy/docker-debian11-ansible
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    pre_build_image: true
-    privileged: true
-    systemd: always
   - name: debian12
     image: docker.io/geerlingguy/docker-debian12-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
@@ -36,12 +24,6 @@ platforms:
     systemd: always
   - name: debian13
     image: docker.io/geerlingguy/docker-debian13-ansible
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    pre_build_image: true
-    privileged: true
-    systemd: always
-  - name: centos8
-    image: geerlingguy/docker-centos8-ansible
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     pre_build_image: true
     privileged: true
