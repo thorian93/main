@@ -26,13 +26,13 @@
   when: upgrade_reporting_enable | bool
 
 - name: "Upgrade via YUM."  # noqa package-latest
-  ansible.builtin.yum:
+  ansible.builtin.yum:  # noqa fqcn # We are using the `yum` module intentionally here.
     name: "*"
     state: latest
     update_cache: true
 
 - name: "Cleanup via YUM."
-  ansible.builtin.yum:
+  ansible.builtin.yum:  # noqa fqcn # We are using the `yum` module intentionally here.
     state: absent
     autoremove: true
 
