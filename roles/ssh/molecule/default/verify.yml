@@ -9,19 +9,19 @@
 
     - name: "Test SSH Service is running."
       ansible.builtin.assert:
-        that: "'sshd.service' in ansible_facts.services"
+        that: "'sshd.service' in ansible_facts['services']"
 
-    - name: "Test that SSH is listening on Port {{ ssh_port }}."
+    - name: "Test that SSH is listening on default port."
       ansible.builtin.wait_for:
         port: "{{ ssh_port }}"
         connect_timeout: 30
       register: ssh_port_state
 
-    - name: "Verify that SSH Service is listening on port {{ ssh_port }}."
+    - name: "Verify that SSH Service is listening on default port."
       ansible.builtin.assert:
         that: "(ssh_port_state.port == ssh_port) and (ssh_port_state.state == 'started')"
 
-    - name: "Verify SSHD Port."
+    - name: "Verify SSHD port."
       ansible.builtin.lineinfile:
         name: /etc/ssh/sshd_config
         line: "Port {{ ssh_port }}"
