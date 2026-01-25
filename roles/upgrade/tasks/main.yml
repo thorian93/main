@@ -25,7 +25,7 @@
     - (upgrade_service_restarts is defined and upgrade_service_restarts | length > 0)
     - (upgrade_restart_services | bool)
     - (item not in upgrade_restart_services_blacklist)
-    - (services[item].status != "masked")
+    - (ansible_facts['services'][item].status != "masked")
 
 - name: "Reboot Server."
   become: true

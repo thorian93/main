@@ -58,4 +58,4 @@
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
     upgrade_service_restarts: "{{ upgrade_service_restarts_dnf.stdout_lines }}"
-  when: not (ansible_facts['distribution'] == "Fedora" and ansible_facts['distribution_major_version'] | int < 33) and "upgrade_service_restarts_dnf.stdout_lines | length > 0"
+  when: not (ansible_facts['distribution'] == "Fedora" and ansible_facts['distribution_major_version'] | int < 33) and upgrade_service_restarts_dnf.stdout_lines | length > 0
