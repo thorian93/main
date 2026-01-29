@@ -5,7 +5,6 @@ common_stable_os:
   - Debian-11
   - Debian-12
   - Debian-13
-  - Fedora-42
   - SLES-11
   - SLES-12
   - openSUSE Leap-15

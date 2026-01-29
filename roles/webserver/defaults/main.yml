@@ -5,7 +5,6 @@ webserver_stable_os:
   - Debian-11
   - Debian-12
   - Debian-13
-  - Fedora-42
   - openSUSE Leap-15
   - openSUSE Leap-42
   - SLES-11

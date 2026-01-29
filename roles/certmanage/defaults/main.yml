@@ -7,7 +7,6 @@ certmanage_stable_os:
   - Debian-11
   - Debian-12
   - Debian-13
-  - Fedora-42
   - Ubuntu-16
   - Ubuntu-18
   - Ubuntu-20
