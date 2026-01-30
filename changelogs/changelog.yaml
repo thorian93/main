@@ -56,3 +56,23 @@ releases:
     release_date: '2024-04-01'
   1.2.0:
     release_date: '2025-08-28'
+  2.0.0:
+    changes:
+      known_issues:
+      - I changed a bunch of things, so things might break. While I am using this
+        collection myself, I cannot promise, that I will detect issues myself.
+      - I did not have the time to summarize all the changes, so expect the unexpected.
+      - Some tests do still fail, but I want to get this release out and fix subsequent
+        findings when I get the time.
+      major_changes:
+      - Fix tons of linting findings across roles and playbooks.
+      - Modernize CI. Move all Python calls to ``uv`` and run on Podman.
+      - Update and clean up OS support.
+      minor_changes:
+      - Clean up old configuration.
+      - Extend Dependabot coverage.
+      release_summary: A well overdue cleanup.
+    fragments:
+    - release.yml
+    - release_summary.yml
+    release_date: '2026-01-30'
