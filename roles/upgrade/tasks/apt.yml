@@ -13,7 +13,7 @@
   ansible.builtin.template:
     src: needrestart.conf.j2
     dest: /etc/needrestart/conf.d/interaction.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: upgrade_needrestart_disable_interaction | bool
@@ -65,8 +65,8 @@
     needrestart -b
   args:
     executable: "/bin/bash"
-  register: reboot_hint_apt
-  changed_when: "'NEEDRESTART-KSTA: 1' not in reboot_hint_apt.stdout"
+  register: upgrade_upgrade_upgrade_reboot_hint_apt
+  changed_when: "'NEEDRESTART-KSTA: 1' not in upgrade_upgrade_upgrade_reboot_hint_apt.stdout"
 
 - name: "Check for Service Restarts."
   ansible.builtin.shell: |
@@ -75,18 +75,18 @@
     exit 0
   args:
     executable: "/bin/bash"
-  register: service_restarts_apt
-  changed_when: "service_restarts_apt.stdout_lines | length | bool"
+  register: upgrade_upgrade_service_restarts_apt
+  changed_when: "upgrade_upgrade_service_restarts_apt.stdout_lines | length > 0 | bool"
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
-    reboot_hint: true
-  when: "'NEEDRESTART-KSTA: 1' not in reboot_hint_apt.stdout"
+    upgrade_reboot_hint: true
+  when: "'NEEDRESTART-KSTA: 1' not in upgrade_upgrade_upgrade_reboot_hint_apt.stdout"
 
 - name: "Set Service Restarts."
   ansible.builtin.set_fact:
-    service_restarts: "{{ service_restarts_apt.stdout_lines }}"
-  when: "service_restarts_apt.stdout_lines | length | bool"
+    upgrade_service_restarts: "{{ upgrade_upgrade_service_restarts_apt.stdout_lines }}"
+  when: "upgrade_upgrade_service_restarts_apt.stdout_lines | length > 0 | bool"
 
 - name: "Trigger Checkmk APT Plugin."
   ansible.builtin.file:

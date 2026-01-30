@@ -1,47 +1,60 @@
 ---
-- hosts: all
+- name: "Run Certmanage Role."
   become: true
+  hosts: all
   roles:
     - certmanage
 
-- hosts: all
-  name: "Common."
+- name: "Run Common Role."
   become: true
+  hosts: all
   roles:
     - common
 
-- hosts: all
+- name: "Run Journald Role."
   become: true
+  hosts: all
   roles:
     - journald
 
-- hosts: all
+- name: "Run Logrotate Role."
   become: true
+  hosts: all
   roles:
     - logrotate
 
-- hosts: all
+- name: "Run NTP Role."
   become: true
+  hosts: all
   roles:
     - ntp
 
-- hosts: all
-  name: "Proxy."
+- name: "Run Proxy Role."
   become: true
+  hosts: all
   roles:
     - proxy
 
-- hosts: all
+- name: "Run SSH Role."
   become: true
+  hosts: all
   roles:
     - ssh
 
-- hosts: all
+- name: "Run Sudo Role."
   become: true
+  hosts: all
   roles:
     - sudo
 
-- hosts: all
+- name: "Run Upgrade Role."
   become: true
+  hosts: all
   roles:
     - upgrade
+
+- name: "Run Webserver Role."
+  become: true
+  hosts: all
+  roles:
+    - webserver

@@ -4,14 +4,16 @@
   gather_facts: false
   tasks:
 
-    - name: "Test Server is upgraded."
+    - name: "Test Server is upgraded."   # noqa package-latest
       ansible.builtin.package:
         name: "*"
         state: "latest"
-      register: server_upgrade_status
+      register: upgrade_status
 
-    - debug: var=server_upgrade_status
+    - name: "Debug."
+      ansible.builtin.debug:
+        var: upgrade_status
 
     - name: "Verify Server is upgraded."
       ansible.builtin.assert:
-        that: not server_upgrade_status.changed and not server_upgrade_status.failed
+        that: not upgrade_status.changed and not upgrade_status.failed

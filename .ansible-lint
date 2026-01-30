@@ -9,7 +9,6 @@ exclude_paths:
   - .vagrant/
   - changelogs/
   - docs/
-  - molecule/
 
 # parseable: true
 # quiet: true
@@ -73,8 +72,7 @@ skip_list:
 #   - all
 
 # Offline mode disables installation of requirements.yml
-# offline: true
-offline: false
+offline: true
 
 # # Define required Ansible's variables to satisfy syntax check
 # extra_vars:

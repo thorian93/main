@@ -1,7 +1,7 @@
 ---
 - name: "Workaround - Install python-xml."  # noqa command-instead-of-module no-changed-when
   ansible.builtin.command: zypper in -y python-xml
-  when: ansible_distribution == "openSUSE Leap" and ansible_distribution_major_version == "42"
+  when: ansible_facts['distribution'] == "openSUSE Leap" and ansible_facts['distribution_major_version'] == "42"
   ignore_errors: true  # noqa ignore-errors
 
 - name: "Ensure Dependencies are present."
@@ -31,10 +31,10 @@
 
 - name: "Check for reboot hint."  # noqa command-instead-of-module no-changed-when
   ansible.builtin.command: zypper ps -s
-  register: reboot_hint_zypper
-  changed_when: "'The following running processes use deleted files' in reboot_hint_zypper.stdout"
+  register: upgrade_upgrade_reboot_hint_zypper
+  changed_when: "'The following running processes use deleted files' in upgrade_upgrade_reboot_hint_zypper.stdout"
 
 - name: "Set Reboot Hint."
   ansible.builtin.set_fact:
-    reboot_hint: true
-  when: "'The following running processes use deleted files' in reboot_hint_zypper.stdout"
+    upgrade_reboot_hint: true
+  when: "'The following running processes use deleted files' in upgrade_upgrade_reboot_hint_zypper.stdout"

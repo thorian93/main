@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: Copy the Certificates.
   ansible.builtin.template:
@@ -13,6 +13,6 @@
     dest: "/usr/local/share/ca-certificates/certificate_{{ item.name }}.crt"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items: "{{ certmanage_certificates }}"
   notify: update trust

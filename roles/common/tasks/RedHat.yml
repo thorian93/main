@@ -6,7 +6,7 @@
     create: true
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items: "{{ common_shopt_options }}"
 
 - name: "Configure Bash Completion."
@@ -15,7 +15,7 @@
     create: true
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     content: |
      if ! shopt -oq posix; then
@@ -30,4 +30,4 @@
   ansible.builtin.package:
     name: epel-release
     state: present
-  when: common_epel_enabled and ansible_distribution == "CentOS"
+  when: common_epel_enabled and ansible_facts['distribution'] == "CentOS"

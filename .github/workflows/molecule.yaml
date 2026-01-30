@@ -5,6 +5,10 @@
 # 3. If your collection depends on other collections ensure they are installed, see "Install collection dependencies"
 # If you need help please ask in #ansible-community on the Libera.chat IRC network
 
+env:
+  NAMESPACE: thorian93
+  COLLECTION_NAME: main
+
 name: Molecule Tests
 on:
   workflow_dispatch:
@@ -18,10 +22,7 @@ on:
       - devel
     paths:
       - 'roles/**'
-
-env:
-  NAMESPACE: thorian93
-  COLLECTION_NAME: main
+      - '.github/workflows/molecule.yaml'
 
 jobs:
   build:
@@ -43,24 +44,43 @@ jobs:
           - webserver
 
     steps:
-      - name: Check out code
+
+      # This was necessary at some point to avoid random failure.
+      # Disabling on 20250826 to check, if it is still necessary.
+      # Re-enabling on 20251124 as it still seems necessary.
+      - name: "Free Disk Space."
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+      - name: "Add swap file to avoid memory shortage."
+        run: |
+          sudo fallocate -l 12G /mnt/swap
+          sudo chmod 600 /mnt/swap
+          sudo mkswap /mnt/swap
+          sudo swapon /mnt/swap
+          free -h
+          swapon --show
+
+      - name: "Check out code."
         uses: actions/checkout@v6
         with:
           path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: "Install uv."
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: '3.12'
+          enable-cache: true
+          working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
 
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements.txt
+      - name: "Install Dependencies."
+        run: uv sync
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-      - name: Test with molecule
+      - name: "Run Molecule."
         run: |
           cd roles/${{ matrix.role }}
-          molecule test
+          uv run molecule test --report
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}

@@ -1,13 +1,15 @@
 ---
 - name: "Preflight - Fail if target host is not stable for this Role."
   ansible.builtin.fail:
-    msg: "This role is not stable for the target operating system, {{ ansible_distribution }} {{ ansible_distribution_major_version }}."
-  when: (ansible_distribution is not defined) or
-        (ansible_distribution_version is not defined) or
-        (ansible_distribution+" "+ansible_distribution_major_version not in upgrade_stable_os)
+    msg: "This role is not stable for the target operating system: {{ ansible_facts['distribution'] + '-' + ansible_facts['distribution_major_version'] }}."
+  when: (ansible_facts['distribution'] is not defined) or
+        (ansible_facts['distribution_version'] is not defined) or
+        (ansible_facts['distribution'] + "-" + ansible_facts['distribution_major_version'] not in upgrade_stable_os)
+  tags:
+    - always
 
 - name: Populate Service Facts.
-  service_facts:
+  ansible.builtin.service_facts:
 
 - name: "Include Package Manager specific Playbook."
   ansible.builtin.include_tasks: "{{ ansible_pkg_mgr }}.yml"
@@ -17,13 +19,13 @@
   ansible.builtin.service:
     name: "{{ item }}"
     state: restarted
-  loop: "{{ service_restarts }}"
+  loop: "{{ upgrade_service_restarts }}"
   when:
-    - ((reboot_hint is not defined) or reboot_hint is defined and not (upgrade_unattended_reboot | bool))
-    - (service_restarts is defined and service_restarts | length)
+    - ((upgrade_reboot_hint is not defined) or upgrade_reboot_hint is defined and not (upgrade_unattended_reboot | bool))
+    - (upgrade_service_restarts is defined and upgrade_service_restarts | length > 0)
     - (upgrade_restart_services | bool)
     - (item not in upgrade_restart_services_blacklist)
-    - (services[item].status != "masked")
+    - (ansible_facts['services'][item].status != "masked")
 
 - name: "Reboot Server."
   become: true
@@ -32,7 +34,7 @@
     post_reboot_delay: "{{ patchday_sleep | default('10') }}"
     msg: "Reboot triggered by Ansible"
   when:
-    - (reboot_hint is defined and reboot_hint | bool)
+    - (upgrade_reboot_hint is defined and upgrade_reboot_hint | bool)
     - (upgrade_unattended_reboot | bool) or (upgrade_force_reboot | bool)
 
 - name: "Include Reporting Playbook."

@@ -20,28 +20,28 @@ jobs:
       # Prepare the environment.
       #
 
-      - name: Checkout code
+      - name: "Checkout Code"
         uses: actions/checkout@v6
 
-      - name: Get current version
+      - name: "Get current Version"
         id: current_version
         run: echo "version=$(grep 'version:' galaxy.yml | cut -d ' ' -f 2)" >> $GITHUB_OUTPUT
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: "Install uv."
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: '3.12'
+          enable-cache: true
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: "Install Dependencies."
+        run: uv sync
+        env:
+          UV_SYSTEM_PYTHON: 1
 
       #
       # First stage: Build and install collection to generate docs and changelogs.
       #
 
-      - name: Copy Files and Directories to Source
+      - name: "Copy Files and Directories to Source"
         run: |
           mkdir -p build/src
           cp $files build/src
@@ -50,14 +50,14 @@ jobs:
           files: ${{env.FILES}}
           directories: ${{env.DIRS}}
 
-      - name: Build Ansible Collection
-        run: ansible-galaxy collection build build/src --force
+      - name: "Build the Collection"
+        run: uv run ansible-galaxy collection build build/src --force
 
-      - name: Install Ansible Collection
-        run: ansible-galaxy collection install --no-deps ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz
+      - name: "Install the Collection"
+        run: uv run ansible-galaxy collection install --no-deps ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz
 
-      - name: Compile Collection Changelog
-        run: antsibull-changelog release
+      - name: "Compile Collection Changelog"
+        run: uv run antsibull-changelog release
 
       - name: Create Pull Request for docs and changelog against devel branch
         uses: peter-evans/create-pull-request@v8
@@ -78,7 +78,7 @@ jobs:
       # Second stage: Build the final version of the collection and release it.
       #
 
-      - name: Copy Files and Directories to Source
+      - name: "Copy Files and Directories to Source"
         run: |
           mkdir -p build/src
           cp $files build/src
@@ -88,10 +88,10 @@ jobs:
           files: ${{env.FILES}}
           directories: ${{env.DIRS}}
 
-      - name: Build Ansible Collection
-        run: ansible-galaxy collection build build/src --force
+      - name: "Build the Collection"
+        run: uv run ansible-galaxy collection build build/src --force
 
-      - name: Create Release and upload Assets
+      - name: "Create Release and upload Assets"
         id: create-release
         uses: softprops/action-gh-release@v2
         with:
@@ -110,5 +110,5 @@ jobs:
 
             This collection can be found in the [Galaxy](https://galaxy.ansible.com/ui/repo/published/thorian93/main/) as well!
 
-      - name: Publish Ansible Collection to the Galaxy
-        run: ansible-galaxy collection publish ${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
+      - name: "Publish Ansible Collection to the Galaxy"
+        run: uv run ansible-galaxy collection publish ${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}

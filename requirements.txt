@@ -1,9 +1,0 @@
-ansible
-antsibull-changelog
-antsibull-docs
-ansible-lint
-jinja2
-molecule >= 5.0.1
-molecule-plugins[docker]
-molecule-plugins[podman]
-yamllint

@@ -1,23 +1,17 @@
 ---
 certmanage_stable_os:
-  - CentOS 7
-  - CentOS 8
-  - Debian 9
-  - Debian 10
-  - Debian 11
-  - Debian 12
-  - Fedora 30
-  - Fedora 31
-  - Fedora 32
-  - Fedora 33
-  - Fedora 34
-  - Fedora 35
-  - Fedora 36
-  - Ubuntu 16
-  - Ubuntu 18
-  - Ubuntu 20
-  - Ubuntu 22
-  - Ubuntu 24
+  - CentOS-7
+  - CentOS-8
+  - Debian-9
+  - Debian-10
+  - Debian-11
+  - Debian-12
+  - Debian-13
+  - Ubuntu-16
+  - Ubuntu-18
+  - Ubuntu-20
+  - Ubuntu-22
+  - Ubuntu-24
 
 certmanage_certificates:
   - name: example_certificate

@@ -8,7 +8,7 @@
     state: "{{ proxy_state }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     setype: etc_t
 
 - name: "Configure Proxy User for YUM."
@@ -16,10 +16,10 @@
     dest: /etc/yum/yum.conf
     section: main
     option: proxy_username
-    state: "{{ username_state }}"
+    state: "{{ proxy_username_state }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     setype: etc_t
 
 - name: "Configure Proxy Password for YUM."
@@ -30,6 +30,6 @@
     value: "{{ proxy_package_proxy_password }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     setype: etc_t
-    state: "{{ password_state }}"
+    state: "{{ proxy_password_state }}"

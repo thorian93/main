@@ -3,7 +3,7 @@
   ansible.builtin.lineinfile:
     path: /etc/{{ webserver_apache_name }}/envvars
     state: present
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
     line: "{{ item.line }}"
