@@ -1,0 +1,13 @@
+major_changes:
+  - Modernize CI. Move all Python calls to ``uv`` and run on Podman.
+  - Fix tons of linting findings across roles and playbooks.
+  - Update and clean up OS support.
+
+minor_changes:
+  - Extend Dependabot coverage.
+  - Clean up old configuration.
+
+known_issues:
+  - I did not have the time to summarize all the changes, so expect the unexpected.
+  - I changed a bunch of things, so things might break. While I am using this collection myself, I cannot promise, that I will detect issues myself.
+  - Some tests do still fail, but I want to get this release out and fix subsequent findings when I get the time.
