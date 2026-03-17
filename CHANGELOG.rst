@@ -4,6 +4,34 @@ thorian93.main Release Notes
 
 .. contents:: Topics
 
+v2.0.0
+======
+
+Release Summary
+---------------
+
+A well overdue cleanup.
+
+Major Changes
+-------------
+
+- Fix tons of linting findings across roles and playbooks.
+- Modernize CI. Move all Python calls to ``uv`` and run on Podman.
+- Update and clean up OS support.
+
+Minor Changes
+-------------
+
+- Clean up old configuration.
+- Extend Dependabot coverage.
+
+Known Issues
+------------
+
+- I changed a bunch of things, so things might break. While I am using this collection myself, I cannot promise, that I will detect issues myself.
+- I did not have the time to summarize all the changes, so expect the unexpected.
+- Some tests do still fail, but I want to get this release out and fix subsequent findings when I get the time.
+
 v1.2.0
 ======
 
