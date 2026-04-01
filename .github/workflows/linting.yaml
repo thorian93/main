@@ -11,6 +11,9 @@ permissions:
 name: Linting
 on:
   workflow_dispatch:
+  workflow_call:
+  schedule:
+    - cron: '0 0 * * 0'
   pull_request:
     branches:
       - main
@@ -43,6 +46,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
+          github-token: ${{ github.token }}
           working-directory: ./ansible_collections/thorian93/main/
 
       - name: "Install Dependencies."

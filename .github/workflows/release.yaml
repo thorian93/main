@@ -1,18 +1,36 @@
 ---
 name: Release Collection
 
-on: # yamllint disable-line rule:truthy
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
   workflow_dispatch:
 
 env:
   NAMESPACE: thorian93
   COLLECTION_NAME: main
-  FILES: "CHANGELOG.rst LICENSE README.md ansible.cfg galaxy.yml"
+  FILES: "ansible.cfg CHANGELOG.rst galaxy.yml LICENSE README.md"
   DIRS: "changelogs meta playbooks roles"
 
 jobs:
+
+  #
+  # Run linting and sanity checks prior to release.
+  #
+
+  linting:
+    name: Linting
+    uses: ./.github/workflows/linting.yaml
+
+  sanity:
+    name: Sanity
+    uses: ./.github/workflows/sanity.yaml
+
   release:
-    runs-on: ubuntu-latest
+    needs: [linting, sanity]
+    runs-on: ubuntu-24.04
 
     steps:
 
@@ -31,6 +49,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
+          github-token: ${{ github.token }}
 
       - name: "Install Dependencies."
         run: uv sync
@@ -59,17 +78,31 @@ jobs:
       - name: "Compile Collection Changelog"
         run: uv run antsibull-changelog release
 
-      - name: Create Pull Request for docs and changelog against devel branch
+      # This is slightly hacky and we might need to adapt it later.
+      # But for now it looks promising. See the below link for documentation:
+      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+      - name: "Record Changes for Release"
+        run: |
+          {
+            echo 'CHANGELOG_FRAGMENT<<EOF'
+            echo "$(git diff CHANGELOG.rst | grep '^+' | tail -n+4 | tr -d '+')"
+            echo 'EOF'
+          } >> $GITHUB_ENV
+
+      - name: "Compile Collection Docs"
+        run: uv run antsibull-docs collection --use-current --squash-hierarchy --fail-on-error --dest-dir ./docs/ checkmk.general
+
+      - name: "Create Pull Request for Docs and Changelog against devel branch"
         uses: peter-evans/create-pull-request@v8
         with:
-          commit-message: Update Changelogs
+          commit-message: Update Docs and Changelogs upon Release
           signoff: false
-          branch: changelogs-update-${{ steps.current_version.outputs.version }}
+          branch: changelogs-docs-update-${{ steps.current_version.outputs.version }}
           base: devel
           delete-branch: true
-          title: '[Auto] Update changelogs for ${{ steps.current_version.outputs.version }}'
+          title: '[Auto] Update changelogs and docs upon release'
           body: |
-            Changelogs updated during *${{ steps.current_version.outputs.version }}* release.
+            Changelogs and docs updated during *${{ steps.current_version.outputs.version }}* release.
           assignees: thorian93
           reviewers: thorian93
           draft: false

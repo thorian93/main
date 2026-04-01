@@ -9,6 +9,9 @@ permissions:
 name: Sanity Tests
 on:
   workflow_dispatch:
+  workflow_call:
+  schedule:
+    - cron: '0 0 * * 0'
   pull_request:
     types: [opened]
     paths-ignore:
@@ -52,6 +55,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
+          github-token: ${{ github.token }}
           working-directory: ./ansible_collections/thorian93/main/
 
       - name: "Create uv venv."
