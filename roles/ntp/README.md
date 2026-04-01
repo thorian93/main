@@ -1,6 +1,6 @@
 # Ansible Role: NTP
 
-This role installs and configures NTP on RHEL/CentOS, Debian/Ubuntu, Fedora and Suse servers.
+This role installs and configures NTP on RHEL/CentOS, Debian/Ubuntu, Fedora and Suse servers. On Debian 13, it uses `ntpsec`, as it replaces NTP.
 
 ## Requirements
 
