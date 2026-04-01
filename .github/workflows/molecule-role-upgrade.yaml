@@ -1,0 +1,26 @@
+# https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
+
+permissions:
+  contents: read
+
+name: Molecule Tests
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'roles/**'
+  push:
+    branches:
+      - devel
+    paths:
+      - 'roles/upgrades/**'
+      - '.github/workflows/molecule-role-upgrade.yaml'
+
+jobs:
+  integration:
+    name: "Molecule"
+    uses: ./.github/workflows/_template-molecule-test.yaml
+    with:
+      role: upgrade
