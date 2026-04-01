@@ -3,9 +3,8 @@
 # - Template for this file: https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
 # - About Ansible sanity tests: https://docs.ansible.com/ansible/latest/dev_guide/testing_sanity.html
 
-env:
-  NAMESPACE: thorian93
-  COLLECTION_NAME: main
+permissions:
+  contents: read
 
 name: Sanity Tests
 on:
@@ -53,16 +52,16 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
-          working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+          working-directory: ./ansible_collections/thorian93/main/
 
       - name: "Create uv venv."
         run: uv venv
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+        working-directory: ./ansible_collections/thorian93/main/
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: uv pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+        working-directory: ./ansible_collections/thorian93/main/
 
       - name: Run sanity tests
         run: uv run ansible-test sanity --docker -v --color --coverage
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+        working-directory: ./ansible_collections/thorian93/main/
