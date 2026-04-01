@@ -4,10 +4,12 @@ ntp_stable_os:
   - Debian-11
   - Debian-12
   - Debian-13
-  - Ubuntu 18
-  - Ubuntu 20
-  - Ubuntu 22
-  - Ubuntu 24
+  - Rocky-9
+  - Rocky-10
+  - Ubuntu-18
+  - Ubuntu-20
+  - Ubuntu-22
+  - Ubuntu-24
 
 ntp_driftfile: /var/lib/ntp/drift
 ntp_server:
