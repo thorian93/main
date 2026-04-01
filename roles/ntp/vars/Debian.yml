@@ -1,5 +1,5 @@
 ---
 ntp_prerequisites:
-  - ntp
+  - "{{ 'ntpsec' if ansible_facts['distribution_major_version'] | int >= 13 else 'ntp' }}"
 
-ntp_name: ntp
+ntp_name: "{{ 'ntpsec' if ansible_facts['distribution_major_version'] | int >= 13 else 'ntp' }}"
