@@ -46,7 +46,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
         with:
-          path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+          path: ./ansible_collections/thorian93/main/
 
       - name: "Install uv."
         uses: astral-sh/setup-uv@v7

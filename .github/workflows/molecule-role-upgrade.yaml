@@ -16,6 +16,7 @@ on:
       - devel
     paths:
       - 'roles/upgrades/**'
+      - '.github/workflows/_template-molecule-test.yaml'
       - '.github/workflows/molecule-role-upgrade.yaml'
 
 jobs:
