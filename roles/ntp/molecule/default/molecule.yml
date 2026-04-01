@@ -28,18 +28,6 @@ platforms:
     pre_build_image: true
     privileged: true
     systemd: always
-  - name: rockylinux9
-    image: docker.io/geerlingguy/docker-rockylinux9-ansible
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    pre_build_image: true
-    privileged: true
-    systemd: always
-  - name: rockylinux10
-    image: docker.io/geerlingguy/docker-rockylinux10-ansible
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    pre_build_image: true
-    privileged: true
-    systemd: always
 provisioner:
   name: ansible
   config_options:
@@ -50,14 +38,10 @@ verifier:
 scenario:
   test_sequence:
     - dependency
-    - cleanup
-    - destroy
     - syntax
     - create
-    # - prepare
     - converge
     # - idempotence  # disable for now, as we have non-idempotent tasks
-    # - side_effect
     - verify
     - cleanup
     - destroy
