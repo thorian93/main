@@ -25,14 +25,14 @@ jobs:
       - name: "Check out code."
         uses: actions/checkout@v6
         with:
-          path: ansible_collections/checkmk/general
+          path: ./ansible_collections/thorian93/main/
 
       - name: "Install uv."
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
           github-token: ${{ github.token }}
-          working-directory: ./ansible_collections/thorian93/main//
+          working-directory: ./ansible_collections/thorian93/main/
 
       - name: "Install Dependencies."
         run: uv sync
