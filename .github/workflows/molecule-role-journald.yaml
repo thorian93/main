@@ -3,7 +3,7 @@
 permissions:
   contents: read
 
-name: Molecule Tests
+name: Molecule Test Journald
 on:
   workflow_dispatch:
   pull_request:
