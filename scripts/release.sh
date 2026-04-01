@@ -9,6 +9,8 @@
 # Usage: ./release.sh -s 0.0.1 -t 0.0.2
 #
 
+set -e
+
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 collection_dir="${script_dir%/*}"
 
@@ -32,11 +34,12 @@ echo
 echo "# Changes:"
 sed -i "s/version: ${source_version}/version: ${target_version}/g" "${collection_dir}/galaxy.yml" && echo "Updated Collection version in 'galaxy.yml' from ${source_version} to ${target_version}."
 sed -i "s/version: ${source_version}/version: ${target_version}/g" "${collection_dir}/requirements.yml" && echo "Updated Collection version in 'requirements.yml' from ${source_version} to ${target_version}."
-echo "# End changes section."
+# pyproject.toml
+sed -i "s/version = \"${source_version}\"/version = \"${target_version}\"/g" "${collection_dir}/pyproject.toml" && echo "Updated Collection version in pyproject.toml from ${source_version} to ${target_version}."
 echo
 
 echo "# Test findings:"
 if [[ $(find "${collection_dir}/changelogs/fragments" | wc -l) -lt 1 ]] ; then echo "Make sure to provide all relevant changelogs!" ; fi
 grep -R release_summary "${collection_dir}/changelogs/fragments/" > /dev/null || echo "Please provide a 'release_summary' in the changelogs!"
-grep "${target_version}" "${collection_dir}/SUPPORT.md" > /dev/null || echo "Please provide a line about the version support in 'SUPPORT.md'!"
-echo "# End tests section."
+grep -R breaking_changes "${collection_dir}/changelogs/fragments/" > /dev/null && echo "Breaking changes found! Make sure to reflect this in the release version!"
+echo

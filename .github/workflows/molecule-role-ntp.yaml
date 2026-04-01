@@ -1,0 +1,25 @@
+# https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
+
+permissions:
+  contents: read
+
+name: Molecule Test NTP
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'roles/ntp/**'
+      - '.github/workflows/_template-molecule-test.yaml'
+      - '.github/workflows/molecule-role-ntp.yaml'
+  push:
+    paths:
+      - 'roles/ntp/**'
+      - '.github/workflows/_template-molecule-test.yaml'
+      - '.github/workflows/molecule-role-ntp.yaml'
+
+jobs:
+  integration:
+    name: "Molecule"
+    uses: ./.github/workflows/_template-molecule-test.yaml
+    with:
+      role: ntp

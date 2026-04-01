@@ -1,0 +1,25 @@
+# https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
+
+permissions:
+  contents: read
+
+name: Molecule Test Webserver
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'roles/webserver/**'
+      - '.github/workflows/_template-molecule-test.yaml'
+      - '.github/workflows/molecule-role-webserver.yaml'
+  push:
+    paths:
+      - 'roles/webserver/**'
+      - '.github/workflows/_template-molecule-test.yaml'
+      - '.github/workflows/molecule-role-webserver.yaml'
+
+jobs:
+  integration:
+    name: "Molecule"
+    uses: ./.github/workflows/_template-molecule-test.yaml
+    with:
+      role: webserver

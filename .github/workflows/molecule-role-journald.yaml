@@ -1,0 +1,25 @@
+# https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
+
+permissions:
+  contents: read
+
+name: Molecule Test Journald
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'roles/journald/**'
+      - '.github/workflows/_template-molecule-test.yaml'
+      - '.github/workflows/molecule-role-journald.yaml'
+  push:
+    paths:
+      - 'roles/journald/**'
+      - '.github/workflows/_template-molecule-test.yaml'
+      - '.github/workflows/molecule-role-journald.yaml'
+
+jobs:
+  integration:
+    name: "Molecule"
+    uses: ./.github/workflows/_template-molecule-test.yaml
+    with:
+      role: journald
