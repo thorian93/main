@@ -89,8 +89,9 @@ jobs:
             echo 'EOF'
           } >> $GITHUB_ENV
 
-      - name: "Compile Collection Docs"
-        run: uv run antsibull-docs collection --use-current --squash-hierarchy --fail-on-error --dest-dir ./docs/ checkmk.general
+      # There are no docs to compile (yet)
+      # - name: "Compile Collection Docs"
+      #   run: uv run antsibull-docs collection --use-current --squash-hierarchy --fail-on-error --dest-dir ./docs/ checkmk.general
 
       - name: "Create Pull Request for Docs and Changelog against devel branch"
         uses: peter-evans/create-pull-request@v8
