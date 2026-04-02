@@ -93,6 +93,7 @@ common_shopt_options:
 # Oh my ZSH
 common_zsh_users: root
 common_zsh_theme: clean
+common_zsh_update: disabled
 common_zsh_path: /opt/oh-my-zsh
 common_zsh_plugins:
   - git
