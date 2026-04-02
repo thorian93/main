@@ -76,3 +76,14 @@ releases:
     - release.yml
     - release_summary.yml
     release_date: '2026-01-30'
+  2.1.0:
+    changes:
+      minor_changes:
+      - Build related changes - Clean up and improve molecule tests.
+      - Common role - Improve Oh my ZSH configuration.
+      - NTP role - Start using the ``ntpsec`` package starting with Debian 13.
+      release_summary: A little love for the NTP role.
+    fragments:
+    - 2.1.0.yml
+    - release_summary.yml
+    release_date: '2026-04-02'
