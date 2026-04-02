@@ -4,15 +4,16 @@ common_zsh_source: "https://github.com/robbyrussell/oh-my-zsh.git"
 common_minimal_apps:
   - bzip2
   - ca-certificates
+  - fzf
   - git
   - gzip
   - htop
   - lsof
-  - mlocate
   - mtr
   - net-tools
   - ncdu
   - parted
+  - plocate
   - rsync
   - screen
   - time
