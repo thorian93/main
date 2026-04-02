@@ -100,24 +100,32 @@ Configure general paths.
 
 Configure global shopt options.
 
+    common_zsh_source: "https://github.com/ohmyzsh/ohmyzsh.git"
+
+Configure the git repository, where to pull Oh my ZSH from.
+
     common_zsh_users: root
 
 Configure ZSH for this users.
 
     common_zsh_theme: clean
 
-Configure the oh my zsh theme.
+Configure the Oh my ZSH theme.
+
+    common_zsh_update: disabled
+
+Configure Oh my ZSH update behavior. Valid options are `auto`, `disabled` and `reminder`.
 
     common_zsh_path: /opt/oh-my-zsh
 
-Configure the oh my zsh installation path.
+Configure the Oh my ZSH installation path.
 
     common_zsh_plugins:
     - git
     - rsync
     - wd
 
-Enable these oh my zsh plugins.
+Enable these Oh my ZSH plugins.
 
 ## Dependencies
 

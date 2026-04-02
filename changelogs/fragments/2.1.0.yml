@@ -1,3 +1,4 @@
 minor_changes:
   - NTP role - Start using the ``ntpsec`` package starting with Debian 13.
   - Build related changes - Clean up and improve molecule tests.
+  - Common role - Improve Oh my ZSH configuration.

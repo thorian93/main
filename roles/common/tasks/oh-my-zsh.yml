@@ -1,8 +1,11 @@
 ---
-- name: "Install ZSH."
+- name: "Install Prerequisites."
   ansible.builtin.package:
-    name: zsh
+    name: "{{ item }}"
     state: present
+  loop:
+    - zsh
+    - git
 
 - name: "Download oh-my-zsh."
   ansible.builtin.git:
