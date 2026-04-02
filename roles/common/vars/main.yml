@@ -1,6 +1,4 @@
 ---
-common_zsh_source: "https://github.com/robbyrussell/oh-my-zsh.git"
-
 common_minimal_apps:
   - bzip2
   - ca-certificates
