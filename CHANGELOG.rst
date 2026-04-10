@@ -4,6 +4,21 @@ thorian93.main Release Notes
 
 .. contents:: Topics
 
+v2.1.0
+======
+
+Release Summary
+---------------
+
+A little love for the NTP role.
+
+Minor Changes
+-------------
+
+- Build related changes - Clean up and improve molecule tests.
+- Common role - Improve Oh my ZSH configuration.
+- NTP role - Start using the ``ntpsec`` package starting with Debian 13.
+
 v2.0.0
 ======
 
