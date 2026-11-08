@@ -1,6 +1,6 @@
 # Ansible Role: Upgrade
 
-This role performs upgrades on Debian/Ubuntu, RHEL/CentOS, Fedora and Suse servers.
+This role performs upgrades on Debian/Ubuntu, RHEL/CentOS, Fedora, Suse and Alpine servers.
 
 ## Features
 
@@ -15,12 +15,15 @@ This role performs upgrades on Debian/Ubuntu, RHEL/CentOS, Fedora and Suse serve
 The reboot and service restart checks for APT are implemented via [needrestart](https://github.com/liske/needrestart). For Fedora this is implemented through the dnf plugin [needs-restarting](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html).
 For RHEL/CentOS it is implemented through the [needs-restarting](https://dnf-plugins-core.readthedocs.io/en/latest/needs_restarting.html) tool.
 
+**For Alpine Linux there is no such tool.** `apk` offers no equivalent to `needrestart`, and `needrestart` is not packaged for Alpine. Reboot and service restart detection are therefore **not implemented**.
+
 The role uses the output or return codes respectively to decide what actions to take. You can configure the behavior through the variables below.
 
 Neither of these methods are perfect, but it works reasonably good. You might want to look through the role before using it though.
 
 ## Known issues
 
+- **Alpine Linux**: No reboot and service restart detection. Services keep running against deleted libraries until you restart them or reboot yourself.
 - Debian 11: Without setting `ansible_python_interpreter=/usr/bin/python3` explicitly, the `apt` module will try to install `python-apt` on the fly, which fails. See [this issue](https://github.com/ansible/ansible/issues/69053) for more details.
 - CentOS 8: Reboot detection does not work as there is a flag missing for the dnf needs-restarting plugin. No reboot will be performed at any time.
 - Fedora 32 and earlier: Service restart detection does not work as there is a flag missing for the dnf needs-restarting plugin. No service restarts will be performed at any time.
@@ -77,6 +80,43 @@ Enable automatic service restarts. This causes the role to restart services whic
       - systemd-manager.service
 
 Blacklist services that should not or cannot be restarted. The default list is based on and expanded per experience. Feel free to report services that need to be added here.
+
+### Topgrade Variables
+
+    upgrade_topgrade_install: false
+
+Install [topgrade](https://github.com/topgrade-rs/topgrade) from its upstream release archive. Default is `false`. Note that the role only **installs** the binary, it does not run it. Upgrades are still performed by the package manager. Only `x86_64` and `aarch64` are supported, the role fails on other architectures. On Alpine the musl build is used and `tar` and `ca-certificates` are installed, as the `unarchive` module cannot work with busybox `tar` and the download needs a CA bundle.
+
+The downloaded archive is verified against a SHA256 checksum before it is unpacked. Upstream publishes no checksum file, so the checksums are pinned in the role's `vars/main.yml` per version and build target.
+
+    upgrade_topgrade_version: "17.9.0"
+
+The topgrade version to install. The role compares this against the output of `topgrade --version` and only downloads if they differ, so lowering this value downgrades the binary. **When you change this, you also have to add the matching checksums to `upgrade_topgrade_checksums` in the role's `vars/main.yml`**, otherwise the role fails rather than installing an unverified binary. The file documents how to generate them.
+
+    upgrade_topgrade_path: "/usr/local/bin"
+
+Where to place the topgrade binary.
+
+    upgrade_topgrade_run: false
+
+Run topgrade after the package manager upgrade. Default is `false`. The role fails if topgrade is not present at `upgrade_topgrade_path`, so either enable `upgrade_topgrade_install` or install it yourself.
+
+**Be aware that this upgrades your system packages a second time**, as topgrade drives the very same package manager this role already used. Its value lies in the steps the package manager does not cover, such as `cargo`, `npm`, `pipx` or `flatpak`. Also note that topgrade runs as the user the role runs as, which is usually `root`, so it only sees `root`'s toolchains, and that the reboot and service restart detection of this role happens *before* topgrade runs, so anything topgrade installs is not covered by it.
+
+    upgrade_topgrade_args:
+      - "--yes"
+      - "--allow-root"
+      - "--no-ask-retry"
+      - "--no-self-update"
+
+The arguments topgrade is called with. The defaults are what makes an unattended run work at all:
+
+- `--yes` assumes yes on every package manager prompt.
+- `--allow-root` suppresses the confirmation prompt topgrade shows when running as `root`. Without it the run hangs.
+- `--no-ask-retry` stops topgrade from asking what to do after a failed step. Without it the run hangs.
+- `--no-self-update` keeps the version this role installed and verified. Without it topgrade may replace itself with a binary this role never checksummed.
+
+If a step fails, topgrade exits non-zero and the task fails. Add `--disable <step>` here to skip steps you do not want.
 
 ### Reporting Variables
 
