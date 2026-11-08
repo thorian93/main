@@ -1,12 +1,22 @@
 # https://github.com/ansible-collections/collection_template/blob/main/.github/workflows/ansible-test.yml
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+name: Molecule Test SSH
+
 permissions:
   contents: read
 
-name: Molecule Test SSH
 on:
   workflow_dispatch:
   pull_request:
+    branches:
+      - main
+      - devel
+    types:
+      - opened
     paths:
       - 'roles/ssh/**'
       - '.github/workflows/_template-molecule-test.yaml'
@@ -14,10 +24,12 @@ on:
   push:
     paths:
       - 'roles/ssh/**'
+      - '!roles/**/*.md'
       - '.github/workflows/_template-molecule-test.yaml'
       - '.github/workflows/molecule-role-ssh.yaml'
 
 jobs:
+
   integration:
     name: "Molecule"
     uses: ./.github/workflows/_template-molecule-test.yaml

@@ -2,31 +2,41 @@ SHELL=/bin/bash
 
 VERSION := $$(grep 'version:' galaxy.yml | cut -d ' ' -f 2)
 
+#https://stackoverflow.com/questions/3931741/why-does-make-think-the-target-is-up-to-date
+.PHONY: clean
+
 help:
-	@echo "setup           - Run all setup target at once."
+	@echo "setup           			- Run all setup target at once."
 	@echo ""
-	@echo "setup-python    - Prepare the system for development with Python."
+	@echo "python	    			- Prepare the system for development with Python."
 	@echo ""
-	@echo "setup-kvm       - Install and enable KVM and prepare Vagrant."
+	@echo "kvm			       		- Install and enable KVM."
 	@echo ""
-	@echo "kvm             - Only copy the correct Vagrantfile for use with KVM."
+	@echo "vagrant   				- Install and enable Vagrant."
 	@echo ""
-	@echo "vm              - Create a virtual development environment."
-	@echo "vms        	   - Create a virtual environment with all boxes (exept for the development ones and ansidows)."
-	@echo "vms-debian 	   - Create a virtual environment with all Debian family OSes."
-	@echo "vms-redhat 	   - Create a virtual environment with all RedHat family OSes."
-	@echo "vms-suse 	   - Create a virtual environment with all Suse family OSes."
+	@echo "venv		       			- Install Python Virtual Environment. You need to activate it yourself though!"
 	@echo ""
-	@echo "clean           - Clean up several things"
-	@echo "clean-vm        - Clean up virtual development environment."
+	@echo "vm           			- Create a virtual development environment."
+	@echo "vms						- Create a virtual environment with all boxes (exept for the development ones and ansidows)."
+	@echo "vms-debian 	   			- Create a virtual environment with all Debian family OSes."
+	@echo "vms-redhat 	   			- Create a virtual environment with all RedHat family OSes."
+	@echo "vms-suse 	   			- Create a virtual environment with all Suse family OSes."
 	@echo ""
-	@echo "version         - Update collection version"
+	@echo "tests	       			- Run all available tests."
+	@echo "tests-sanity    			- Run sanity tests."
+	@echo "tests-integration    	- Run all integration tests."
+	@echo "tests-integration-custom	- Run all integration tests using a custom built image."
+	@echo ""
+	@echo "clean           			- Clean up several things"
+	@echo "clean-vm        			- Clean up virtual development environment."
+	@echo ""
+	@echo "version         			- Update collection version"
 	@echo ""
 	@echo "Publishing:"
 	@echo ""
-	@echo "  release       - Build, upload, publish, announce and tag a release"
-	@echo "  announce      - Announce the release"
-	@echo "  publish       - Make files available, update git and announce"
+	@echo "  release       			- Build, upload, publish, announce and tag a release"
+	@echo "  announce      			- Announce the release"
+	@echo "  publish       			- Make files available, update git and announce"
 	@echo ""
 
 release:
@@ -36,20 +46,12 @@ publish:
 
 announce:
 
-setup: setup-python setup-kvm
+setup: python kvm vagrant
 
-setup-python:
-	@sudo apt-get -y update --quiet
-	@sudo apt-get -y install -y \
-		python3-pip \
-		ca-certificates \
-		curl \
-		gnupg \
-		lsb-release
-	@python3 -m pip install pip --upgrade
-	@python3 -m pip install -r requirements.txt
+python:
+	@uv help > /dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
 
-setup-kvm: kvm
+kvm:
 	@sudo apt update -y
 	@sudo apt install -y \
 		virt-manager \
@@ -57,23 +59,36 @@ setup-kvm: kvm
 		libvirt-clients \
 		libvirt-daemon-system \
 		bridge-utils \
-		virtinst \
-		libguestfs-tools \
 		libvirt-daemon\
 		libvirt-dev \
 		libxslt-dev \
 		libxml2-dev \
 		zlib1g-dev
 	@sudo systemctl enable --now libvirtd
-	@vagrant plugin install vagrant-libvirt
 
-version:
-	@newversion=$$(dialog --stdout --inputbox "New Version:" 0 0 "$(VERSION)") ; \
-	if [ -n "$$newversion" ] ; then ./scripts/release.sh -s "$(VERSION)" -t $$newversion ; fi
+vagrant:
+	@sudo apt update -y
+	@sudo apt install -y \
+		apt-transport-https \
+		ca-certificates \
+		wget \
+		virtiofsd
+	@wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+	@echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $$(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
+	@sudo apt update -y
+	@sudo apt -y install vagrant
+	@sudo usermod -aG libvirt $(USER)
+	@vagrant plugin install vagrant-libvirt vagrant-reload
 
-clean: clean-vm
+venv:
+	@uv venv
+	@uv sync
 
-clean-vm:
+clean:
+	@rm -rf .tox/
+	@rm -rf .venv/
+	@rm -rf ./venv/
+	@rm -rf ./tests/output/*
 	@vagrant destroy --force
 
 vm:
@@ -91,20 +106,48 @@ vms-redhat:
 vms-suse:
 	@vagrant up ansuse # ansles ## currently no SLES box for libvirt!
 
-vms-windows:
-	@vagrant up ansidows
+tests: tests-linting tests-sanity tests-integration
 
-tests: test-sanity test-linting
+tests-linting: vm
+	@vagrant ssh collection -c "\
+	export LC_ALL=C.UTF-8 UV_PROJECT_ENVIRONMENT=$(UV_ENV_VM) && \
+	cd $(COLLECTION_ROOT) && \
+	uv run ansible-galaxy collection install ./ && \
+	uv run yamllint -c .yamllint ./roles/ && \
+	uv run yamllint -c .yamllint ./tests/ && \
+	uv run yamllint -c .yamllint ./playbooks/ && \
+	uv run ansible-lint -c .ansible-lint ./roles/ && \
+	uv run ansible-lint -c .ansible-lint ./tests/ && \
+	uv run ansible-lint -c .ansible-lint ./playbooks/"
 
-test-sanity:
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && /home/vagrant/.local/bin/ansible-test sanity --docker'
+tests-sanity: vm
+	@vagrant ssh collection -c "\
+	export LC_ALL=C.UTF-8 UV_PROJECT_ENVIRONMENT=$(UV_ENV_VM) && \
+	cd $(COLLECTION_ROOT) && \
+	uv run ansible-test sanity --docker"
 
-test-linting:
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && yamllint -c .yamllint roles/'
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && yamllint -c .yamllint playbooks/'
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main && ansible-lint -c .ansible-lint playbooks/'
+tests-units: vm
+	@vagrant ssh collection -c "\
+	export LC_ALL=C.UTF-8 UV_PROJECT_ENVIRONMENT=$(UV_ENV_VM) && \
+	cd $(COLLECTION_ROOT) && \
+	uv run ansible-test units --docker"
 
-tests-molecule: test-molecule-upgrade
+tests-molecule: tests-molecule-agent tests-molecule-server
 
-test-molecule-upgrade:
-	@vagrant ssh -- -t 'cd /home/vagrant/ansible_collections/thorian93/main/roles/upgrade && molecule test'
+tests-molecule-agent: vm
+	@vagrant ssh collection -c "\
+	export LC_ALL=C.UTF-8 UV_PROJECT_ENVIRONMENT=$(UV_ENV_VM) && \
+	cd $(COLLECTION_ROOT)/roles/agent/ && \
+	uv run molecule test"
+
+tests-molecule-server: vm
+	@vagrant ssh collection -c "\
+	export LC_ALL=C.UTF-8 UV_PROJECT_ENVIRONMENT=$(UV_ENV_VM) && \
+	cd $(COLLECTION_ROOT)/roles/server/ && \
+	uv run molecule test"
+
+tests-integration: vm
+	@vagrant ssh collection -c "\
+	export LC_ALL=C.UTF-8 UV_PROJECT_ENVIRONMENT=$(UV_ENV_VM) && \
+	cd $(COLLECTION_ROOT) && \
+	uv run ansible-test integration --docker"

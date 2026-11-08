@@ -37,6 +37,17 @@
     - (upgrade_reboot_hint is defined and upgrade_reboot_hint | bool)
     - (upgrade_unattended_reboot | bool) or (upgrade_force_reboot | bool)
 
+- name: "Detect Patchmon Agent."
+  ansible.builtin.stat:
+    path: /usr/local/bin/patchmon-agent
+  register: upgrade_patchmon_agent
+
+- name: "Trigger Patchmon Agent."
+  ansible.builtin.command: "/usr/local/bin/patchmon-agent report"
+  when: 
+    - (upgrade_patchmon_agent.stat.exists | bool)
+    - (upgrade_patchmon_trigger | bool)
+
 - name: "Include Reporting Playbook."
   ansible.builtin.include_tasks: "report.yml"
   when: upgrade_reporting_enable | bool
