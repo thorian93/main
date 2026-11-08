@@ -59,9 +59,10 @@ jobs:
         run:  uv run yamllint -c .yamllint ./playbooks/
         working-directory: ./ansible_collections/thorian93/main/
 
-      - name: "Run yamllint on tests."
-        run:  uv run yamllint -c .yamllint ./tests/
-        working-directory: ./ansible_collections/thorian93/main/
+      # No tests yet
+      # - name: "Run yamllint on tests."
+      #   run:  uv run yamllint -c .yamllint ./tests/
+      #   working-directory: ./ansible_collections/thorian93/main/
 
   ansible:
     runs-on: ubuntu-24.04
@@ -97,12 +98,13 @@ jobs:
           ANSIBLE_LIBRARY: "./plugins/modules"
           ANSIBLE_ROLES_PATH: "./roles"
 
-      - name: "Run ansible-lint on tests."
-        run:  uv run ansible-lint -c .ansible-lint ./tests/
-        working-directory: ./ansible_collections/thorian93/main/
-        env:
-          ANSIBLE_LIBRARY: "./plugins/modules"
-          ANSIBLE_ROLES_PATH: "./roles"
+      # No tests yet
+      # - name: "Run ansible-lint on tests."
+      #   run:  uv run ansible-lint -c .ansible-lint ./tests/
+      #   working-directory: ./ansible_collections/thorian93/main/
+      #   env:
+      #     ANSIBLE_LIBRARY: "./plugins/modules"
+      #     ANSIBLE_ROLES_PATH: "./roles"
 
       - name: "Run ansible-lint on playbooks."
         run:  uv run ansible-lint -c .ansible-lint ./playbooks/
