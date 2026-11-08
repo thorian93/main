@@ -6,5 +6,5 @@
   when: upgrade_reporting_enable | bool
 
 - name: "Upgrade via APK."
-  ansible.builtin.apk:
+  community.general.apk:
     upgrade: true

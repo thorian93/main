@@ -42,9 +42,9 @@
     path: /usr/local/bin/patchmon-agent
   register: upgrade_patchmon_agent
 
-- name: "Trigger Patchmon Agent."
+- name: "Trigger Patchmon Agent."  # noqa no-changed-when
   ansible.builtin.command: "/usr/local/bin/patchmon-agent report"
-  when: 
+  when:
     - (upgrade_patchmon_agent.stat.exists | bool)
     - (upgrade_patchmon_trigger | bool)
 
