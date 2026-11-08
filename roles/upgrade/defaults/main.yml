@@ -16,6 +16,7 @@ upgrade_stable_os:
   - Ubuntu-20
   - Ubuntu-22
   - Ubuntu-24
+  - Ubuntu-26
 
 # Basic
 upgrade_packages_on_hold: []
