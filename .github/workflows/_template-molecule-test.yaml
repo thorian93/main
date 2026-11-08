@@ -35,7 +35,7 @@ jobs:
           working-directory: ./ansible_collections/thorian93/main/
 
       - name: "Install Dependencies."
-        run: uv sync
+        run: uv sync --locked
         working-directory: ./ansible_collections/thorian93/main/
 
       - name: "Run Molecule."
