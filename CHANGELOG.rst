@@ -4,6 +4,17 @@ thorian93.main Release Notes
 
 .. contents:: Topics
 
+v2.2.0
+======
+
+Minor Changes
+-------------
+
+- Update Python environment.
+- Update build-related configuration from upstream.
+- Upgrade role - Add basic support for the APK package manager.
+- Upgrade role - Add reporting trigger to the Patchmon agent.
+
 v2.1.0
 ======
 
