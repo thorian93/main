@@ -1,5 +1,6 @@
 ---
 upgrade_stable_os:
+  - Alpine-3
   - CentOS-8
   - Debian-10
   - Debian-11
@@ -15,6 +16,7 @@ upgrade_stable_os:
   - Ubuntu-20
   - Ubuntu-22
   - Ubuntu-24
+  - Ubuntu-26
 
 # Basic
 upgrade_packages_on_hold: []
@@ -26,6 +28,9 @@ upgrade_restart_services_blacklist:
   - auditd
   - dbus
   - systemd-manager
+
+# PatchMon
+upgrade_patchmon_trigger: "true"
 
 # Reporting
 upgrade_reporting_enable: false

@@ -1,0 +1,3 @@
+minor_changes:
+  - Upgrade role - Add basic support for the APK package manager.
+  - Upgrade role - Add reporting trigger to the Patchmon agent.

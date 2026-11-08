@@ -39,7 +39,7 @@ jobs:
       #
 
       - name: "Checkout Code"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: "Get current Version"
         id: current_version
@@ -52,9 +52,7 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: "Install Dependencies."
-        run: uv sync
-        env:
-          UV_SYSTEM_PYTHON: 1
+        run: uv sync --locked
 
       #
       # First stage: Build and install collection to generate docs and changelogs.
@@ -72,8 +70,8 @@ jobs:
       - name: "Build the Collection"
         run: uv run ansible-galaxy collection build build/src --force
 
-      - name: "Install the Collection"
-        run: uv run ansible-galaxy collection install --no-deps ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz
+      - name: "Install the Checkmk Ansible Collection"
+        run: uv run ansible-galaxy collection install --no-deps ./checkmk-general-${{ steps.current_version.outputs.version }}.tar.gz
 
       - name: "Compile Collection Changelog"
         run: uv run antsibull-changelog release
@@ -140,9 +138,9 @@ jobs:
 
             For information about this collection and how to install it, refer to the [README](https://github.com/thorian93/main/blob/main/README.md).
 
-            For a detailed changelog, refer to the [CHANGELOG](https://github.com/thorian93/main/blob/main/CHANGELOG.rst).
+            ${{env.CHANGELOG_FRAGMENT}}
 
-            This collection can be found in the [Galaxy](https://galaxy.ansible.com/ui/repo/published/thorian93/main/) as well!
+            For a detailed changelog, refer to the [CHANGELOG](https://github.com/thorian93/main/blob/main/CHANGELOG.rst).
 
       - name: "Publish Ansible Collection to the Galaxy"
         run: uv run ansible-galaxy collection publish ${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${{ steps.current_version.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
