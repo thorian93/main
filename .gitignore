@@ -6,4 +6,3 @@
 .vagrant/
 build/
 tests/output
-uv.lock
