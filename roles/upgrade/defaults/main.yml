@@ -28,6 +28,9 @@ upgrade_restart_services_blacklist:
   - dbus
   - systemd-manager
 
+# PatchMon
+upgrade_patchmon_trigger: "true"
+
 # Reporting
 upgrade_reporting_enable: false
 upgrade_reporting_path: "."
